@@ -4,6 +4,7 @@ const pxtorem = require("postcss-pxtorem");
 const tsImportPluginFactory = require("ts-import-plugin");
 module.exports = {
   productionSourceMap: process.env.NODE_ENV === "production" ? false : true,
+  filenameHashing: true,
   outputDir:
     process.env.NODE_ENV === "development"
       ? "dist/develop"

@@ -1,11 +1,11 @@
-import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators';
+import { VuexModule, Module, Mutation, Action, getModule, } from 'vuex-module-decorators';
 import store from '@/store';
 
 export interface INewsState {
   currentNewsStatistic: tvsnewsadmin.GetNewsListRsp_Statistics;
 }
 
-@Module({ dynamic: true, store, name: 'news' })
+@Module({ dynamic: true, store, name: 'news', })
 class News extends VuexModule implements INewsState {
   currentNewsStatistic = {};
 

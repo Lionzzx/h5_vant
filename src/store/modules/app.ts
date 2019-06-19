@@ -1,9 +1,9 @@
 import Cookies from 'js-cookie';
-import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators';
+import { VuexModule, Module, Mutation, Action, getModule, } from 'vuex-module-decorators';
 import store from '@/store';
-import { AccountlogicApi } from '@/services/gatewayService';
-import { config } from '@/config/app';
-import { getStorage, setStorage } from '@/utils/storage';
+import { AccountlogicApi, } from '@/services/gatewayService';
+import { config, } from '@/config/app';
+import { getStorage, setStorage, } from '@/utils/storage';
 
 const accountlogicApi = new AccountlogicApi();
 
@@ -25,7 +25,7 @@ export interface IAppState {
   };
 }
 
-@Module({ dynamic: true, store, name: 'app' })
+@Module({ dynamic: true, store, name: 'app', })
 class App extends VuexModule implements IAppState {
   app = {};
   config = config();
@@ -38,7 +38,7 @@ class App extends VuexModule implements IAppState {
     clientHeight:
       document.documentElement.clientHeight ||
       document.body.clientHeight ||
-      790
+      790,
   };
 
   get clientHeight() {
@@ -81,24 +81,24 @@ class App extends VuexModule implements IAppState {
     }
   }
 
-  @Action({ commit: 'SET_APP' })
+  @Action({ commit: 'SET_APP', })
   async GetApp() {
-    const { app } = await accountlogicApi.GetApp({
+    const { app, } = await accountlogicApi.GetApp({
       app_id: config().app_id,
-      disable_cache: true
+      disable_cache: true,
     });
 
     return app;
   }
-  @Action({ commit: 'TOGGLE_SIDEBAR' })
+  @Action({ commit: 'TOGGLE_SIDEBAR', })
   ToggleSideBar(withoutAnimation: boolean) {
     return withoutAnimation;
   }
-  @Action({ commit: 'CLOSE_SIDEBAR' })
+  @Action({ commit: 'CLOSE_SIDEBAR', })
   CloseSideBar(withoutAnimation: boolean) {
     return withoutAnimation;
   }
-  @Action({ commit: 'TOGGLE_DEVICE' })
+  @Action({ commit: 'TOGGLE_DEVICE', })
   ToggleDevice(device: DeviceType) {
     return device;
   }
