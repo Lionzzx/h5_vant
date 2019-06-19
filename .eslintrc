@@ -1,0 +1,14 @@
+{
+  "root": true,
+  "env": {
+    "node": true
+  },
+  "extends": ["plugin:vue/essential", "@vue/typescript"],
+  "rules": {
+    "no-console": "warn",
+    "comma-dangle": ["error", "always"]
+  },
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser"
+  }
+}
