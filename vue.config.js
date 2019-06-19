@@ -6,29 +6,29 @@ module.exports = {
   css: {
     loaderOptions: {
       sass: {
-        data: `@import "~@/styles/variables.scss";`
+        data: `@import "~@/styles/variables.scss";`,
       },
       less: {
         modifyVars: {
           red: '#fff',
           blue: '#3eaf7c',
           orange: '#f08d49',
-          'text-color': '#111'
-        }
+          'text-color': '#111',
+        },
       },
       postcss: {
         plugins: [
           autoprefixer(),
           pxtorem({
             rootValue: 75,
-            propList: ['*'],
+            propList: ['*',],
             // 该项仅在使用 Circle 组件时需要
             // 原因参见 https://github.com/youzan/vant/issues/1948
-            selectorBlackList: ['van-circle__layer']
-          })
-        ]
-      }
-    }
+            selectorBlackList: ['van-circle__layer',],
+          }),
+        ],
+      },
+    },
   },
   chainWebpack: config => {
     config.module
@@ -42,15 +42,15 @@ module.exports = {
               tsImportPluginFactory({
                 libraryName: 'vant',
                 libraryDirectory: 'es',
-                style: true
-              })
-            ]
+                style: true,
+              }),
+            ],
           }),
           compilerOptions: {
-            module: 'es2015'
-          }
+            module: 'es2015',
+          },
         })
         return options
       })
-  }
+  },
 }
