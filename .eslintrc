@@ -5,8 +5,7 @@
   },
   "extends": ["plugin:vue/essential", "@vue/typescript"],
   "rules": {
-    "no-console": "warn",
-    "comma-dangle": ["error", "always"]
+    "no-console": "warn"
   },
   "parserOptions": {
     "parser": "@typescript-eslint/parser"

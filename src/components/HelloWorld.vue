@@ -5,13 +5,18 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, } from "vue-property-decorator";
+// https://github.com/kaorun343/vue-property-decorator
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { AppModule } from "@/store/modules/app";
 
 @Component
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
 
-  private hello: string = 'hello caizexin' 
+  private hello: string = "hello caizexin";
+
+  created() {
+  }
 }
 </script>
 

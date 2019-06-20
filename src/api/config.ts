@@ -1,6 +1,6 @@
 export default {
 	channelLogic: {
-		postLogin: '/channel/garden/login',
+		postLogin: 'user/login',
 		getSendMsg: '/channel/garden/sendMsg',
 		getTopFiveCompny: '/channel/garden/topFiveCompny',
 	},

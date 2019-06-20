@@ -27,11 +27,10 @@ export default {
         } = res;
         if ('msgCode' in data) {
             const status = await this.errHandler(data.msgCode, data.msg);
-
             if (status) {
                 return Promise.resolve(data.data);
             } else {
-                return Promise.reject();
+                return Promise.reject(data.msg);
             }
         } else {
             const status = await this.errHandler(data.code || 0, data.error);
