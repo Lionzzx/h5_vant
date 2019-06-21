@@ -1,6 +1,8 @@
 /* eslint-disable */
 import apiRoute from './config'
+import { Toast } from 'vant'
 import { HttpService } from './http'
+
 export class GatewayService extends HttpService {
   constructor(module: string) {
     super('/api')
@@ -17,17 +19,26 @@ export class GatewayService extends HttpService {
           return console.warn(`${key} is not a string `)
         }
         // @ts-ignore
-        this[key] = async function(req: any) {
+        this[key] = async function(req: any, loading? = false) {
           try {
+            if (loading) {
+              Toast.loading({
+                loadingType: 'spinner',
+                duration: 0,
+                forbidClick: true
+              })
+            }
             // @ts-ignore
             let config = { url: apiRoute[module][key] }
             let res =
               key.indexOf('get') == 0
                 ? await this.get(req, config)
                 : await this.post(req, config)
-            return [null, res]
-          } catch (error) {
-            return [error, null]
+            return [res, null]
+          } catch (err) {
+            return [null, err]
+          } finally {
+            Toast.clear()
           }
         }
       }

@@ -1,0 +1,39 @@
+@import './iconfont/iconfont.css';
+
+.x {
+  &-mr1 {
+    margin-right: 5px;
+  }
+  &-mr2 {
+    margin-right: 10px;
+  }
+  &-mr3 {
+    margin-right: 10px;
+  }
+  &-tr {
+    text-align: right;
+  }
+  &-mt2 {
+    margin-top: 20px;
+  }
+
+  &-mtb2 {
+    margin: 20px 0;
+  }
+
+  &-ptb2 {
+    padding: 20px 0;
+  }
+
+  &-fl {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-flc {
+    display: flex;
+    align-items: center;
+  }
+}

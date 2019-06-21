@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 import delegate from './interceptors'
 const rqHttp = axios.create({
   timeout: 30000
@@ -66,7 +67,6 @@ export class BaseService {
         })
         .catch((err: any) => {
           // 404走这里 500
-          console.log(err)
           return reject(err)
         })
     })

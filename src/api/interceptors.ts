@@ -30,15 +30,14 @@ export default {
             if (status) {
                 return Promise.resolve(data.data);
             } else {
-                return Promise.reject(data.msg);
+                return Promise.reject(data);
             }
         } else {
             const status = await this.errHandler(data.code || 0, data.error);
-
             if (status) {
                 return Promise.resolve(data.data);
             } else {
-                return Promise.reject();
+                return Promise.reject(data);
             }
         }
     },

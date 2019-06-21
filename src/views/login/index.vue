@@ -1,11 +1,5 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo"
-         src="../assets/logo.png" />
-    <van-button type="danger">警告按钮</van-button>
-    <HelloWorld class="van-hairline--surround"
-                msg="van-ellipsis" />
-
+  <div class="page">
   </div>
 </template>
 
@@ -24,10 +18,6 @@ import { AppModule } from "@/store/modules/app";
 })
 export default class Home extends Vue {
   async created() {
-    const [err,data] = await TestApi.postLogin({
-      username: "admin",
-      password: "123456"
-    });
   }
 }
 </script>
