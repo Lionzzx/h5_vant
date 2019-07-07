@@ -16,34 +16,39 @@ export default new Router({
       path: '/commercial',
       name: 'commercialIndex',
       component: () =>
-        import(/* webpackChunkName: "index" */ './views/commercial/index.vue'),
-      children: [
-        {
-          path: '/honor',
-          name: 'honor',
-          component: () =>
-            import(
-              /* webpackChunkName: "index" */ './views/commercial/honor/index.vue'
-            )
-        }
-      ]
+        import(/* webpackChunkName: "myserve" */ '@/views/commercial/index.vue')
     },
     {
       path: '/account',
-      name: 'accountIndex',
+      name: 'account',
       component: () =>
-        import(/* webpackChunkName: "index" */ './views/account/index.vue')
+        import(/* webpackChunkName: "myserve" */ '@/views/account/index.vue')
+    },
+    {
+      path: '/myserve',
+      name: 'myserve',
+      component: () =>
+        import(
+          /* webpackChunkName: "myserve" */ '@/views/commercial/myServe/index.vue'
+        )
+    },
+    {
+      path: '/mytools',
+      name: 'mytools',
+      component: () =>
+        import(/* webpackChunkName: "myserve" */ '@/views/mytools/index.vue')
     },
     {
       path: '/user',
       name: 'user',
       component: () =>
-        import(/* webpackChunkName: "index" */ './views/user/index.vue')
+        import(/* webpackChunkName: "myserve" */ '@/views/user/index.vue')
     },
     {
-      path: '/login',
-      name: 'login',
-      component: login
+      path: '/user/about',
+      name: 'about',
+      component: () =>
+        import(/* webpackChunkName: "myserve" */ '@/views/user/about/index.vue')
     }
   ]
 })

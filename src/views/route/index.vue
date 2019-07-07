@@ -9,7 +9,7 @@ import userModule from "@/store/modules/user";
 
 @Component({
   beforeRouteEnter(to: Route, from: Route, next: (r: any) => void) {
-    next("/commercial");
+    next("/account");
   }
 })
 export default class Index extends Vue {}
