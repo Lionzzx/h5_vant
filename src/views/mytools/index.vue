@@ -2,69 +2,51 @@
   <div class="page">
     <div class="header"><span class="header-icon"></span>实用工具</div>
     <div class="list">
-      <div class="item">
-        <img class="icon"
-             src="/icon/icon_music.png" />
-        <div class="title">工具名</div>
+      <div @click="onNavTo('latestPolicy')" class="item">
+        <img class="icon" src="~@/assets/index_icons01.png" />
+        <div class="title">最新政策</div>
       </div>
-      <div class="item">
-        <img class="icon"
-             src="/icon/icon_music.png" />
-        <div class="title">工具名</div>
+      <div @click="onNavTo('patent')" class="item">
+        <img class="icon" src="@/assets/index_icons02.png" />
+        <div class="title">专利荣誉查询</div>
+      </div>
+      <div @click="onNavTo('abnormal')" class="item">
+        <img class="icon" src="/icon/icon_music.png" />
+        <div class="title">企业异常查询</div>
+      </div>
+      <div @click="onNavTo('income')" class="item">
+        <img class="icon" src="@/assets/index_icons04.png" />
+        <div class="title">个税测算</div>
       </div>
     </div>
-
-    <div class="header"><span class="header-icon"></span>实用工具</div>
     <div class="list">
-      <div class="item">
-        <img class="icon"
-             src="/icon/icon_music.png" />
-        <div class="title">工具名</div>
+      <div @click="onNavTo('subsidy')" class="item">
+        <img class="icon" src="@/assets/index_icons05.png" />
+        <div class="title">政府补助测评</div>
       </div>
-      <div class="item">
-        <img class="icon"
-             src="/icon/icon_music.png" />
-        <div class="title">工具名</div>
-      </div>
-      <div class="item">
-        <img class="icon"
-             src="/icon/icon_music.png" />
-        <div class="title">工具名</div>
-      </div>
-      <div class="item">
-        <img class="icon"
-             src="/icon/icon_music.png" />
-        <div class="title">工具名</div>
+      <div @click="onNavTo('bill')" class="item">
+        <img class="icon" src="@/assets/index_icons06.png" />
+        <div class="title">发票查询</div>
       </div>
     </div>
- 
-    <van-tabbar v-model="active"
-                active-color="#f27c41"
-                fixed>
-      <van-tabbar-item icon="gem-o"
-                       to="/">我的服务</van-tabbar-item>
-      <van-tabbar-item icon="apps-o">我的工具</van-tabbar-item>
-      <van-tabbar-item icon="user-o"
-                       to="/user">个人中心</van-tabbar-item>
-    </van-tabbar>
   </div>
-
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { Button } from "vant";
-import TestApi from "@/services/testApi";
-import { AppModule } from "@/store/modules/app";
-
+import { Component, Vue } from 'vue-property-decorator';
+import { Icon } from 'vant';
+import TestApi from '@/services/testApi';
+import { AppModule } from '@/store/modules/app';
 
 @Component({
   components: {
+    [Icon.name]: Icon
   }
 })
 export default class MyTools extends Vue {
-  private active = 1;
-  async created() {}
+  onNavTo(data: string) {
+    window.open(`http://park.zgcfo.com/#/pages/tools/${data}/${data}`);
+  }
 }
 </script>
 
@@ -82,6 +64,7 @@ export default class MyTools extends Vue {
     }
   }
   .list {
+    margin-top: 16px;
     display: flex;
     .item {
       display: flex;

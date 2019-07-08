@@ -20,16 +20,16 @@ export interface AppStoreType {
 
 @Module({ dynamic: true, store, name: 'app' })
 class App extends VuexModule {
-  public inlineState = '111'
+  public loading = false
 
   @Mutation
-  SET() {
-    this.inlineState = 'caizexin'
+  OPENLOADING() {
+    this.loading = true
   }
 
-  @Action({ commit: 'SET' })
-  setdata(inlineState: string) {
-    return inlineState
+  @Mutation
+  CLOSELOADING() {
+    this.loading = false
   }
 }
 

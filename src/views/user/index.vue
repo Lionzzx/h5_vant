@@ -6,51 +6,27 @@
       <img />
     </div>
     <van-cell-group class="user-group">
-      <van-cell icon="records"
-                title="我的订单"
-                to="/commercial"
-                is-link />
+      <van-cell icon="records" title="我的订单" is-link />
     </van-cell-group>
 
     <van-cell-group>
-      <van-cell icon="points"
-                title="我的优惠券"
-                is-link />
-      <van-cell icon="gold-coin-o"
-                title="反馈建议"
-                is-link />
-      <van-cell icon="gift-o"
-                to="/user/about"
-                title="关于我们"
-                is-link />
+      <van-cell icon="points" title="我的优惠券" is-link />
+      <van-cell icon="gold-coin-o" title="反馈建议" is-link />
+      <van-cell icon="gift-o" to="/user/about" title="关于我们" is-link />
     </van-cell-group>
-
-    <van-tabbar v-model="active"
-                value="2"
-                active-color="#f27c41"
-                fixed>
-      <van-tabbar-item icon="gem-o"
-                       to="/">我的服务</van-tabbar-item>
-      <van-tabbar-item icon="apps-o"
-                       to="/mytools">我的工具</van-tabbar-item>
-      <van-tabbar-item icon="user-o"
-                       to="/user">个人中心</van-tabbar-item>
-    </van-tabbar>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { Cell, CellGroup } from "vant";
+import { Component, Vue } from 'vue-property-decorator';
+import { Cell, CellGroup } from 'vant';
 @Component({
   components: {
     [Cell.name]: Cell,
     [CellGroup.name]: CellGroup
   }
 })
-export default class Home extends Vue {
-  private active = 2;
-}
+export default class Home extends Vue {}
 </script>
 
 <style lang="scss">
@@ -61,9 +37,7 @@ export default class Home extends Vue {
     justify-content: center;
     flex-direction: column;
     height: 30vh;
-    // background: url('/img/user_bg.png');
-    // background-size: 100% 100%;
-    background: linear-gradient(#f27c41, #f27c41);
+    background: linear-gradient(#E94F55, #e52810);
     &-name {
       font-size: 20px;
       margin-top: 10px;

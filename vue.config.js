@@ -17,9 +17,6 @@ module.exports = {
           '^/api': ''
         }
       },
-      '/foo': {
-        target: '<other_url>'
-      }
     }
   },
   css: {
