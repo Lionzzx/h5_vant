@@ -9,7 +9,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/home/commercial'
+      redirect: '/home/account'
     },
     {
       path: '/login',
@@ -124,6 +124,26 @@ export default new Router({
       component: () =>
         import(
           /* webpackChunkName: "myserve" */ '@/views/commercial/agencyAccount/index.vue'
+        )
+    },
+
+    // 会计页面
+    {
+      path: '/taxDetail',
+      name: 'taxDetail',
+      component: () =>
+        import(
+          /* webpackChunkName: "myserve" */ '@/views/account/taxDetail/index.vue'
+        )
+    },
+
+    // 我的
+    {
+      path: '/user/message',
+      name: 'message',
+      component: () =>
+        import(
+          /* webpackChunkName: "myserve" */ '@/views/user/message/index.vue'
         )
     }
   ]

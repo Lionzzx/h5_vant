@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div>
     <van-nav-bar :title="title" :left-arrow="hasLeft" @click-left="goHome" />
   </div>
 </template>

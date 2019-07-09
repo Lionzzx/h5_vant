@@ -40,7 +40,7 @@
       </div>
     </div>
     <div class="page-center van-hairline--top">
-      <div v-for="(item, index) in iconConfig" :key="index" class="page-center-item">
+      <div @click="onNavTo(item.title)" v-for="(item, index) in iconConfig" :key="index" class="page-center-item">
         <img class="img-icon" :src="item.icon" />
         <div class="img-title">{{ item.title }}</div>
       </div>
@@ -68,7 +68,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import CountTo from '@/components/CountTo/index.vue';
 import MyProgress from '@/components/Process/index.vue';
-import { Swipe, SwipeItem, ActionSheet, DropdownMenu, DropdownItem } from 'vant';
+import { Swipe, SwipeItem, ActionSheet, DropdownMenu, DropdownItem, Icon } from 'vant';
 import TestApi from '@/services/testApi';
 import { AppModule } from '@/store/modules/app';
 
@@ -76,6 +76,7 @@ import { AppModule } from '@/store/modules/app';
   components: {
     [Swipe.name]: Swipe,
     [SwipeItem.name]: SwipeItem,
+    [Icon.name]: Icon,
     [ActionSheet.name]: ActionSheet,
     [DropdownMenu.name]: DropdownMenu,
     [DropdownItem.name]: DropdownItem,
@@ -132,20 +133,18 @@ export default class Home extends Vue {
   navToServe() {
     this.$router.push({ name: 'myserve' });
   }
-  goHonor() {
-    this.$router.push({
-      name: 'honor',
-      params: {
-        companyid: '111'
-      }
-    });
+
+  onNavTo(value: string) {
+    switch (value) {
+      case '纳税详情':
+        this.$router.push({ name: 'taxDetail' });
+        break;
+    }
   }
-
-  created() {}
-
   handleCompanySelect() {
     this.show = true;
   }
+  created() {}
 }
 </script>
 <style>

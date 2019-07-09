@@ -1,6 +1,16 @@
 <template>
   <div class="page">
     <nav-bar title="企业荣誉" has-left />
+    <div class="page-title">恭喜你是高新企业</div>
+    <div class="page-logo">
+      <img src="" />
+    </div>
+
+    <van-collapse v-model="activeName" accordion>
+      <van-collapse-item title="标题1(10)" name="1">内容</van-collapse-item>
+      <van-collapse-item title="标题2" name="2">内容</van-collapse-item>
+      <van-collapse-item title="标题3" name="3">内容</van-collapse-item>
+    </van-collapse>
   </div>
 </template>
 
@@ -8,32 +18,38 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import NavBar from '@/components/NavBar/index.vue';
 import TestApi from '@/services/testApi';
+import { Collapse, CollapseItem } from 'vant';
 import { AppModule } from '@/store/modules/app';
 
 @Component({
   components: {
-    NavBar
+    NavBar,
+    [Collapse.name]: Collapse,
+    [CollapseItem.name]: CollapseItem
   }
 })
-export default class Honor extends Vue {}
+export default class Honor extends Vue {
+  private activeName: number = 1;
+}
 </script>
-
-
-<style>
-.van-nav-bar {
-  background: linear-gradient(180deg, rgba(255, 84, 38, 1) 0%, rgba(210, 9, 1, 1) 100%);
-}
-.van-nav-bar .van-icon {
-  color: #fff;
-}
-.van-nav-bar__title {
-  color: #fff;
-}
-</style>
 
 <style lang="scss" scoped>
 .page {
   height: 100vh;
+  &-title{
+    text-align: center;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+  }
+  &-logo {
+    height: 200px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
 </style>
 

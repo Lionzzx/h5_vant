@@ -21,6 +21,7 @@ import { Tabbar, TabbarItem } from 'vant';
 })
 export default class MyTools extends Vue {
   get active() {
+    
     return this.$route.name == 'user' ? 2 : this.$route.name == 'mytools' ? 1 : 0;
   }
 

@@ -1,22 +1,16 @@
 <template>
   <div class="page">
-    <nav-bar title="商标查询" has-left />
+    <!-- <div clas="page-search x-fl">
+      <input />
+    </div> -->
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { Swipe, SwipeItem } from 'vant';
-import TestApi from '@/services/testApi';
-import NavBar from '@/components/NavBar/index.vue';
-import { AppModule } from '@/store/modules/app';
 
 @Component({
-  components: {
-    [Swipe.name]: Swipe,
-    [SwipeItem.name]: SwipeItem,
-    NavBar
-  }
+  components: {}
 })
 export default class Home extends Vue {
   async created() {}
@@ -26,7 +20,13 @@ export default class Home extends Vue {
 <style lang="scss" scoped>
 .page {
   height: 100vh;
-  background: blue;
+  background: url('http://park.zgcfo.com/static/abnormal_bg.png');
+  background-size: 100% 100%;
+  &-search {
+    width: 70vw;
+    height: 50px;
+    background: hsla(0, 0%, 100%, 0.16);
+  }
 }
 </style>
 

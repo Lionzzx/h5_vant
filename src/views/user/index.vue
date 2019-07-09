@@ -12,6 +12,7 @@
     <van-cell-group>
       <van-cell icon="points" title="我的优惠券" is-link />
       <van-cell icon="gold-coin-o" title="反馈建议" is-link />
+      <van-cell icon="chat-o" to="/user/message" title="我的消息" is-link />
       <van-cell icon="gift-o" to="/user/about" title="关于我们" is-link />
     </van-cell-group>
   </div>
@@ -37,7 +38,7 @@ export default class Home extends Vue {}
     justify-content: center;
     flex-direction: column;
     height: 30vh;
-    background: linear-gradient(#E94F55, #e52810);
+    background: linear-gradient(#e94f55, #e52810);
     &-name {
       font-size: 20px;
       margin-top: 10px;
