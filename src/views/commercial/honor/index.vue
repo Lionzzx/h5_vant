@@ -17,7 +17,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import NavBar from '@/components/NavBar/index.vue';
-import TestApi from '@/services/testApi';
+import { storeApi } from '@/api';
 import { Collapse, CollapseItem } from 'vant';
 import { AppModule } from '@/store/modules/app';
 
@@ -36,7 +36,7 @@ export default class Honor extends Vue {
 <style lang="scss" scoped>
 .page {
   height: 100vh;
-  &-title{
+  &-title {
     text-align: center;
     font-size: 14px;
     height: 30px;

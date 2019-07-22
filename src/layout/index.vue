@@ -2,7 +2,7 @@
   <div class="page">
     <router-view></router-view>
     <van-tabbar v-model="active" active-color="#E52810" fixed>
-      <van-tabbar-item icon="gem-o" to="commercial">我的服务</van-tabbar-item>
+      <van-tabbar-item icon="gem-o" to="/">我的服务</van-tabbar-item>
       <van-tabbar-item icon="apps-o" to="mytools">我的工具</van-tabbar-item>
       <van-tabbar-item icon="user-o" to="user">个人中心</van-tabbar-item>
     </van-tabbar>
@@ -21,12 +21,10 @@ import { Tabbar, TabbarItem } from 'vant';
 })
 export default class MyTools extends Vue {
   get active() {
-    
     return this.$route.name == 'user' ? 2 : this.$route.name == 'mytools' ? 1 : 0;
   }
 
-  set active(newVal) {    
-  }
+  set active(newVal) {}
 }
 </script>
 

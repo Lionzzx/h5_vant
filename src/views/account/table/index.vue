@@ -1,14 +1,5 @@
 <template>
   <div>
-    <van-nav-bar style="background-color: #952f2a;color:white" title="企业评估报告" left-arrow @click-left="$backTo()" />
-    <van-loading v-if="loading" style="top:50vw;left:50vh" />
-    <!-- <van-row style="padding:10px">
-      <van-row v-for="item in tableData" :key="item.id">
-        <van-col span="20" style="font-size:16px;border:1px solid #636363;padding-left:12px;line-height:16px">{{item.name}}</van-col>
-        <van-col span="4" style="font-size:16px;border:1px solid #636363;padding-left:12px;line-height:16px">100</van-col>
-      </van-row>
-    </van-row> -->
-
     <div style="font-size:12px" v-if="!loading">
       <table class="table table-striped table-bordered" v-if="this.$route.params.type == 'cash'">
         <thead>
@@ -70,73 +61,22 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      tableData: [],
-      loading: false
-    };
-  },
-  methods: {
-    get_table_data() {
-      let _self = this;
-      _self.loading = true;
-      // let url = `http://192.168.0.220:8888/Mock/simple?projectID=1&uri=/store/findCompanyReportInfo`
-      let url = `api/store/findCompanyReportInfo`;
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import { storeApi } from '@/api';
+import UserModule from '@/store/modules/user';
 
-      let config = {
-        params: {
-          companyId: _self.$route.params.companyid,
-          period: _self.$route.params.period,
-          type: _self.$route.params.type
-          // companyId: '33784',
-          // period: '201805',
-          // type: _self.$route.params.type
-        }
-      };
-
-      function success(res) {
-        console.log(res.data.data);
-        _self.tableData = res.data.data;
-        _self.loading = false;
-      }
-
-      function fail(err) {
-        _self.loading = false;
-        console.log(err);
-      }
-
-      this.$Get(url, config, success, fail);
-    }
-  },
-  filters: {
-    replace: function(value) {
-      if (!value) {
-        return '';
-      }
-      value = value.toString();
-      // console.log(value.replace(/ /g,"&nbsp;"))
-      return value.replace(/ /g, '&nbsp;&nbsp;');
-    }
-  },
-  created() {
-    this.get_table_data();
-  },
-  beforeRouteEnter(to, from, next) {
-    let _self = this;
-
-    next(vm => {
-      vm.$bus.emit('UPDATE_TABLE', true);
-    });
-  },
-  beforeRouteLeave(to, from, next) {
-    // console.log("这是退出路由！")
-    let _self = this;
-    _self.$bus.emit('CANCEL_TABLE', true);
-    next();
+@Component({
+  components: {}
+})
+export default class Table extends Vue {
+  private type:string = '';
+  async created() {
+    let { type= '' } = this.$route.params;
+    this.type = type;
+    await storeApi.findCompanyReportInfo({ companyId: UserModule.companyId, period: '', type });
   }
-};
+}
 </script>
 
 <style scoped>

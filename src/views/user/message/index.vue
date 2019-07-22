@@ -1,21 +1,26 @@
 <template>
   <div>
     <nav-bar title="我的消息" has-left></nav-bar>
-    <van-contact-card type="edit" :name="currentContact.name" :tel="currentContact.tel" @click="showList = true" />
-    <van-contact-card type="edit" :name="currentContact.name" :tel="currentContact.tel" @click="showList = true" />
-    <van-contact-card type="edit" :name="currentContact.name" :tel="currentContact.tel" @click="showList = true" />
+    <div class="msg van-hairline--bottom">
+      <div class="msg-icon">图标</div>
+      <div class="msg-main">
+        <div class="msg-title">
+          <div class="msg-activity">优惠活动</div>
+          <div class="msg-time">193423：32</div>
+        </div>
+        <div class="msg-desc">提示信息</div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import NavBar from '@/components/NavBar/index.vue';
-import { ContactCard } from 'vant';
 
 @Component({
   components: {
-    NavBar,
-    [ContactCard.name]: ContactCard
+    NavBar
   }
 })
 export default class Message extends Vue {
@@ -28,4 +33,33 @@ export default class Message extends Vue {
   ];
 }
 </script>
+
+<style lang="scss" scoped>
+.msg {
+  display: flex;
+  padding: 10px 20px;
+  &-icon {
+    width: 20vw;
+    
+  }
+
+  &-main {
+    flex: 1;
+  }
+
+  &-title {
+    display: flex;
+    font-size: 14px;
+    color: #222;
+    justify-content: space-between;
+  }
+
+  &-desc {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #666;
+  }
+}
+</style>
+
 

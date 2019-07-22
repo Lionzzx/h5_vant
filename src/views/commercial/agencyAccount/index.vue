@@ -33,7 +33,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import NavBar from '@/components/NavBar/index.vue';
-import TestApi from '@/services/testApi';
+// import TestApi from '@/services/testApi';
 import { AppModule } from '@/store/modules/app';
 
 @Component({

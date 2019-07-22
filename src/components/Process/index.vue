@@ -51,8 +51,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch, Prop } from 'vue-property-decorator';
 import { Icon } from 'vant';
+import { storeApi } from '@/api';
+import UserStore from '@/store/modules/user';
 
 @Component({
   components: {
@@ -60,9 +62,29 @@ import { Icon } from 'vant';
   }
 })
 export default class MyProcess extends Vue {
+  private accountList = [];
+  private bussinessList = [];
+  private projectList = [];
+
+  @Prop({
+    type: Number,
+    required: true
+  })
+  companyId: number = 0;
+
+  @Watch('companyId', { immediate: true, deep: true })
+  onCompanyIdChanged(val: string, oldVal: string) {
+    let { ACCOUNT, BUSSINESS, PROJECT } = storeApi.ServiceList({ companyId: val, codeType: 'ACCOUNT,BUSSINESS,PROJECT' });
+    this.accountList = ACCOUNT;
+    this.bussinessList = BUSSINESS;
+    this.projectList = PROJECT;
+  }
+
   navToServe() {
     this.$router.push({ name: 'myserve' });
   }
+
+  async created() {}
 }
 </script>
 

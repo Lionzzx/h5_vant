@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import login from '@/views/login/index.vue'
-import layout from '@/views/layout/index.vue'
+import index from '@/views/route/index.vue'
+import layout from '@/layout/index.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -9,7 +10,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/home/account'
+      name: 'index',
+      component: index
     },
     {
       path: '/login',
@@ -134,6 +136,22 @@ export default new Router({
       component: () =>
         import(
           /* webpackChunkName: "myserve" */ '@/views/account/taxDetail/index.vue'
+        )
+    },
+    {
+      path: '/taxDetail/detail',
+      name: 'detail',
+      component: () =>
+        import(
+          /* webpackChunkName: "myserve" */ '@/views/account/taxDetail/detail.vue'
+        )
+    },
+    {
+      path: '/table',
+      name: 'table',
+      component: () =>
+        import(
+          /* webpackChunkName: "myserve" */ '@/views/account/table/index.vue'
         )
     },
 

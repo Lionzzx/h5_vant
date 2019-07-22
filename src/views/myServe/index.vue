@@ -50,7 +50,7 @@
         </div>
       </van-tab>
       <van-tab>
-        <div slot="title"><van-icon class="icon" name="balance-list-o" />增值进度</div>
+        <div slot="title"><van-icon class="icon" name="balance-list-o" />项目进度</div>
         <div @click="toProject" class="contain">
           <div class="contain-list">
             <div class="contain-list-main">

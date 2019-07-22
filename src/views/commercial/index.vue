@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <van-dropdown-menu active-color="#ff7d4e">
-      <van-dropdown-item v-model="currentCompany" :options="companyOption" />
+      <van-dropdown-item @change="getWorkList" v-model="currentCompany" :options="companyOption" />
     </van-dropdown-menu>
 
     <van-swipe class="page-swipe" :autoplay="3000" indicator-color="black">
@@ -24,14 +24,16 @@
         <div class="img-title">{{ item.title }}</div>
       </div>
     </div>
+
+    <!-- 代账/工商/项目的进度 -->
     <my-progress></my-progress>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { Swipe, SwipeItem, ActionSheet, DropdownMenu, DropdownItem, Icon } from 'vant';
-import TestApi from '@/services/testApi';
+import { Swipe, SwipeItem, DropdownMenu, DropdownItem, Icon } from 'vant';
+import { storeApi } from '@/api';
 import MyProgress from '@/components/Process/index.vue';
 import { AppModule } from '@/store/modules/app';
 
@@ -39,7 +41,6 @@ import { AppModule } from '@/store/modules/app';
   components: {
     [Swipe.name]: Swipe,
     [SwipeItem.name]: SwipeItem,
-    [ActionSheet.name]: ActionSheet,
     [DropdownMenu.name]: DropdownMenu,
     [DropdownItem.name]: DropdownItem,
     [Icon.name]: Icon,
@@ -47,14 +48,9 @@ import { AppModule } from '@/store/modules/app';
   }
 })
 export default class Home extends Vue {
-  private show: boolean = false;
-  private active: number = 0;
   private currentCompany: number = 0;
-  private companyOption = [
-    { text: '新年有限公司', value: 0 },
-    { text: '阿里巴巴有限公司', value: 1 },
-    { text: '中国有限公司', value: 2 }
-  ];
+  private companyOption = [];
+
   private iconConfig = [
     {
       title: '企业荣誉',
@@ -126,15 +122,29 @@ export default class Home extends Vue {
     });
   }
 
-  created() {}
+  async getCompany() {
+    try {
+      let resp = await storeApi.listCustomerCompany();
+      this.companyOption = resp.map((v: any) => ({ text: v.companyname, value: v.id }));
+      this.currentCompany = resp[0].id;
+      this.getWorkList(this.currentCompany);
 
-  handleCompanySelect() {
-    this.show = true;
+      storeApi.ServiceList({ companyId: this.currentCompany, codeType: 'BUSSINESS' });
+    } catch (error) {}
+  }
+
+  async getWorkList(companyId: number) {
+    try {
+      let resp = await storeApi.listCompanyOrder({ companyId });
+    } catch {}
+  }
+
+  created() {
+    this.getCompany();
   }
 }
 </script>
-<style>
-</style>
+
 <style>
 .van-dropdown-menu {
   height: 40px;

@@ -19,28 +19,35 @@
         <countTo class="count-number" :startVal="startVal" :endVal="endVal" :duration="1000"></countTo>
         <div class="count-title">本月应交税费（元）</div>
       </div>
+      <div class="page-tip">
+        财税报表 201808
+      </div>
+
+      <div class="page-message">
+        消息
+      </div>
     </div>
 
     <div class="page-number">
       <div class="page-number-item">
-        <div class="title"><van-icon style="margin-right:8px" color="#fbc2a7" name="bar-chart-o"></van-icon>本月净利润（元）</div>
-        <div class="number number-active">-20,918.53</div>
+        <div class="title"><van-icon style="margin-right:8px" color="#fbc2a7" name="bar-chart-o"></van-icon>月收入（元）</div>
+        <div class="number number-active">{{ accountReport.yueshouru }}</div>
       </div>
       <div class="page-number-item">
-        <div class="title"><van-icon style="margin-right:8px" color="#fbc2a7" name="bar-chart-o"></van-icon>本月净利润（元）</div>
-        <div class="number">-20,918.53</div>
+        <div class="title"><van-icon style="margin-right:8px" color="#fbc2a7" name="bar-chart-o"></van-icon>货币资金（元）</div>
+        <div class="number">{{ accountReport.huobizijin }}</div>
       </div>
       <div class="page-number-item">
-        <div class="title"><van-icon style="margin-right:8px" color="#fbc2a7" name="bar-chart-o"></van-icon>本月净利润（元）</div>
-        <div class="number">-20,918.53</div>
+        <div class="title"><van-icon style="margin-right:8px" color="#fbc2a7" name="bar-chart-o"></van-icon>成本费用（元）</div>
+        <div class="number">{{ accountReport.chengbenfeiyong }}</div>
       </div>
       <div class="page-number-item">
-        <div class="title"><van-icon style="margin-right:8px" color="#fbc2a7" name="bar-chart-o"></van-icon>本月净利润（元）</div>
-        <div class="number">-20,918.53</div>
+        <div class="title"><van-icon style="margin-right:8px" color="#fbc2a7" name="bar-chart-o"></van-icon>税金（元）</div>
+        <div class="number">{{ accountReport.zhenzhishui }}</div>
       </div>
     </div>
     <div class="page-center van-hairline--top">
-      <div @click="onNavTo(item.title)" v-for="(item, index) in iconConfig" :key="index" class="page-center-item">
+      <div @click="onNavTo(item.name)" v-for="(item, index) in iconConfig" :key="index" class="page-center-item">
         <img class="img-icon" :src="item.icon" />
         <div class="img-title">{{ item.title }}</div>
       </div>
@@ -60,7 +67,7 @@
       /></van-swipe-item>
     </van-swipe>
 
-    <my-progress></my-progress>
+    <my-progress :company-id="currentCompany"></my-progress>
   </div>
 </template>
 
@@ -69,8 +76,9 @@ import { Component, Vue } from 'vue-property-decorator';
 import CountTo from '@/components/CountTo/index.vue';
 import MyProgress from '@/components/Process/index.vue';
 import { Swipe, SwipeItem, ActionSheet, DropdownMenu, DropdownItem, Icon } from 'vant';
-import TestApi from '@/services/testApi';
+import { storeApi } from '@/api';
 import { AppModule } from '@/store/modules/app';
+import UserStore from '@/store/modules/user';
 
 @Component({
   components: {
@@ -87,6 +95,7 @@ import { AppModule } from '@/store/modules/app';
 export default class Home extends Vue {
   private startVal = 0;
   private endVal = 2017435;
+  private accountReport = '';
   private show: boolean = false;
   private active: number = 0;
   private currentCompany: number = 0;
@@ -114,15 +123,18 @@ export default class Home extends Vue {
     },
     {
       title: '企业利润',
-      icon: '/icon/icon_zhuanli.png'
+      icon: '/icon/icon_zhuanli.png',
+      name: 'income'
     },
     {
       title: '资产负债',
-      icon: '/icon/icon_yichang.png'
+      icon: '/icon/icon_yichang.png',
+      name: 'balance'
     },
     {
       title: '现金流量',
-      icon: '/icon/icon_cash.png'
+      icon: '/icon/icon_cash.png',
+      name: 'cash'
     },
     {
       title: '票据情况',
@@ -135,16 +147,19 @@ export default class Home extends Vue {
   }
 
   onNavTo(value: string) {
-    switch (value) {
-      case '纳税详情':
-        this.$router.push({ name: 'taxDetail' });
-        break;
+    if (value == 'balance' || value == 'income' || value == 'cash') {
+      this.$router.push({ name: 'table', params: { type: value } });
+    } else {
+      this.$router.push({ name: value });
     }
   }
   handleCompanySelect() {
     this.show = true;
   }
-  created() {}
+  async created() {
+    const resp = await storeApi.accountReport({ companyId: UserStore.companyId, period: '201906' });
+    this.accountReport = resp;
+  }
 }
 </script>
 <style>
@@ -190,6 +205,23 @@ export default class Home extends Vue {
       }
     }
   }
+  &-tip {
+    z-index: 20;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: #fff;
+    font-size: 13px;
+  }
+  &-message {
+    z-index: 200;
+    position: absolute;
+    top: -28px;
+    right: 10px;
+    color: $theme-color;
+    font-size: 13px;
+  }
+
   &-swipe {
     height: 150px;
     img {

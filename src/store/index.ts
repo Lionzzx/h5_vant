@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { AppModule, AppStoreType } from './modules/app'
+import { AppStoreType } from './modules/app'
+import { UserStoreType } from './modules/user'
 Vue.use(Vuex)
 
-export default new Vuex.Store<AppStoreType>({})
+export default new Vuex.Store<AppStoreType | UserStoreType>({})

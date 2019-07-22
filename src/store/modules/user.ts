@@ -6,24 +6,44 @@ import {
   Action,
   getModule
 } from 'vuex-module-decorators'
-
+import { storeApi } from '@/api'
 import store from '@/store'
-export interface AppStoreType {
+export interface UserStoreType {
   user: User
 }
 
-@Module({ dynamic: true, store, name: 'app' })
+@Module({ dynamic: true, store, name: 'user' })
 class User extends VuexModule {
-  public roles: string = ''
+  public customerId: string = ''
+  public companyId: string = ''
+  public companyList: any
+  public home: string = 'ACCOUNT'
 
   @Mutation
-  SETUSER() {
-    this.roles = 'caizexin'
+  SETUSERID(val: string = '') {
+    this.customerId = val
+  }
+  @Mutation
+  SETCOMPANYLIST(val: string = '') {
+    this.customerId = val
   }
 
-  @Action({ commit: 'SET' })
-  setdata(inlineState: string) {
-    return inlineState
+  @Mutation
+  SETCOMPANYID(val: string = '') {
+    this.companyId = val
+  }
+
+  @Mutation
+  SETHOME(val: string = '') {
+    this.home = val
+  }
+
+  @Action({ commit: 'SETCOMPANYLIST' })
+  async getCompanyList() {
+    try {
+      const resp = await storeApi.listCustomerCompany()
+      return resp
+    } catch (error) {}
   }
 }
 
