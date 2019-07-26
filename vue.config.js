@@ -2,6 +2,10 @@ const merge = require('webpack-merge')
 const autoprefixer = require('autoprefixer')
 const pxtorem = require('postcss-pxtorem')
 const tsImportPluginFactory = require('ts-import-plugin')
+const path = require('path')
+function resolve(dir) {
+  return path.join(__dirname, dir)
+}
 module.exports = {
   productionSourceMap: process.env.NODE_ENV === 'production' ? false : true,
   filenameHashing: true,
@@ -10,13 +14,13 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://192.168.0.220:9000',
+        target: 'http://192.168.2.88:9000',
         ws: true,
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
         }
-      },
+      }
     }
   },
   css: {
@@ -37,7 +41,7 @@ module.exports = {
           autoprefixer(),
           pxtorem({
             rootValue: 37.5,
-            propList: ['*'],
+            propList: ['*']
             // 该项仅在使用 Circle 组件时需要
             // 原因参见 https://github.com/youzan/vant/issues/1948
           })
@@ -46,6 +50,23 @@ module.exports = {
     }
   },
   chainWebpack: config => {
+    config.plugins.delete('preload') // TODO: need test
+    config.plugins.delete('prefetch') // TODO: need test
+    config.module
+      .rule('svg')
+      .exclude.add(resolve('src/icons'))
+      .end()
+    config.module
+      .rule('icons')
+      .test(/\.svg$/)
+      .include.add(resolve('src/icons'))
+      .end()
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'icon-[name]'
+      })
+      .end()
     config.module
       .rule('ts')
       .use('ts-loader')

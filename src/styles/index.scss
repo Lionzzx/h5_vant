@@ -10,6 +10,10 @@
   &-mr3 {
     margin-right: 10px;
   }
+
+  &-md1 {
+    margin-right: 5px;
+  }
   &-tr {
     text-align: right;
   }
@@ -69,8 +73,13 @@
 
 .bg-theme {
   background: #e52810 !important;
+  color: #fff !important;
 }
 
+.bg-pink {
+  background: #e94f55 !important;
+  color: #fff !important;
+}
 .bg-primary {
   background: #f27c41 !important;
 }

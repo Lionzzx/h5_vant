@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <van-dropdown-menu class="page-header" active-color="#ff7d4e">
-      <van-dropdown-item v-model="currentCompany" :options="companyOption" />
+      <van-dropdown-item @change="onCompanyIdChange" v-model="currentCompany" :options="companyOption" />
     </van-dropdown-menu>
 
     <div class="waveWrapper waveAnimation">
@@ -92,18 +92,14 @@ import UserStore from '@/store/modules/user';
     MyProgress
   }
 })
-export default class Home extends Vue {
+export default class Account extends Vue {
   private startVal = 0;
   private endVal = 2017435;
   private accountReport = '';
   private show: boolean = false;
   private active: number = 0;
   private currentCompany: number = 0;
-  private companyOption = [
-    { text: '新年有限公司', value: 0 },
-    { text: '阿里巴巴有限公司', value: 1 },
-    { text: '中国有限公司', value: 2 }
-  ];
+  private companyOption: any = [];
   private iconConfig = [
     {
       title: '纳税详情',
@@ -111,15 +107,18 @@ export default class Home extends Vue {
     },
     {
       title: '可开票额',
-      icon: '/icon/icon_money.png'
+      icon: '/icon/icon_money.png',
+      name: 'bill'
     },
     {
       title: '外勤详情',
-      icon: '/icon/icon_waiqing.png'
+      icon: '/icon/icon_waiqing.png',
+      name: 'legwork'
     },
     {
       title: '资料存管',
-      icon: '/icon/icon_zhiliao.png'
+      icon: '/icon/icon_zhiliao.png',
+      name: 'dataStorage'
     },
     {
       title: '企业利润',
@@ -138,7 +137,8 @@ export default class Home extends Vue {
     },
     {
       title: '票据情况',
-      icon: '/icon/icon_piaoju.png'
+      icon: '/icon/icon_piaoju.png',
+      name: 'invoice'
     }
   ];
 
@@ -156,14 +156,19 @@ export default class Home extends Vue {
   handleCompanySelect() {
     this.show = true;
   }
-  async created() {
-    const resp = await storeApi.accountReport({ companyId: UserStore.companyId, period: '201906' });
-    this.accountReport = resp;
+  onCompanyIdChange(e: string) {
+    UserStore.SETCOMPANYID(e);
+  }
+  created() {
+    this.companyOption = UserStore.COMPANYLIST;
+    // 保存companyid
+    let id = this.companyOption[0].value;
+    this.currentCompany = id;
+    UserStore.SETCOMPANYID(id);
   }
 }
 </script>
-<style>
-</style>
+
 <style>
 .van-dropdown-menu {
   height: 40px;

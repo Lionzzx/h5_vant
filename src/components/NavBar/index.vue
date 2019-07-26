@@ -1,6 +1,8 @@
 <template>
   <div>
-    <van-nav-bar :title="title" :left-arrow="hasLeft" @click-left="goHome" />
+    <van-nav-bar :title="title" :left-arrow="hasLeft" @click-left="goHome">
+      <slot slot="title" name="title"></slot>
+    </van-nav-bar>
   </div>
 </template>
 

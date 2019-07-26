@@ -7,7 +7,9 @@ import {
   getModule
 } from 'vuex-module-decorators'
 import { storeApi } from '@/api'
+
 import store from '@/store'
+import { setStorage, getStorage } from '@/utils/storage'
 export interface UserStoreType {
   user: User
 }
@@ -18,6 +20,14 @@ class User extends VuexModule {
   public companyId: string = ''
   public companyList: any
   public home: string = 'ACCOUNT'
+
+  get COMPANYLIST() {
+    return this.companyList ? this.companyList : getStorage('companyList')
+  }
+
+  get COMPANYID() {
+    return this.companyId ? this.companyId : getStorage('companyId')
+  }
 
   @Mutation
   SETUSERID(val: string = '') {
@@ -30,6 +40,7 @@ class User extends VuexModule {
 
   @Mutation
   SETCOMPANYID(val: string = '') {
+    setStorage('companyId', val)
     this.companyId = val
   }
 
@@ -41,7 +52,13 @@ class User extends VuexModule {
   @Action({ commit: 'SETCOMPANYLIST' })
   async getCompanyList() {
     try {
-      const resp = await storeApi.listCustomerCompany()
+      let resp = await storeApi.listCustomerCompany()
+      resp = resp.map((v: any) => ({
+        text: v.companyname,
+        value: v.id,
+        serviceDeparts: v.service_departs
+      }))
+      setStorage('companyList', resp)
       return resp
     } catch (error) {}
   }

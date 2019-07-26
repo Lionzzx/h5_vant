@@ -36,6 +36,7 @@ import { Swipe, SwipeItem, DropdownMenu, DropdownItem, Icon } from 'vant';
 import { storeApi } from '@/api';
 import MyProgress from '@/components/Process/index.vue';
 import { AppModule } from '@/store/modules/app';
+import UserStore from '@/store/modules/user';
 
 @Component({
   components: {
@@ -124,12 +125,10 @@ export default class Home extends Vue {
 
   async getCompany() {
     try {
-      let resp = await storeApi.listCustomerCompany();
-      this.companyOption = resp.map((v: any) => ({ text: v.companyname, value: v.id }));
-      this.currentCompany = resp[0].id;
-      this.getWorkList(this.currentCompany);
+      this.companyOption = UserStore.COMPANYLIST;
+      // this.getWorkList(this.currentCompany);
 
-      storeApi.ServiceList({ companyId: this.currentCompany, codeType: 'BUSSINESS' });
+      // storeApi.ServiceList({ companyId: this.currentCompany, codeType: 'BUSSINESS' });
     } catch (error) {}
   }
 

@@ -8,10 +8,10 @@
       </div>
       <div class="page-process-item">
         <div class="page-process-item-title">亿账柜有限公司</div>
-        <div class="page-process-item-serve">服务单位：亿账柜有限公司</div>
-        <div class="page-process-item-desc">
-          <div>代账中（等待传票）</div>
-          <div>已成功代账16个月</div>
+        <!-- <div class="page-process-item-serve">详情</div> -->
+        <div class="page-process-item-desc x-mb1">
+          <div>当前进度：国地税报道</div>
+          <div>预计完成时间: 20190308</div>
         </div>
       </div>
     </div>
@@ -24,11 +24,11 @@
         <div class="page-process-header-right">全部</div>
       </div>
       <div class="page-process-item">
-        <div class="page-process-item-title">亿账柜有限公司</div>
-        <div class="page-process-item-serve">服务单位：亿账柜有限公司</div>
+        <div class="page-process-item-title">亿账柜有限公司(服务中)</div>
+        <!-- <div class="page-process-item-serve">服务单位：亿账柜有限公司</div> -->
         <div class="page-process-item-desc">
-          <div>代账中（等待传票）</div>
-          <div>已成功代账16个月</div>
+          <div>总计 20000</div>
+          <div>已收 10000</div>
         </div>
       </div>
     </div>
@@ -59,22 +59,20 @@ import UserStore from '@/store/modules/user';
 @Component({
   components: {
     [Icon.name]: Icon
-  }
+  },
+  props: ['companyId']
 })
 export default class MyProcess extends Vue {
   private accountList = [];
   private bussinessList = [];
   private projectList = [];
 
-  @Prop({
-    type: Number,
-    required: true
-  })
-  companyId: number = 0;
-
   @Watch('companyId', { immediate: true, deep: true })
   onCompanyIdChanged(val: string, oldVal: string) {
-    let { ACCOUNT, BUSSINESS, PROJECT } = storeApi.ServiceList({ companyId: val, codeType: 'ACCOUNT,BUSSINESS,PROJECT' });
+    if (!val) {
+      return;
+    }
+    let { ACCOUNT, BUSSINESS, PROJECT } = this.$storeApi.serviceList({ companyId: val, codeType: 'ACCOUNT,BUSSINESS,PROJECT' });
     this.accountList = ACCOUNT;
     this.bussinessList = BUSSINESS;
     this.projectList = PROJECT;

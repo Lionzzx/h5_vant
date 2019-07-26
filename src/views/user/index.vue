@@ -1,17 +1,17 @@
 <template>
   <div>
     <div class="user-poster">
-      <div class="user-poster-avatar"></div>
-      <div class="user-poster-name">昵称</div>
+      <div class="user-poster-avatar"><img :src="userDetail.head_img_url" /></div>
+      <div class="user-poster-name">{{ userDetail.nickname || '暂无信息' }}</div>
       <img />
     </div>
-    <van-cell-group class="user-group">
+    <!-- <van-cell-group class="user-group">
       <van-cell icon="records" title="我的订单" is-link />
-    </van-cell-group>
+    </van-cell-group> -->
 
     <van-cell-group>
-      <van-cell icon="points" title="我的优惠券" is-link />
-      <van-cell icon="gold-coin-o" title="反馈建议" is-link />
+      <!-- <van-cell icon="points" title="我的优惠券" is-link />
+      <van-cell icon="gold-coin-o" title="反馈建议" is-link /> -->
       <van-cell icon="chat-o" to="/user/message" title="我的消息" is-link />
       <van-cell icon="gift-o" to="/user/about" title="关于我们" is-link />
     </van-cell-group>
@@ -21,13 +21,23 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { Cell, CellGroup } from 'vant';
+
 @Component({
   components: {
     [Cell.name]: Cell,
     [CellGroup.name]: CellGroup
   }
 })
-export default class Home extends Vue {}
+export default class User extends Vue {
+  private userDetail: any = {
+    head_img_url: '',
+    nickname: ''
+  };
+  async created() {
+    const resp = await this.$storeApi.userDetail();
+    this.userDetail = resp;
+  }
+}
 </script>
 
 <style lang="scss">
@@ -50,6 +60,10 @@ export default class Home extends Vue {}
       width: 70px;
       border-radius: 50%;
       background: #fff;
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 

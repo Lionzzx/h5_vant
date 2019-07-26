@@ -102,7 +102,7 @@ export class HttpService extends BaseService {
     })
   }
 
-  async requestProxy({ req = {}, config = {} }) {
+  async requestProxy({ req = {}, config = { loading: false } }) {
     let res
     // 请求头处理
     // TODO 这里可以对config做处理
@@ -110,9 +110,9 @@ export class HttpService extends BaseService {
       req,
       config
     })
-
+    console.log()
     try {
-      if (false) {
+      if (config.loading) {
         AppModule.OPENLOADING()
       }
 
@@ -120,7 +120,7 @@ export class HttpService extends BaseService {
     } catch (e) {
       res = e
     } finally {
-      if (false) {
+      if (config.loading) {
         AppModule.CLOSELOADING()
       }
     }
