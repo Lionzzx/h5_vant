@@ -23,7 +23,7 @@
         财税报表 201808
       </div>
 
-      <div class="page-message">
+      <div @click="navToMessage" class="page-message">
         消息
       </div>
     </div>
@@ -68,6 +68,7 @@
     </van-swipe>
 
     <my-progress :company-id="currentCompany"></my-progress>
+    <div class="page-bottom"></div>
   </div>
 </template>
 
@@ -159,6 +160,9 @@ export default class Account extends Vue {
   onCompanyIdChange(e: string) {
     UserStore.SETCOMPANYID(e);
   }
+  navToMessage() {
+    this.$router.push({ name: 'message' });
+  }
   created() {
     this.companyOption = UserStore.COMPANYLIST;
     // 保存companyid
@@ -186,6 +190,7 @@ export default class Account extends Vue {
   font-size: 12px;
   &-header {
     z-index: 100;
+    background: #fff;
   }
   &-count {
     z-index: 20;
@@ -331,6 +336,10 @@ export default class Account extends Vue {
         padding: 10px 0;
       }
     }
+  }
+  &-bottom {
+    height: 60px;
+    background-color: #e4e4e4;
   }
 }
 </style>

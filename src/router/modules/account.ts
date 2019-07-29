@@ -1,11 +1,5 @@
 export default [
   {
-    path: 'account',
-    name: 'account',
-    component: () =>
-      import(/* webpackChunkName: "account" */ '@/views/account/index.vue')
-  },
-  {
     path: 'account/taxDetail',
     name: 'taxDetail',
     component: () =>
@@ -63,6 +57,22 @@ export default [
     component: () =>
       import(
         /* webpackChunkName: "renewal" */ '@/views/account/legwork/renewal/index.vue'
+      )
+  },
+  {
+    path: 'account/legwork/complain',
+    name: 'complain',
+    component: () =>
+      import(
+        /* webpackChunkName: "complain" */ '@/views/account/legwork/complain/index.vue'
+      )
+  },
+  {
+    path: 'account/legwork/detail',
+    name: 'legworkDetail',
+    component: () =>
+      import(
+        /* webpackChunkName: "complain" */ '@/views/account/legwork/detail/index.vue'
       )
   }
 ]

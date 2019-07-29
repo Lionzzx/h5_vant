@@ -27,7 +27,7 @@ export default class Home extends Vue {
 
 <style>
 .van-nav-bar {
-  background: linear-gradient(180deg, #e94f55 0%, #c91f25 100%) !important;
+  background: linear-gradient(180deg, #e94f55 0%, #f23e0f 100%) !important;
 }
 .van-nav-bar .van-icon {
   color: #fff;

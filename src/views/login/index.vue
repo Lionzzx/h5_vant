@@ -10,15 +10,15 @@
         <van-cell-group>
           <van-field v-model="mobile" label="手机号" placeholder="请输入手机号" />
           <van-field v-model="code" type="number" label="短信验证码" placeholder="请输入验证码">
-            <van-button slot="button" size="small" type="primary" @click="getCode" v-if="!codeDisable">获取验证码</van-button>
-            <van-button slot="button" size="small" type="default" @click="getCode" v-if="codeDisable" disabled
+            <van-button slot="button" size="small" class="bt_primary"  @click="getCode" v-if="!codeDisable">获取验证码</van-button>
+            <van-button slot="button" size="small" class="bt_primary"  @click="getCode" v-if="codeDisable" disabled
               >{{ time }}秒后重新获取</van-button
             >
           </van-field>
         </van-cell-group>
       </div>
       <van-row style="width:80%;margin:auto;margin-top:60px">
-        <van-button size="large" type="primary" @click="login" :disabled="isLogin">登 陆</van-button>
+        <van-button size="large" class="bt_primary"  @click="login" :disabled="isLogin">登 陆</van-button>
       </van-row>
     </van-row>
   </van-row>
@@ -92,5 +92,13 @@ export default class Message extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.bt_primary {
+  background-color: #f74d2f;
+  color: #fff;
+}
+</style>
+
 
 

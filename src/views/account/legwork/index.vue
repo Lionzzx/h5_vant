@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="page-header x-fl">广东科技有限公司</div>
+    <div class="page-header x-fl">{{ serviceInfo.companyname }}</div>
     <div class="page-server">
       <div class="page-server-body">
         <div class="item">服务会计：{{ serviceInfo.realname }}</div>
@@ -8,8 +8,8 @@
         <div class="item">服务税期：{{ serviceInfo.begin_period + '至' + serviceInfo.end_period }}</div>
 
         <div class="tousu van-hairline--top x-fls">
-          <div>服务不满意？<span style="color:#e94f55;">我有话要说</span></div>
-          <div @click="hanleNotice" class="tousu-tip">
+          <div>服务不满意？<span @click="handleComplain" style="color:#e94f55;">我有话要说</span></div>
+          <div class="tousu-tip">
             <a href="https://mp.weixin.qq.com/s/W25DatAlyJIchb7-O74Myw">做账资料注意事项</a>
           </div>
         </div>
@@ -28,31 +28,27 @@
         <div>使用：{{ detail.bCount - detail.remainderB }} 剩余：{{ detail.remainderB }}</div>
       </div>
     </div>
-
-    <van-steps active-color="#000" direction="vertical" :active="active">
-      <van-step
-        >买家下单
-        <div slot="active-icon">A类</div>
-        <div slot="inactive-icon">测试</div></van-step
-      >
-      <van-step
-        ><div slot="inactive-icon">A类</div>
-        商家接单</van-step
-      >
-      <van-step>
-        <div slot="inactive-icon">测试</div>
-        <div>【城市】物流状态1</div>
-        <div>2016-07-12 12:40</div>
-      </van-step>
-      <van-step>交易完成</van-step>
-    </van-steps>
+    <div class="steps">
+      <van-steps active-color="#000" direction="vertical">
+        <van-step v-for="(item, index) in list" :key="index">
+          <div @click="navToDetail" class="steps-title">
+            <span>{{ item.legwork_name }}</span
+            ><span>{{ item.begin_time }}</span>
+          </div>
+          <div>{{ item.begin_address }}</div>
+          <div slot="active-icon">{{ item.type }}类</div>
+          <div slot="inactive-icon">{{ item.type }}类</div></van-step
+        >
+      </van-steps>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import NavBar from '@/components/NavBar/index.vue';
-import { AppModule } from '@/store/modules/app';
+
+import userStore from '@/store/modules/user';
 import { Step, Steps } from 'vant';
 @Component({
   components: {
@@ -69,7 +65,7 @@ export default class MyTools extends Vue {
   async getLegworkList() {
     let { detail = {}, list = {} } = await this.$storeApi.legworkList({ company_id: '194180', page: '1', pageSize: '10' });
     this.detail = detail;
-    this.list = list;
+    this.list = list.rows;
   }
 
   async getCompanyServiceInfo() {
@@ -79,6 +75,14 @@ export default class MyTools extends Vue {
       this.serverTel = `tel:${tel}`;
     }
   }
+  navToDetail() {
+    // console.log('hahah');
+    this.$router.push({ name: 'legworkDetail' });
+  }
+  handleComplain() {
+    this.$router.push({ name: 'complain', params: { id: this.serviceInfo.cycle_work_order_id } });
+  }
+
   created() {
     this.getLegworkList();
     this.getCompanyServiceInfo();
@@ -87,6 +91,12 @@ export default class MyTools extends Vue {
 </script>
 
 
+<style>
+.van-step__circle-container,
+.van-step__title {
+  color: #222 !important;
+}
+</style>
 
 <style lang="scss">
 .page {
@@ -149,6 +159,15 @@ export default class MyTools extends Vue {
       &-title {
         margin-bottom: 6px;
       }
+    }
+  }
+  .steps {
+    padding: 0px 20px;
+    color: #222;
+    &-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 }

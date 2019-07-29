@@ -2,15 +2,11 @@
   <div>
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <nav-bar title="我的消息" has-left></nav-bar>
-
-      <div v-for="(item, index) in list" :key="index" class="msg van-hairline--bottom">
-        <div class="msg-icon"><svg-icon icon-class="edit" /></div>
-        <!-- <div class="msg-main"> -->
-          <div class="msg-title">
-            <div class="msg-activity">{{ item.templatename }}</div>
-            <div class="msg-time">{{ item.senddate | changeTime }}</div>
-          <!-- </div> -->
-          <!-- <div class="msg-desc">{{ item.templatename }}</div> -->
+      <div @click="navToDetail(item.id)" v-for="(item, index) in list" :key="index" class="msg van-hairline--bottom">
+        <div class="msg-icon"><svg-icon icon-class="email" /></div>
+        <div class="msg-title">
+          <div class="msg-activity">{{ item.templatename }}</div>
+          <div class="msg-time">{{ item.senddate | changeTime }}</div>
         </div>
       </div>
     </van-list>
@@ -42,9 +38,10 @@ export default class Message extends Vue {
 
   created() {
     this.$storeApi.msgList({ page: 1, pageSize: 10 });
-    this.$storeApi.msgDetail({ id: 14644 });
   }
-
+  navToDetail(id: any) {
+    this.$router.push({ name: 'messageDetail', params: { id } });
+  }
   async onLoad() {
     this.page += 1;
     const resp = await this.$storeApi.msgList({ page: this.page, pageSize: this.pageSize });
@@ -80,7 +77,9 @@ export default class Message extends Vue {
   &-title {
     display: flex;
     font-size: 14px;
+    line-height: 31px;
     color: #222;
+    width: 100%;
     justify-content: space-between;
   }
 

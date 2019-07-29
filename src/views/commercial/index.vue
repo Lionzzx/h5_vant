@@ -27,6 +27,7 @@
 
     <!-- 代账/工商/项目的进度 -->
     <my-progress></my-progress>
+    <div class="page-bottom"></div>
   </div>
 </template>
 
@@ -195,6 +196,10 @@ export default class Home extends Vue {
     .img-title {
       margin: 5px;
     }
+  }
+  &-bottom {
+    height: 60px;
+    background-color: #e4e4e4;
   }
 }
 </style>

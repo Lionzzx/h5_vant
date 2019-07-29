@@ -2,38 +2,49 @@
 <template>
   <div class="page">
     <div class="page-process">
-      <div @click="navToServe" class="page-process-header">
-        <div class="page-process-header-left color-theme"><van-icon class="icon " name="label-o"></van-icon>最新代账进度</div>
+      <div @click="navToServe('BUSSINESS')" class="page-process-header">
+        <div class="page-process-header-left color-theme"><van-icon class="icon " name="label-o"></van-icon>最新工商进度</div>
         <div class="page-process-header-right">全部</div>
       </div>
-      <div class="page-process-item">
-        <div class="page-process-item-title">亿账柜有限公司</div>
+      <div
+        @click="navToBussiness(item.workorderId)"
+        v-for="(item, index) in bussinessList"
+        :key="index"
+        class="page-process-item"
+      >
+        <div class="page-process-item-title">{{ item.product }}</div>
         <!-- <div class="page-process-item-serve">详情</div> -->
         <div class="page-process-item-desc x-mb1">
-          <div>当前进度：国地税报道</div>
-          <div>预计完成时间: 20190308</div>
+          <div>当前进度：{{ item.CurrentProcess }}</div>
+          <div>预计完成时间: {{ item.service_end_time }}</div>
+        </div>
+        <div class="page-process-item-tip">
+          <div class="title">详情</div>
         </div>
       </div>
     </div>
 
     <div class="page-process">
-      <div @click="navToServe" class="page-process-header">
+      <div @click="navToServe('ACCOUNT')" class="page-process-header">
         <div class="page-process-header-left color-primary">
-          <van-icon class="icon bg-primary" name="label-o"></van-icon>最新工商进度
+          <van-icon class="icon bg-primary" name="label-o"></van-icon>最新代账进度
         </div>
         <div class="page-process-header-right">全部</div>
       </div>
-      <div class="page-process-item">
-        <div class="page-process-item-title">亿账柜有限公司(服务中)</div>
-        <!-- <div class="page-process-item-serve">服务单位：亿账柜有限公司</div> -->
+      <div v-for="(item, index) in accountList" :key="index" class="page-process-item">
+        <div class="page-process-item-title">{{ item.product }}</div>
+        <div class="page-process-item-serve">服务企业：{{ item.companyname }}</div>
         <div class="page-process-item-desc">
-          <div>总计 20000</div>
-          <div>已收 10000</div>
+          <div>已成功代账 {{ item.successMonth }}个月</div>
+        </div>
+        <div class="page-process-item-tip">
+          <div class="title">代帐中</div>
+          <div @click="navToBuy" class="tip">(立即缴费)</div>
         </div>
       </div>
     </div>
 
-    <div class="page-process">
+    <div v-if="projectList.length" class="page-process">
       <div @click="navToServe" class="page-process-header">
         <div class="page-process-header-left color-red"><van-icon class="icon bg-red" name="label-o"></van-icon>最新项目进度</div>
         <div class="page-process-header-right">全部</div>
@@ -68,18 +79,28 @@ export default class MyProcess extends Vue {
   private projectList = [];
 
   @Watch('companyId', { immediate: true, deep: true })
-  onCompanyIdChanged(val: string, oldVal: string) {
+  async onCompanyIdChanged(val: string, oldVal: string) {
     if (!val) {
       return;
     }
-    let { ACCOUNT, BUSSINESS, PROJECT } = this.$storeApi.serviceList({ companyId: val, codeType: 'ACCOUNT,BUSSINESS,PROJECT' });
-    this.accountList = ACCOUNT;
+    let { ACCOUNT, BUSSINESS } = await this.$storeApi.serviceList({ companyId: val, codeType: 'ACCOUNT,BUSSINESS,PROJECT' });
+    this.accountList = ACCOUNT.map((v: any) => {
+      let date = new Date();
+      let nowMonth: any = `${date.getFullYear()}${date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()}`;
+      v.successMonth = nowMonth - v.begin_period * 1 < 0 ? '0' : nowMonth - v.begin_period * 1;
+      return v;
+    });
     this.bussinessList = BUSSINESS;
-    this.projectList = PROJECT;
   }
 
-  navToServe() {
-    this.$router.push({ name: 'myserve' });
+  navToServe(type: string) {
+    this.$router.push({ name: 'myServe', params: { type } });
+  }
+  navToBuy() {
+    this.$router.push({ name: 'agencyAccount' });
+  }
+  navToBussiness(id: any) {
+    this.$router.push({ name: 'businessDetail', params: { id } });
   }
 
   async created() {}
@@ -113,6 +134,7 @@ export default class MyProcess extends Vue {
     }
 
     &-item {
+      position: relative;
       background: #fff;
       padding: 0 10px;
       border-top: 1px solid rgba(239, 239, 239, 0.8);
@@ -121,7 +143,7 @@ export default class MyProcess extends Vue {
         padding-top: 16px;
       }
       &-serve {
-        margin: 10px 0 20px;
+        margin: 10px 0 10px;
         font-size: 10px;
         color: #aaa;
       }
@@ -130,6 +152,23 @@ export default class MyProcess extends Vue {
         justify-content: space-between;
         align-items: center;
         padding: 10px 0;
+      }
+      &-tip {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        text-align: center;
+
+        .title {
+          font-size: 14px;
+          color: #f27c41;
+        }
+
+        .tip {
+          font-size: 14px;
+          color: #e52810;
+          text-decoration: underline;
+        }
       }
     }
   }

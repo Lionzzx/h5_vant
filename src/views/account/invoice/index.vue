@@ -29,9 +29,8 @@
           <span>银行回单</span>
           <div class="collapse-item-num">
             <span>×{{ item.bank_receipt }} </span><span> </span>
-          </div>
-        </div></van-collapse-item
-      >
+          </div></div
+      ></van-collapse-item>
     </van-collapse>
   </div>
 </template>
@@ -50,16 +49,15 @@ import NavBar from '@/components/NavBar/index.vue';
   }
 })
 export default class DataStorage extends Vue {
-  private activeNames = [1];
+  private activeNames = [0];
   private list: any = [];
 
   async billList() {
-    const resp = await this.$storeApi.billList({ companyId: '194180' },true);
+    const resp = await this.$storeApi.billList({ companyId: '194180' }, true);
     this.list = resp.map((v: any) => {
       v.title = this.handleDate(v.period);
       return v;
     });
-    console.log(resp);
   }
 
   handleDate(time: string) {

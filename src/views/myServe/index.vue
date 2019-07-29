@@ -1,75 +1,43 @@
 <template>
   <div class="page">
-    <van-tabs v-model="active">
+    <van-tabs @change="handleChangeType" v-model="active">
       <van-tab>
         <div slot="title"><van-icon class="icon" name="balance-list-o" />代账进度</div>
         <div @click="toAccount" class="contain">
-          <div class="contain-list">
+          <div v-for="(item, index) in list" :key="index" class="contain-list">
             <div class="contain-list-main">
               <div class="company">
                 <div>
-                  重庆八戒财税科技有限公司（演示）
+                  {{ item.alisname }}
                 </div>
-                <div class="company-serve">
-                  服务单位：重庆八戒财税有限公司（演示）
-                </div>
+                <div class="company-serve">服务企业：{{ item.companyname }}</div>
               </div>
               <div class="info">
-                <div class="info-status">代账中</div>
-                <div class="info-tip">等待传票</div>
+                <div class="info-status">代帐中</div>
+                <div class="info-tip">(立即缴费)</div>
               </div>
             </div>
-            <div class="contain-list-footer">
-              已成功代账16个月
-            </div>
+            <div class="contain-list-footer">已成功代账 {{ item.successMonth }}个月</div>
           </div>
         </div>
       </van-tab>
       <van-tab>
         <div slot="title"><van-icon class="icon" name="balance-list-o" />工商进度</div>
         <div @click="toBusiness" class="contain">
-          <div class="contain-list">
+          <div v-for="(item, index) in list" :key="index" class="contain-list">
             <div class="contain-list-main">
               <div class="company">
                 <div>
-                  重庆八戒财税科技有限公司（演示）
+                  {{ item.product }}
                 </div>
-                <div class="company-serve">
-                  服务单位：重庆八戒财税有限公司（演示）
-                </div>
+                <div class="company-serve">当前进度：{{ item.CurrentProcess }}</div>
               </div>
               <div class="info">
-                <div class="info-status">代账中</div>
-                <div class="info-tip">等待传票</div>
+                <!-- <div class="info-status">详情</div> -->
+                <div class="info-tip">详情</div>
               </div>
             </div>
-            <div class="contain-list-footer">
-              已成功代账16个月
-            </div>
-          </div>
-        </div>
-      </van-tab>
-      <van-tab>
-        <div slot="title"><van-icon class="icon" name="balance-list-o" />项目进度</div>
-        <div @click="toProject" class="contain">
-          <div class="contain-list">
-            <div class="contain-list-main">
-              <div class="company">
-                <div>
-                  重庆八戒财税科技有限公司（演示）
-                </div>
-                <div class="company-serve">
-                  服务单位：重庆八戒财税有限公司（演示）
-                </div>
-              </div>
-              <div class="info">
-                <div class="info-status">代账中</div>
-                <div class="info-tip">等待传票</div>
-              </div>
-            </div>
-            <div class="contain-list-footer">
-              已成功代账16个月
-            </div>
+            <div class="contain-list-footer">预计完成时间: {{ item.service_end_time }}</div>
           </div>
         </div>
       </van-tab>
@@ -90,6 +58,11 @@ import { Tab, Tabs, Icon } from 'vant';
 })
 export default class MyServe extends Vue {
   private active = 0;
+  private page: number = 1;
+  private pageSize: number = 10;
+  private hasMore: boolean = true;
+  private list: any = [];
+  private type: string = '';
 
   toAccount() {
     this.$router.push({ name: 'agency' });
@@ -102,8 +75,33 @@ export default class MyServe extends Vue {
   toBusiness() {
     this.$router.push({ name: 'business' });
   }
-
-  created() {}
+  handleChangeType(e: any) {
+    this.type = e == '0' ? 'ACCOUNT' : 'BUSSINESS';
+    this.getList(this.type);
+  }
+  async getList(type?: string) {
+    let temType: string;
+    if (type) {
+      temType = type;
+      this.page = 1;
+      this.hasMore = true;
+    } else {
+      temType = this.type || this.$route.params.type;
+    }
+    if (!this.hasMore) {
+      return;
+    }
+    try {
+      const resp = await this.$storeApi.workOrderList({ type: temType, page: this.page, pageSize: this.pageSize });
+      this.list = resp.rows;
+      this.page += 1;
+      this.hasMore = this.page * this.pageSize > this.list.total;
+    } catch (error) {}
+  }
+  created() {
+    this.active = this.$route.params.type == 'ACCOUT' ? 0 : 1;
+    this.getList();
+  }
 }
 </script>
 

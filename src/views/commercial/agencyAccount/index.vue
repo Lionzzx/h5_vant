@@ -24,8 +24,8 @@
       </p>
     </div>
     <div class="page-actions">
-      <div class="page-actions-button gray-button">联系管家</div>
-      <div class="page-actions-button">支付</div>
+      <!-- <div class="page-actions-button gray-button">联系管家</div> -->
+      <div @click="handleContact" class="page-actions-button">联系管家</div>
     </div>
   </div>
 </template>
@@ -33,7 +33,6 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import NavBar from '@/components/NavBar/index.vue';
-// import TestApi from '@/services/testApi';
 import { AppModule } from '@/store/modules/app';
 
 @Component({
@@ -52,12 +51,13 @@ export default class Honor extends Vue {
       this.type = value;
     }
   }
+
+  handleContact() {
+    console.log('联系管家');
+    // this.$storeApi
+  }
 }
 </script>
-
-
-<style>
-</style>
 
 <style lang="scss" scoped>
 .page {
@@ -139,7 +139,7 @@ export default class Honor extends Vue {
     align-items: center;
     &-button {
       height: 42px;
-      width: 42vw;
+      width: 80vw;
       line-height: 42px;
       text-align: center;
       font-size: 16px;

@@ -5,7 +5,7 @@ import index from '@/views/index/index.vue'
 import layout from '@/layout/index.vue'
 import account from './modules/account'
 import commercial from './modules/commercial'
-import mytools from './modules/mytools'
+import myServe from './modules/myServe'
 import user from './modules/user'
 Vue.use(Router)
 
@@ -13,18 +13,19 @@ export default new Router({
   mode: process.env.NODE_ENV === 'production' ? 'history' : 'hash',
   routes: [
     {
-      path: '/',
-      name: 'index',
-      component: index
-    },
-    {
       path: '/login',
       name: 'login',
       component: login
     },
     {
+      path: '/',
+      name: 'index',
+      component: index
+    },
+    {
       path: '/home',
       name: 'home',
+      redirect: '/',
       component: layout,
       children: [
         {
@@ -59,40 +60,9 @@ export default new Router({
         }
       ]
     },
-
-    {
-      path: '/myserve',
-      name: 'myserve',
-      component: () =>
-        import(/* webpackChunkName: "myserve" */ '@/views/myServe/index.vue')
-    },
-    {
-      path: '/agency',
-      name: 'agency',
-      component: () =>
-        import(
-          /* webpackChunkName: "agency" */ '@/views/myServe/agency/index.vue'
-        )
-    },
-    {
-      path: '/business',
-      name: 'business',
-      component: () =>
-        import(
-          /* webpackChunkName: "business" */ '@/views/myServe/business/index.vue'
-        )
-    },
-    {
-      path: '/project',
-      name: 'project',
-      component: () =>
-        import(
-          /* webpackChunkName: "project" */ '@/views/myServe/project/index.vue'
-        )
-    },
     ...account,
     ...commercial,
-    ...mytools,
+    ...myServe,
     ...user
   ]
 })

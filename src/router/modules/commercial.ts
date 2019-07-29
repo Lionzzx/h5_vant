@@ -1,35 +1,35 @@
 export default [
   //企业荣誉
   {
-    path: '/honor',
+    path: 'commercial/honor',
     name: 'honor',
     component: () =>
       import(
-        /* webpackChunkName: "myserve" */ '@/views/commercial/honor/index.vue'
+        /* webpackChunkName: "honor" */ '@/views/commercial/honor/index.vue'
       )
   },
   {
-    path: '/trademark',
+    path: 'commercial/trademark',
     name: 'trademark',
     component: () =>
       import(
-        /* webpackChunkName: "myserve" */ '@/views/commercial/trademark/index.vue'
+        /* webpackChunkName: "trademark" */ '@/views/commercial/trademark/index.vue'
       )
   },
   {
-    path: '/projectApplication',
+    path: 'commercial/projectApplication',
     name: 'projectApplication',
     component: () =>
       import(
-        /* webpackChunkName: "myserve" */ '@/views/commercial/projectApplication/index.vue'
+        /* webpackChunkName: "projectApplication" */ '@/views/commercial/projectApplication/index.vue'
       )
   },
   {
-    path: '/agencyAccount',
+    path: 'commercial/agencyAccount',
     name: 'agencyAccount',
     component: () =>
       import(
-        /* webpackChunkName: "myserve" */ '@/views/commercial/agencyAccount/index.vue'
+        /* webpackChunkName: "agencyAccount" */ '@/views/commercial/agencyAccount/index.vue'
       )
   }
 ]

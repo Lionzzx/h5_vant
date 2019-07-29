@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="user-poster">
-      <div class="user-poster-avatar"><img :src="userDetail.head_img_url" /></div>
+      <div class="user-poster-avatar">
+        <img v-if="userDetail.head_img_url" :src="userDetail.head_img_url" />
+        <img v-else src="@/assets/avatar.png" />
+      </div>
       <div class="user-poster-name">{{ userDetail.nickname || '暂无信息' }}</div>
       <img />
     </div>
@@ -13,7 +16,7 @@
       <!-- <van-cell icon="points" title="我的优惠券" is-link />
       <van-cell icon="gold-coin-o" title="反馈建议" is-link /> -->
       <van-cell icon="chat-o" to="/user/message" title="我的消息" is-link />
-      <van-cell icon="gift-o" to="/user/about" title="关于我们" is-link />
+      <van-cell icon="points" to="/user/about" title="关于我们" is-link />
     </van-cell-group>
   </div>
 </template>

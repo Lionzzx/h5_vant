@@ -5,13 +5,14 @@ export default {
   async errHandler(errcode: string | number, errmsg: string) {
     if (errcode == '40000') {
       return true
-    } else {
-      if (errcode == '50003') {
-        Toast('请重新登录')
-        setTimeout(() => {
-          Router.replace('/login')
-        }, 800)
-      }
+    } else if (errcode == '50003') {
+      Toast('请重新登录')
+      setTimeout(() => {
+        Router.replace('/login')
+      }, 800)
+      return false
+    } else if (errcode == '50000') {
+      Toast(errmsg)
       return false
     }
   },
