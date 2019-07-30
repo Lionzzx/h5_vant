@@ -36,7 +36,7 @@ export default class Message extends Vue {
   background: white;
   box-shadow: 0 0.05333rem 0.26667rem 0 rgba(0, 0, 0, 0.08);
   border-radius: 10px;
-  margin: 0 auto;
+  margin: 20px auto;
   padding: 20px 10px;
   &-title {
     margin-top: 6px;

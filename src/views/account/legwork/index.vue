@@ -5,12 +5,12 @@
       <div class="page-server-body">
         <div class="item">服务会计：{{ serviceInfo.realname }}</div>
         <div class="item">联系方式：{{ serviceInfo.mobilePhone }}</div>
-        <div class="item">服务税期：{{ serviceInfo.begin_period + '至' + serviceInfo.end_period }}</div>
+        <div class="item">服务税期：{{ serviceInfo.begin_period + ' 至 ' + serviceInfo.end_period }}</div>
 
         <div class="tousu van-hairline--top x-fls">
           <div>服务不满意？<span @click="handleComplain" style="color:#e94f55;">我有话要说</span></div>
           <div class="tousu-tip">
-            <a href="https://mp.weixin.qq.com/s/W25DatAlyJIchb7-O74Myw">做账资料注意事项</a>
+            <a href="https://mp.weixin.qq.com/s/W25DatAlyJIchb7-O74Myw"><svg-icon icon-class="message" /> 做账资料注意事项</a>
           </div>
         </div>
 
@@ -19,19 +19,21 @@
     </div>
 
     <div class="page-type">
-      <div class="page-type-item bg-pink">
+      <div @click="navToBuy" class="page-type-item bg-pink">
         <div class="page-type-item-title">A类</div>
         <div>使用：{{ detail.aCount - detail.remainderA }} 剩余：{{ detail.remainderA }}</div>
       </div>
-      <div class="page-type-item">
+      <div @click="navToBuy" class="page-type-item">
         <div class="page-type-item-title">B类</div>
         <div>使用：{{ detail.bCount - detail.remainderB }} 剩余：{{ detail.remainderB }}</div>
       </div>
     </div>
+
+    <div class="page-tip" @click="getLegworkList">获取更多外勤>></div>
     <div class="steps">
       <van-steps active-color="#000" direction="vertical">
         <van-step v-for="(item, index) in list" :key="index">
-          <div @click="navToDetail" class="steps-title">
+          <div @click="navToDetail(item.id)" class="steps-title">
             <span>{{ item.legwork_name }}</span
             ><span>{{ item.begin_time }}</span>
           </div>
@@ -59,32 +61,55 @@ import { Step, Steps } from 'vant';
 })
 export default class MyTools extends Vue {
   private detail: any = {};
-  private list: any = {};
+  private list: any = [];
   private serviceInfo: any = {};
   private serverTel: string = '';
+  private page: number = 1;
+  private pageSize: number = 10;
+  private hasMore: boolean = true;
+
   async getLegworkList() {
-    let { detail = {}, list = {} } = await this.$storeApi.legworkList({ company_id: '194180', page: '1', pageSize: '10' });
-    this.detail = detail;
-    this.list = list.rows;
+    if (!this.hasMore) {
+      this.$toast('已经到底了');
+      return;
+    }
+    try {
+      let { detail = {}, list = {} } = await this.$storeApi.legworkList(
+        {
+          company_id: userStore.companyId,
+          page: this.page,
+          pageSize: this.pageSize
+        },
+        true
+      );
+      this.list.push(...list.rows);
+      this.page += 1;
+      this.detail = detail;
+
+      this.hasMore = this.page * this.pageSize < list.total;
+    } catch (error) {}
   }
 
   async getCompanyServiceInfo() {
-    this.serviceInfo = await this.$storeApi.companyServiceInfo({ companyId: '194180' });
+    this.serviceInfo = await this.$storeApi.companyServiceInfo({ companyId: userStore.companyId });
     let tel = this.serviceInfo.mobilePhone;
     if (tel) {
       this.serverTel = `tel:${tel}`;
     }
   }
-  navToDetail() {
-    // console.log('hahah');
-    this.$router.push({ name: 'legworkDetail' });
+  navToDetail(id: string) {
+    this.$router.push({ name: 'legworkDetail', params: { id } });
   }
   handleComplain() {
     this.$router.push({ name: 'complain', params: { id: this.serviceInfo.cycle_work_order_id } });
   }
 
+  navToBuy() {
+    this.$router.push({ name: 'renewal' });
+  }
   created() {
     this.getLegworkList();
+    this.list = [];
     this.getCompanyServiceInfo();
   }
 }
@@ -160,6 +185,10 @@ export default class MyTools extends Vue {
         margin-bottom: 6px;
       }
     }
+  }
+  &-tip {
+    text-align: center;
+    font-size: 14px;
   }
   .steps {
     padding: 0px 20px;

@@ -28,7 +28,11 @@ export default {
     // 获取公司项目进度
     showCompanyProgressInfo: {
       url: '/store/customer/company/showCompanyProgressInfo',
-      type: 'post'
+      type: 'get'
+    },
+    processImg: {
+      url: '/store/customer/company/work/order/process/finish/img',
+      type: 'get'
     },
     // 服务中的工单查询
     serviceList: {
@@ -127,6 +131,26 @@ export default {
     // 客户查看客户资料交接请求(只看出库)
     requestList: {
       url: '/store/customer/file/connect/request/list',
+      type: 'get'
+    },
+    //查询外勤详情
+    followbyPhone: {
+      url: '/store/customer/followby/detail',
+      type: 'get'
+    },
+    //获取管家电话
+    getTaskPropertyDetailByTaskId: {
+      url: '/task/getTaskPropertyDetailByTaskId',
+      type: 'get'
+    },
+    //查询外勤详情
+    legworkDetail: {
+      url: '/store/customer/information/legwork/detail',
+      type: 'get'
+    },
+    //商标查询
+    getTrademarkBySearchKey: {
+      url: '/customer/company/getTrademarkBySearchKey',
       type: 'get'
     }
   }

@@ -3,7 +3,7 @@
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <nav-bar title="我的消息" has-left></nav-bar>
       <div @click="navToDetail(item.id)" v-for="(item, index) in list" :key="index" class="msg van-hairline--bottom">
-        <div class="msg-icon"><svg-icon icon-class="email" /></div>
+        <div class="msg-icon"><svg-icon icon-class="message" /></div>
         <div class="msg-title">
           <div class="msg-activity">{{ item.templatename }}</div>
           <div class="msg-time">{{ item.senddate | changeTime }}</div>

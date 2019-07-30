@@ -29,13 +29,20 @@ class User extends VuexModule {
     return this.companyId ? this.companyId : getStorage('companyId')
   }
 
+  get currentCompanyName() {
+    return this.COMPANYLIST.find((v: any) => {
+      return v.value == this.COMPANYID
+    }).text
+  }
+
   @Mutation
   SETUSERID(val: string = '') {
     this.customerId = val
   }
   @Mutation
-  SETCOMPANYLIST(val: string = '') {
-    this.customerId = val
+  SETCOMPANYLIST(val: any) {
+    this.companyList = val
+    setStorage('companyList', val)
   }
 
   @Mutation
@@ -49,7 +56,7 @@ class User extends VuexModule {
     this.home = val
   }
 
-  @Action({ commit: 'SETCOMPANYLIST' })
+  @Action({})
   async getCompanyList() {
     try {
       let resp = await storeApi.listCustomerCompany()
@@ -58,7 +65,7 @@ class User extends VuexModule {
         value: v.id,
         serviceDeparts: v.service_departs
       }))
-      setStorage('companyList', resp)
+      this.SETCOMPANYLIST(resp)
       return resp
     } catch (error) {}
   }

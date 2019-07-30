@@ -1,6 +1,8 @@
 <template>
   <div class="page">
-    <nav-bar has-left><div @click="handleTitle" slot="title">测试</div></nav-bar>
+    <nav-bar has-left
+      ><div @click="handleTitle" slot="title">{{ companyName }}</div></nav-bar
+    >
     <div class="main">
       <table class="table table-striped table-bordered" v-if="this.$route.params.type == 'cash'">
         <thead>
@@ -59,7 +61,7 @@
         </tbody>
       </table>
     </div>
-    <van-action-sheet v-model="show" :actions="actions" @select="onSelect" />
+    <!-- <van-action-sheet v-model="show" :actions="actions" @select="onSelect" /> -->
   </div>
 </template>
 
@@ -73,6 +75,16 @@ import { ActionSheet } from 'vant';
   components: {
     NavBar,
     [ActionSheet.name]: ActionSheet
+  },
+  filters: {
+    replace: function(value: any) {
+      if (!value) {
+        return '';
+      }
+      value = value.toString();
+      // console.log(value.replace(/ /g,"&nbsp;"))
+      return value.replace(/ /g, '&nbsp;&nbsp;');
+    }
   }
 })
 export default class Table extends Vue {
@@ -80,16 +92,38 @@ export default class Table extends Vue {
   private actions = [{ name: '选项' }, { name: '选项' }, { name: '选项', subname: '描述信息' }];
   private type: string = '';
   private tableData = [];
+  private period = '';
+  private companyName = UserModule.currentCompanyName;
+  private workOrderList: any = [];
 
   async getTable() {
     try {
       let { type = '' } = this.$route.params;
       this.type = type;
-      this.tableData = await storeApi.findCompanyReportInfo({ companyId: UserModule.COMPANYID, period: '', type });
+      if (this.$route.params.period) {
+        this.period = this.$route.params.period;
+      }
+      this.tableData = await storeApi.findCompanyReportInfo({ companyId: UserModule.COMPANYID, period: this.period, type }, true);
     } catch (error) {}
   }
+
+  async getBaseInfo() {
+    try {
+      let { detail = [] } = await this.$storeApi.showCompanyProgressInfo({ companyId: UserModule.COMPANYID }, true);
+      this.workOrderList = detail
+        .filter((v: any) => {
+          return !!v.id;
+        })
+        .reverse();
+      this.period = this.workOrderList[0].period;
+      this.getTable();
+    } catch (error) {
+      this.$toast('该公司没有周期性服务');
+    }
+  }
   async created() {
-    this.getTable();
+    // this.getTable();
+    this.getBaseInfo();
   }
   handleTitle() {
     this.show = true;

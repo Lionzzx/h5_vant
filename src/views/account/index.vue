@@ -1,27 +1,25 @@
 <template>
   <div class="page">
-    <van-dropdown-menu class="page-header" active-color="#ff7d4e">
+    <van-dropdown-menu class="page-header" active-color="#ff0808">
       <van-dropdown-item @change="onCompanyIdChange" v-model="currentCompany" :options="companyOption" />
     </van-dropdown-menu>
 
-    <div class="waveWrapper waveAnimation">
+    <div @click="handleAccount" class="waveWrapper waveAnimation">
       <div class="waveWrapperInner bgTop">
-        <div class="wave waveTop" style="background-image: url('/img/cheshi.png')"></div>
+        <div class="wave waveTop" style="background-image: url('/img/cheshi1.png')"></div>
       </div>
       <div class="waveWrapperInner bgMiddle">
-        <div class="wave waveMiddle" style="background-image: url('/img/cheshi.png')"></div>
+        <div class="wave waveMiddle" style="background-image: url('/img/cheshi2.png')"></div>
       </div>
       <div class="waveWrapperInner bgBottom">
-        <div class="wave waveBottom" style="background-image: url('/img/cheshi.png')"></div>
+        <div class="wave waveBottom" style="background-image: url('/img/cheshi1.png')"></div>
       </div>
 
       <div class="page-count">
-        <countTo class="count-number" :startVal="startVal" :endVal="endVal" :duration="1000"></countTo>
-        <div class="count-title">本月应交税费（元）</div>
+        <countTo class="count-number" :startVal="startVal" :endVal="accountReport.yuelirun || 0" :duration="1000"></countTo>
+        <div class="count-title">月净利润（元）</div>
       </div>
-      <div class="page-tip">
-        财税报表 201808
-      </div>
+      <div class="page-tip">财税报表 {{ year }}年{{ month }}月</div>
 
       <div @click="navToMessage" class="page-message">
         消息
@@ -68,7 +66,6 @@
     </van-swipe>
 
     <my-progress :company-id="currentCompany"></my-progress>
-    <div class="page-bottom"></div>
   </div>
 </template>
 
@@ -77,8 +74,6 @@ import { Component, Vue } from 'vue-property-decorator';
 import CountTo from '@/components/CountTo/index.vue';
 import MyProgress from '@/components/Process/index.vue';
 import { Swipe, SwipeItem, ActionSheet, DropdownMenu, DropdownItem, Icon } from 'vant';
-import { storeApi } from '@/api';
-import { AppModule } from '@/store/modules/app';
 import UserStore from '@/store/modules/user';
 
 @Component({
@@ -96,16 +91,18 @@ import UserStore from '@/store/modules/user';
 export default class Account extends Vue {
   private startVal = 0;
   private endVal = 2017435;
-  private accountReport = '';
+  private accountReport = {};
   private show: boolean = false;
   private active: number = 0;
+  private year: string = '';
+  private month: string = '';
   private currentCompany: number = 0;
   private companyOption: any = [];
   private iconConfig = [
-    {
-      title: '纳税详情',
-      icon: '/icon/icon_nasui.png'
-    },
+    // {
+    //   title: '纳税详情',
+    //   icon: '/icon/icon_nasui.png'
+    // },
     {
       title: '可开票额',
       icon: '/icon/icon_money.png',
@@ -163,12 +160,25 @@ export default class Account extends Vue {
   navToMessage() {
     this.$router.push({ name: 'message' });
   }
+  getDate() {
+    let date = new Date();
+    this.year = `${date.getFullYear()}`;
+    this.month = `${date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()}`;
+  }
+  getAccountReport() {
+    this.accountReport = this.$storeApi.accountReport({ companyId: this.currentCompany });
+  }
+  handleAccount() {
+    this.$router.push({ name: 'agency' });
+  }
   created() {
     this.companyOption = UserStore.COMPANYLIST;
     // 保存companyid
     let id = this.companyOption[0].value;
     this.currentCompany = id;
     UserStore.SETCOMPANYID(id);
+    this.getDate();
+    this.getAccountReport();
   }
 }
 </script>
@@ -181,13 +191,14 @@ export default class Account extends Vue {
   top: 8px;
 }
 .van-dropdown-menu__title {
-  color: #ff7d4e;
+  color: #ff0808;
 }
 </style>
 
 <style lang="scss" scoped>
 .page {
   font-size: 12px;
+  padding-bottom: 25px;
   &-header {
     z-index: 100;
     background: #fff;
@@ -255,7 +266,7 @@ export default class Account extends Vue {
         font-size: 20px;
         color: #717484;
         &-active {
-          color: #f27c41;
+          color: #ff0808;
         }
       }
     }
@@ -336,10 +347,6 @@ export default class Account extends Vue {
         padding: 10px 0;
       }
     }
-  }
-  &-bottom {
-    height: 60px;
-    background-color: #e4e4e4;
   }
 }
 </style>

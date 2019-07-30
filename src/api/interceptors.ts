@@ -27,6 +27,7 @@ export default {
   async responseHander(res: any) {
     const { data } = res
     if (!data) {
+      Toast('网络异常')
       return Promise.reject(res)
     }
     if ('msgCode' in data) {

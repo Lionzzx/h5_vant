@@ -1,7 +1,7 @@
 export default [
   //企业荣誉
   {
-    path: 'commercial/honor',
+    path: '/commercial/honor',
     name: 'honor',
     component: () =>
       import(
@@ -9,7 +9,7 @@ export default [
       )
   },
   {
-    path: 'commercial/trademark',
+    path: '/commercial/trademark',
     name: 'trademark',
     component: () =>
       import(
@@ -17,7 +17,7 @@ export default [
       )
   },
   {
-    path: 'commercial/projectApplication',
+    path: '/commercial/projectApplication',
     name: 'projectApplication',
     component: () =>
       import(
@@ -25,7 +25,7 @@ export default [
       )
   },
   {
-    path: 'commercial/agencyAccount',
+    path: '/commercial/agencyAccount',
     name: 'agencyAccount',
     component: () =>
       import(

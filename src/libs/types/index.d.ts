@@ -4,9 +4,10 @@ interface IStoreApi {
   listCompanyOrder(): any
   detailOrder(config: { workOrderId: string }): any
   login(): any
-  showCompanyProgressInfo(): any
+  showCompanyProgressInfo(config: { companyId: number }, loading?: boolean): any
   serviceList: Function
-  accountReport(): any
+  accountReport(config: { companyId: number; period?: string }): any
+  processImg(config: { processId: string }): any
   userDetail(): any
   fileList(config: {
     page?: string | number
@@ -17,6 +18,10 @@ interface IStoreApi {
   }): { total: string; rows: any[] }
   fileDetail(config?: any, loading?: boolean): any
   billList(config: { companyId: string }, loadng?: boolean): any
+  getTrademarkBySearchKey(
+    config: { searchKey: string; page: number; pageSize: number },
+    loadng?: boolean
+  ): any
   invoiceList(
     config: { companyId: string; type?: string },
     loading?: boolean
@@ -24,8 +29,8 @@ interface IStoreApi {
   legworkList(
     config: {
       company_id: string
-      page?: string
-      pageSize?: string
+      page?: number
+      pageSize?: number
     },
     loadng?: boolean
   ): any
@@ -39,17 +44,24 @@ interface IStoreApi {
   ): any
   requestDetail(config: { connectRequestId: string }, loading?: boolean): any
   customerFileList(config?: any, loading?: boolean): any
-  bmjDetail(config: { companyId: string }, loading?: boolean): any
-  bmjList(config: string, loading?: boolean): any
+  bmjDetail(
+    config: { companyId: string; type?: string | undefined },
+    loading?: boolean
+  ): any
+  bmjList(config?: any, loading?: boolean): any
   askHelp(config: { companyId: string }, loading?: boolean): any
   createComplaint(
     config: { workOrderId: string; record: string },
     loading?: boolean
   ): any
   workOrderList(
-    config: { type: string; page: number; pageSize: number },
+    config: { type: string; page: number; pageSize: number; companyId: string },
     loading?: boolean
   ): any
+  followbyPhone(config?: any, loading?: boolean): any
+
+  legworkDetail(config: { legworkId: string }, loading?: boolean): any
+  companyServiceInfo(config: { companyId: string }, loading?: boolean): any
   createEvaluate(
     config: {
       customerMemo: string

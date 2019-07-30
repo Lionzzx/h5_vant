@@ -1,6 +1,6 @@
 export default [
   {
-    path: 'account/taxDetail',
+    path: '/account/taxDetail',
     name: 'taxDetail',
     component: () =>
       import(
@@ -8,7 +8,7 @@ export default [
       )
   },
   {
-    path: 'account/dataStorage',
+    path: '/account/dataStorage',
     name: 'dataStorage',
     component: () =>
       import(
@@ -16,7 +16,7 @@ export default [
       )
   },
   {
-    path: 'account/invoice',
+    path: '/account/invoice',
     name: 'invoice',
     component: () =>
       import(
@@ -24,13 +24,13 @@ export default [
       )
   },
   {
-    path: 'account/bill',
+    path: '/account/bill',
     name: 'bill',
     component: () =>
       import(/* webpackChunkName: "bill" */ '@/views/account/bill/index.vue')
   },
   {
-    path: 'account/taxDetail/detail',
+    path: '/account/taxDetail/detail',
     name: 'detail',
     component: () =>
       import(
@@ -38,13 +38,13 @@ export default [
       )
   },
   {
-    path: 'account/table',
+    path: '/account/table',
     name: 'table',
     component: () =>
       import(/* webpackChunkName: "table" */ '@/views/account/table/index.vue')
   },
   {
-    path: 'account/legwork',
+    path: '/account/legwork',
     name: 'legwork',
     component: () =>
       import(
@@ -52,7 +52,7 @@ export default [
       )
   },
   {
-    path: 'account/legwork/renewal',
+    path: '/account/legwork/renewal',
     name: 'renewal',
     component: () =>
       import(
@@ -60,7 +60,7 @@ export default [
       )
   },
   {
-    path: 'account/legwork/complain',
+    path: '/account/legwork/complain',
     name: 'complain',
     component: () =>
       import(
@@ -68,7 +68,7 @@ export default [
       )
   },
   {
-    path: 'account/legwork/detail',
+    path: '/account/legwork/detail',
     name: 'legworkDetail',
     component: () =>
       import(

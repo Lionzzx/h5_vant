@@ -62,6 +62,7 @@ export default class User extends Vue {
       height: 70px;
       width: 70px;
       border-radius: 50%;
+      overflow: hidden;
       background: #fff;
       img {
         width: 100%;

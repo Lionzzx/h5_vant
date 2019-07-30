@@ -12,7 +12,7 @@
         周期：<span @click="changeType('timer', 0)" :class="{ active: timer == 0 }" class="button">1年</span
         ><span @click="changeType('timer', 1)" :class="{ active: timer == 1 }" class="button">2年</span>
       </div>
-      <div class="page-product-type price"><span style="font-size:16px;">￥</span>69.9</div>
+      <div class="page-product-type price"><span style="font-size:16px;">￥</span>{{ price }}</div>
     </div>
     <div class="page-detail">
       <div class="page-detail-header">服务介绍</div>
@@ -24,8 +24,7 @@
       </p>
     </div>
     <div class="page-actions">
-      <!-- <div class="page-actions-button gray-button">联系管家</div> -->
-      <div @click="handleContact" class="page-actions-button">联系管家</div>
+      <a :href="phone" class="page-actions-button">联系管家</a>
     </div>
   </div>
 </template>
@@ -40,9 +39,11 @@ import { AppModule } from '@/store/modules/app';
     NavBar
   }
 })
-export default class Honor extends Vue {
+export default class agencyAccount extends Vue {
   private type: number = 0;
   private timer: number = 0;
+  private phone: string = '';
+  private price: number = 2500;
 
   changeType(type: string, value: number) {
     if (type == 'timer') {
@@ -50,11 +51,24 @@ export default class Honor extends Vue {
     } else {
       this.type = value;
     }
+
+    if (this.type == 0 && this.timer == 1) {
+      this.price = 5000;
+    } else if (this.type == 1 && this.timer == 1) {
+      this.price = 14112;
+    } else if (this.type == 1 && this.timer == 0) {
+      this.price = 7056;
+    } else {
+      this.price = 2500;
+    }
   }
 
   handleContact() {
-    console.log('联系管家');
     // this.$storeApi
+  }
+  async created() {
+    let resp = await this.$storeApi.followbyPhone();
+    this.phone = `tel:${resp.mobilephone}`;
   }
 }
 </script>

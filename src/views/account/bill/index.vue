@@ -3,7 +3,7 @@
     <nav-bar title="发票情况" has-left></nav-bar>
     <div class="page-title">
       <div class="page-title-top">
-        <div class="title"><svg-icon icon-class="nested" /> 空票明细</div>
+        <div class="title"><svg-icon icon-class="form" /> 空票明细</div>
         <!-- <div>可开金额：142121</div> -->
       </div>
       <div v-for="(item, index) in list.invoice" :key="index" class="page-title-bottom">

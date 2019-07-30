@@ -1,12 +1,12 @@
 export default [
   {
-    path: 'myServe',
+    path: '/myServe',
     name: 'myServe',
     component: () =>
       import(/* webpackChunkName: "agency" */ '@/views/myServe/index.vue')
   },
   {
-    path: 'myServe/agency',
+    path: '/myServe/agency',
     name: 'agency',
     component: () =>
       import(
@@ -14,7 +14,7 @@ export default [
       )
   },
   {
-    path: 'myServe/business',
+    path: '/myServe/business',
     name: 'business',
     component: () =>
       import(
@@ -22,7 +22,7 @@ export default [
       )
   },
   {
-    path: 'myServe/business/detail',
+    path: '/myServe/business/detail',
     name: 'businessDetail',
     component: () =>
       import(
@@ -30,7 +30,7 @@ export default [
       )
   },
   {
-    path: 'myServe/project',
+    path: '/myServe/project',
     name: 'project',
     component: () =>
       import(

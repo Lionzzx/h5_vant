@@ -1,7 +1,7 @@
 
 <template>
   <div class="page">
-    <div class="page-process">
+    <div style="padding-top: 8px;" class="page-process">
       <div @click="navToServe('BUSSINESS')" class="page-process-header">
         <div class="page-process-header-left color-theme"><van-icon class="icon " name="label-o"></van-icon>最新工商进度</div>
         <div class="page-process-header-right">全部</div>
@@ -32,7 +32,7 @@
         <div class="page-process-header-right">全部</div>
       </div>
       <div v-for="(item, index) in accountList" :key="index" class="page-process-item">
-        <div class="page-process-item-title">{{ item.product }}</div>
+        <div @click="navToAccount(item.workorderId)" class="page-process-item-title">{{ item.product }}</div>
         <div class="page-process-item-serve">服务企业：{{ item.companyname }}</div>
         <div class="page-process-item-desc">
           <div>已成功代账 {{ item.successMonth }}个月</div>
@@ -44,7 +44,7 @@
       </div>
     </div>
 
-    <div v-if="projectList.length" class="page-process">
+    <!-- <div v-if="projectList.length" class="page-process">
       <div @click="navToServe" class="page-process-header">
         <div class="page-process-header-left color-red"><van-icon class="icon bg-red" name="label-o"></van-icon>最新项目进度</div>
         <div class="page-process-header-right">全部</div>
@@ -57,13 +57,13 @@
           <div>已成功代账16个月</div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch, Prop } from 'vue-property-decorator';
-import { Icon } from 'vant';
+import { Icon, Dialog } from 'vant';
 import { storeApi } from '@/api';
 import UserStore from '@/store/modules/user';
 
@@ -84,6 +84,15 @@ export default class MyProcess extends Vue {
       return;
     }
     let { ACCOUNT, BUSSINESS } = await this.$storeApi.serviceList({ companyId: val, codeType: 'ACCOUNT,BUSSINESS,PROJECT' });
+    if (!ACCOUNT.length) {
+      Dialog.setDefaultOptions({ confirmButtonColor: '#e52810' });
+      Dialog.confirm({
+        title: '消息提示',
+        message: '您现在还没有代账服务，现在就去开启代账服务。'
+      }).then(() => {
+        this.$router.push({ name: 'agencyAccount' });
+      });
+    }
     this.accountList = ACCOUNT.map((v: any) => {
       let date = new Date();
       let nowMonth: any = `${date.getFullYear()}${date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()}`;
@@ -102,6 +111,9 @@ export default class MyProcess extends Vue {
   navToBussiness(id: any) {
     this.$router.push({ name: 'businessDetail', params: { id } });
   }
+  navToAccount(id: any) {
+    this.$router.push({ name: 'agency', params: { id } });
+  }
 
   async created() {}
 }
@@ -109,8 +121,9 @@ export default class MyProcess extends Vue {
 
 <style lang="scss" scoped>
 .page {
+  margin-bottom: 50px;
   &-process {
-    padding-top: 8px;
+    padding-bottom: 8px;
     background: rgb(228, 228, 228);
     &-header {
       display: flex;

@@ -5,14 +5,15 @@
     </div>
     <div class="page-product">
       <div class="page-product-type">
-        类型：<span @click="changeType('type', 0)" class="button" :class="{ active: type == 0 }">小规模代账</span
-        ><span @click="changeType('type', 1)" :class="{ active: type == 1 }" class="button">一般纳税人代账</span>
+        类型：<span @click="changeType('type', 0)" class="button" :class="{ active: type == 0 }">A类外勤</span
+        ><span @click="changeType('type', 1)" :class="{ active: type == 1 }" class="button">B类外勤</span>
       </div>
       <div class="page-product-type">
-        周期：<span @click="changeType('timer', 0)" :class="{ active: timer == 0 }" class="button">1年</span
-        ><span @click="changeType('timer', 1)" :class="{ active: timer == 1 }" class="button">2年</span>
+        周期：<span @click="changeType('timer', 1)" :class="{ active: timer == 1 }" class="button">1次</span
+        ><span @click="changeType('timer', 2)" :class="{ active: timer == 2 }" class="button">2次</span>
+        <span @click="changeType('timer', 5)" :class="{ active: timer == 5 }" class="button">5次</span>
       </div>
-      <div class="page-product-type price"><span style="font-size:16px;">￥</span>69.9</div>
+      <div class="page-product-type price"><span style="font-size:16px;">￥</span>{{ price }}</div>
     </div>
     <div class="page-detail">
       <div class="page-detail-header">服务介绍</div>
@@ -24,8 +25,7 @@
       </p>
     </div>
     <div class="page-actions">
-      <div class="page-actions-button gray-button">联系管家</div>
-      <div class="page-actions-button">支付</div>
+      <a :href="phone" class="page-actions-button">联系管家</a>
     </div>
   </div>
 </template>
@@ -33,7 +33,6 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import NavBar from '@/components/NavBar/index.vue';
-// import TestApi from '@/services/testApi';
 import { AppModule } from '@/store/modules/app';
 
 @Component({
@@ -43,7 +42,9 @@ import { AppModule } from '@/store/modules/app';
 })
 export default class Honor extends Vue {
   private type: number = 0;
-  private timer: number = 0;
+  private timer: number = 1;
+  private phone: string = '';
+  private price: number = 200;
 
   changeType(type: string, value: number) {
     if (type == 'timer') {
@@ -51,13 +52,31 @@ export default class Honor extends Vue {
     } else {
       this.type = value;
     }
+
+    if (this.type == 0 && this.timer == 1) {
+      this.price = 200;
+    } else if (this.type == 0 && this.timer == 2) {
+      this.price = 400;
+    } else if (this.type == 0 && this.timer == 5) {
+      this.price = 1000;
+    } else if (this.type == 1 && this.timer == 1) {
+      this.price = 300;
+    } else if (this.type == 1 && this.timer == 2) {
+      this.price = 600;
+    } else if (this.type == 1 && this.timer == 5) {
+      this.price = 1500;
+    }
+  }
+
+  handleContact() {
+    // this.$storeApi
+  }
+  async created() {
+    let { mobilephone } = await this.$storeApi.followbyPhone();
+    this.phone = `tel:${mobilephone}`;
   }
 }
 </script>
-
-
-<style>
-</style>
 
 <style lang="scss" scoped>
 .page {
@@ -139,7 +158,7 @@ export default class Honor extends Vue {
     align-items: center;
     &-button {
       height: 42px;
-      width: 42vw;
+      width: 80vw;
       line-height: 42px;
       text-align: center;
       font-size: 16px;
