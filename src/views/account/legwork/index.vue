@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <div class="page-tip" @click="getLegworkList">获取更多外勤>></div>
+    <div v-if="hasMore" class="page-tip" @click="getLegworkList">获取更多外勤>></div>
     <div class="steps">
       <van-steps active-color="#000" direction="vertical">
         <van-step v-for="(item, index) in list" :key="index">
@@ -49,8 +49,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import NavBar from '@/components/NavBar/index.vue';
-
 import userStore from '@/store/modules/user';
+
 import { Step, Steps } from 'vant';
 @Component({
   components: {
@@ -76,7 +76,7 @@ export default class MyTools extends Vue {
     try {
       let { detail = {}, list = {} } = await this.$storeApi.legworkList(
         {
-          company_id: userStore.companyId,
+          company_id: userStore.COMPANYID,
           page: this.page,
           pageSize: this.pageSize
         },
@@ -91,7 +91,7 @@ export default class MyTools extends Vue {
   }
 
   async getCompanyServiceInfo() {
-    this.serviceInfo = await this.$storeApi.companyServiceInfo({ companyId: userStore.companyId });
+    this.serviceInfo = await this.$storeApi.companyServiceInfo({ companyId: userStore.COMPANYID });
     let tel = this.serviceInfo.mobilePhone;
     if (tel) {
       this.serverTel = `tel:${tel}`;

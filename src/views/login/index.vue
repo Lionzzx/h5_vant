@@ -1,7 +1,7 @@
 <template>
-  <van-row style="overflow-x: hidden">
+  <van-row>
     <van-row>
-      <div style="height: 150px;margin-top: 5rem">
+      <div class="login-img">
         <center>
           <img style="height: 80px" src="~@/assets/logo.png" />
         </center>
@@ -10,15 +10,15 @@
         <van-cell-group>
           <van-field v-model="mobile" label="手机号" placeholder="请输入手机号" />
           <van-field v-model="code" type="number" label="短信验证码" placeholder="请输入验证码">
-            <van-button slot="button" size="small" class="bt_primary"  @click="getCode" v-if="!codeDisable">获取验证码</van-button>
-            <van-button slot="button" size="small" class="bt_primary"  @click="getCode" v-if="codeDisable" disabled
+            <van-button slot="button" size="small" class="bt_primary" @click="getCode" v-if="!codeDisable">获取验证码</van-button>
+            <van-button slot="button" size="small" class="bt_primary" @click="getCode" v-if="codeDisable" disabled
               >{{ time }}秒后重新获取</van-button
             >
           </van-field>
         </van-cell-group>
       </div>
       <van-row style="width:80%;margin:auto;margin-top:60px">
-        <van-button size="large" class="bt_primary"  @click="login" :disabled="isLogin">登 陆</van-button>
+        <van-button size="large" class="bt_primary" @click="login" :disabled="isLogin">登 陆</van-button>
       </van-row>
     </van-row>
   </van-row>
@@ -98,6 +98,12 @@ export default class Message extends Vue {
   background: linear-gradient(#fc2229, #e52810);
   color: #fff;
   border-radius: 6px;
+}
+.login {
+  &-img {
+    height: 150px;
+    margin-top: 140px;
+  }
 }
 </style>
 

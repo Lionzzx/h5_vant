@@ -2,13 +2,7 @@
   <van-row>
     <nav-bar :title="companyName" has-left></nav-bar>
     <div><img src="@/assets/dymaic.png" width="100%" height="150px" /></div>
-    <van-steps
-      direction="vertical"
-      :active="activeIndex"
-      active-color="#f60"
-      style="margin-top:20px;margin-bottom:60px"
-      v-if="!loading"
-    >
+    <van-steps direction="vertical" :active="activeIndex" active-color="#f60" style="margin-top:20px;margin-bottom:60px">
       <van-step>
         <van-row>
           <van-col v-if="status == 'ing'" span="24"> 服务中：{{ workPeople }} 正在为您服务</van-col>
@@ -22,16 +16,20 @@
               [已完成]</span
             ></van-col
           >
-          <van-col span="10"
+          <van-col v-if="item.status !== 0" span="10"
             ><span>{{ item.enddate }}</span></van-col
+          >
+
+          <van-col v-if="item.status == 0" span="10"
+            ><span> 预计时间：{{ item.preenddate || '无' }}</span></van-col
           >
         </van-row>
       </van-step>
     </van-steps>
-    <van-dialog v-model="show" :title="title" show-cancel-button>
+    <!-- <van-dialog v-model="show" :title="title" show-cancel-button>
       <div style="margin:10px"><img style="width:100%;height:100%" src="/img/logo.00fbc545.png" /></div>
-    </van-dialog>
-    <van-button class="button" bottom-action @click="submit">我要催单</van-button>
+    </van-dialog> -->
+    <van-button class="button" bottom-action @click="createComplaint">我要催单</van-button>
   </van-row>
 </template>
 <script lang="ts">
@@ -59,11 +57,12 @@ export default class MyTools extends Vue {
   private workOrderList = [];
   private companyName = '';
   private workPeople = '';
-  private loading = false;
   private status = 'ok';
   private processImg = '';
+
+  // 获取信息
   async getDetail() {
-    const resp = await this.$storeApi.detailOrder({ workOrderId: this.$route.params.id });
+    const resp = await this.$storeApi.detailOrder({ workOrderId: this.$route.query.id });
     this.workOrderList = resp.map((v: any, i: number) => {
       if (v.status == 1) {
         this.activeIndex = i + 1;
@@ -74,9 +73,10 @@ export default class MyTools extends Vue {
       return v;
     });
   }
-  submit() {
+
+  createComplaint() {
     try {
-      this.$storeApi.createComplaint({ workOrderId: this.$route.params.id, record: '客户催单' });
+      this.$storeApi.createComplaint({ workOrderId: this.$route.query.id, record: '客户催单' });
       this.$toast('已通知服务人员');
     } catch (error) {}
   }

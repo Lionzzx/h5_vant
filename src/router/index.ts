@@ -19,30 +19,13 @@ export default new Router({
     },
     {
       path: '/',
-      name: 'index',
-      component: index
-    },
-    {
-      path: '/home',
-      name: 'home',
-      redirect: '/',
       component: layout,
+      redirect: '/index',
       children: [
         {
-          path: 'commercial',
-          name: 'commercial',
-          component: () =>
-            import(
-              /* webpackChunkName: "myserve" */ '@/views/commercial/index.vue'
-            )
-        },
-        {
-          path: 'account',
-          name: 'account',
-          component: () =>
-            import(
-              /* webpackChunkName: "myserve" */ '@/views/account/index.vue'
-            )
+          path: '/index',
+          name: 'index',
+          component: index
         },
         {
           path: 'mytools',

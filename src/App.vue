@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view :class="{ blur: isLoading }" />
+    <!-- <keep-alive> -->
+      <router-view :class="{ blur: isLoading }" />
+    <!-- </keep-alive> -->
     <loading :show="isLoading"></loading>
   </div>
 </template>
@@ -13,14 +15,13 @@ export default {
     Loading
   },
   data() {
-    return {
-    }
+    return {};
   },
   computed: {
     isLoading() {
       return AppModule.loading;
     }
-  },
+  }
 };
 </script>
 

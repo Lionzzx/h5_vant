@@ -23,8 +23,9 @@
         <van-step v-for="(item, index) in workOrderList" :key="index">
           <div class="x-flsa">
             <span>{{ item.period }}</span
-            ><span @click="handleAgency">税金</span><span @click="handleBAOB(item.period)">报表</span
-            ><span @click="handleWAIQ">外勤</span>
+            ><span @click="handleAgency"><svg-icon icon-class="money" /> 税金</span
+            ><span @click="handleBAOB(item.period)"><svg-icon icon-class="dashboard" /> 报表</span
+            ><span @click="handleWAIQ"><svg-icon icon-class="tree" /> 外勤</span>
           </div>
         </van-step>
       </van-steps>
@@ -110,7 +111,7 @@ export default class Agency extends Vue {
   }
 
   async handleAgency(period: string) {
-    this.accountDetail = await this.$storeApi.accountReport({ companyId: userStore.COMPANYID, period });
+    this.accountDetail = await this.$storeApi.accountReport({ companyId: userStore.COMPANYID, period }, true);
     this.show = true;
   }
   created() {

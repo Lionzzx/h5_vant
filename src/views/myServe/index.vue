@@ -46,7 +46,7 @@
                 <!-- <div class="info-tip">详情</div> -->
               </div>
             </div>
-            <div class="contain-list-footer">预计完成时间: {{ item.service_end_time }}</div>
+            <div class="contain-list-footer">预计完成时间: {{ item.service_end_time || '暂无信息' }}</div>
           </div>
         </div>
       </van-tab>
@@ -93,7 +93,7 @@ export default class MyServe extends Vue {
     this.$router.push({ name: 'agencyAccount' });
   }
   toBusiness(id: string) {
-    this.$router.push({ name: 'businessDetail', params: { id } });
+    this.$router.push({ name: 'businessDetail', query: { id } });
   }
   handleChangeType(e: any) {
     this.type = e == '0' ? 'ACCOUNT' : 'BUSSINESS';

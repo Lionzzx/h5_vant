@@ -36,17 +36,13 @@ class User extends VuexModule {
   }
 
   @Mutation
-  SETUSERID(val: string = '') {
-    this.customerId = val
-  }
-  @Mutation
   SETCOMPANYLIST(val: any) {
     this.companyList = val
     setStorage('companyList', val)
   }
 
   @Mutation
-  SETCOMPANYID(val: string = '') {
+  SETCOMPANYID(val: any = '') {
     setStorage('companyId', val)
     this.companyId = val
   }
@@ -59,14 +55,6 @@ class User extends VuexModule {
   @Action({})
   async getCompanyList() {
     try {
-      let resp = await storeApi.listCustomerCompany()
-      resp = resp.map((v: any) => ({
-        text: v.companyname,
-        value: v.id,
-        serviceDeparts: v.service_departs
-      }))
-      this.SETCOMPANYLIST(resp)
-      return resp
     } catch (error) {}
   }
 }

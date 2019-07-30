@@ -1,12 +1,15 @@
 interface IStoreApi {
   findCompanyReportInfo(): any
-  listCustomerCompany(): any
+  listCustomerCompany(config?: any, loading?: boolean): any
   listCompanyOrder(): any
-  detailOrder(config: { workOrderId: string }): any
+  detailOrder(config: { workOrderId: any }): any
   login(): any
   showCompanyProgressInfo(config: { companyId: number }, loading?: boolean): any
   serviceList: Function
-  accountReport(config: { companyId: number; period?: string }): any
+  accountReport(
+    config: { companyId: number; period?: string },
+    loading?: boolean
+  ): any
   processImg(config: { processId: string }): any
   userDetail(): any
   fileList(config: {
@@ -51,7 +54,7 @@ interface IStoreApi {
   bmjList(config?: any, loading?: boolean): any
   askHelp(config: { companyId: string }, loading?: boolean): any
   createComplaint(
-    config: { workOrderId: string; record: string },
+    config: { workOrderId: any; record: string },
     loading?: boolean
   ): any
   workOrderList(

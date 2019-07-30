@@ -1,7 +1,7 @@
 
 <template>
   <div class="page">
-    <div style="padding-top: 8px;" class="page-process">
+    <div v-if="bussinessList.length" style="padding-top: 8px;" class="page-process">
       <div @click="navToServe('BUSSINESS')" class="page-process-header">
         <div class="page-process-header-left color-theme"><van-icon class="icon " name="label-o"></van-icon>最新工商进度</div>
         <div class="page-process-header-right">全部</div>
@@ -16,7 +16,7 @@
         <!-- <div class="page-process-item-serve">详情</div> -->
         <div class="page-process-item-desc x-mb1">
           <div>当前进度：{{ item.CurrentProcess }}</div>
-          <div>预计完成时间: {{ item.service_end_time }}</div>
+          <div>预计完成时间: {{ item.service_end_time || '暂无信息' }}</div>
         </div>
         <div class="page-process-item-tip">
           <div class="title">详情</div>
@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <div class="page-process">
+    <div v-if="accountList.length" class="page-process">
       <div @click="navToServe('ACCOUNT')" class="page-process-header">
         <div class="page-process-header-left color-primary">
           <van-icon class="icon bg-primary" name="label-o"></van-icon>最新代账进度
@@ -39,7 +39,7 @@
         </div>
         <div class="page-process-item-tip">
           <div class="title">代帐中</div>
-          <div @click="navToBuy" class="tip">(立即缴费)</div>
+          <div v-if="item.balance_count < 3" @click="navToBuy" class="tip">(立即缴费)</div>
         </div>
       </div>
     </div>
@@ -64,9 +64,6 @@
 <script lang="ts">
 import { Component, Vue, Watch, Prop } from 'vue-property-decorator';
 import { Icon, Dialog } from 'vant';
-import { storeApi } from '@/api';
-import UserStore from '@/store/modules/user';
-
 @Component({
   components: {
     [Icon.name]: Icon
@@ -95,7 +92,8 @@ export default class MyProcess extends Vue {
     }
     this.accountList = ACCOUNT.map((v: any) => {
       let date = new Date();
-      let nowMonth: any = `${date.getFullYear()}${date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()}`;
+      let month = date.getMonth();
+      let nowMonth: any = `${date.getFullYear()}${month < 10 ? '0' + month : month}`;
       v.successMonth = nowMonth - v.begin_period * 1 < 0 ? '0' : nowMonth - v.begin_period * 1;
       return v;
     });
@@ -109,7 +107,7 @@ export default class MyProcess extends Vue {
     this.$router.push({ name: 'agencyAccount' });
   }
   navToBussiness(id: any) {
-    this.$router.push({ name: 'businessDetail', params: { id } });
+    this.$router.push({ name: 'businessDetail', query: { id } });
   }
   navToAccount(id: any) {
     this.$router.push({ name: 'agency', params: { id } });
