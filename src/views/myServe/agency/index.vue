@@ -31,12 +31,12 @@
       </van-steps>
     </div>
     <!-- <svg-icon icon-class="qq" /> -->
-    <van-dialog v-model="show" title="税金" show-cancel-button>
-      <div style="margin:10px;">
-        <div>增值税：{{ accountDetail.zhenzhishui }}</div>
-        <div>企业所得税：{{ accountDetail.qiyesuodeshui }}</div>
-        <div>个税：{{ accountDetail.gerensuodeshui }}</div>
-        <div>附加税：{{ accountDetail.qitashuifei }}</div>
+    <van-dialog v-model="show"  title="税金" show-cancel-button>
+      <div class="dialog" style="margin:10px;">
+        <div class="dialog-title">增值税：{{ accountDetail.zhenzhishui }}</div>
+        <div class="dialog-title">企业所得税：{{ accountDetail.qiyesuodeshui }}</div>
+        <div class="dialog-title">个税：{{ accountDetail.gerensuodeshui }}</div>
+        <div class="dialog-title">附加税：{{ accountDetail.qitashuifei }}</div>
       </div>
     </van-dialog>
 
@@ -59,7 +59,7 @@ import { Step, Steps, Dialog, ActionSheet } from 'vant';
   }
 })
 export default class Agency extends Vue {
-  private companyName: string = userStore.currentCompanyName;
+  private companyName: string = '';
   private detail: any = {};
   private list: any = {};
   private serviceInfo: any = {};
@@ -78,10 +78,16 @@ export default class Agency extends Vue {
     { name: '资产负债表', type: 'balance' }
   ];
   async getCompanyServiceInfo() {
-    this.serviceInfo = await this.$storeApi.companyServiceInfo({ companyId: userStore.COMPANYID });
-    let tel = this.serviceInfo.mobilePhone;
-    if (tel) {
-      this.serverTel = `tel:${tel}`;
+    try {
+      this.serviceInfo = await this.$storeApi.companyServiceInfo({ companyId: userStore.COMPANYID });
+      let tel = this.serviceInfo.mobilePhone;
+      if (tel) {
+        this.serverTel = `tel:${tel}`;
+      }
+    } catch (error) {
+      setTimeout(() => {
+        this.$router.go(-1);
+      }, 1000);
     }
   }
   handleComplain() {
@@ -105,9 +111,7 @@ export default class Agency extends Vue {
           return !!v.id;
         })
         .reverse();
-    } catch (error) {
-      this.$toast('该公司没有周期性服务');
-    }
+    } catch (error) {}
   }
 
   async handleAgency(period: string) {
@@ -115,6 +119,7 @@ export default class Agency extends Vue {
     this.show = true;
   }
   created() {
+    this.companyName = userStore.currentCompanyName;
     this.getCompanyServiceInfo();
     this.getBaseInfo();
   }
@@ -129,7 +134,7 @@ export default class Agency extends Vue {
     height: 40px;
     font-size: 14px;
     color: #fff;
-    background: rgba(233, 79, 85, 1);
+    background: $linear-color;
   }
   &-server {
     margin: 10px auto;
@@ -157,12 +162,20 @@ export default class Agency extends Vue {
       margin: 0 auto;
       width: 240px;
       height: 40px;
-      background: rgba(233, 79, 85, 1);
+      background: $linear-color;
       border-radius: 5px;
       color: #fff;
       text-align: center;
       line-height: 40px;
       font-size: 14px;
+    }
+  }
+  .dialog {
+    &-title {
+      // background: $theme-color;
+      padding: 4px;
+      margin-bottom: 4px;
+      color: #222;
     }
   }
 }

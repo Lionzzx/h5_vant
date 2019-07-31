@@ -17,7 +17,7 @@
           <van-cell
             :key="index"
             v-if="item.action_type == 'kp'"
-            :title="digitsMap[item.digits] + '--' + invoiceTypeMap[item.invoice_type]"
+            :title="digitsMap[item.digits] + '--' + invoiceTypeMap[item.invoice_type] + '✖' + item.amount"
             :value="item.createdate"
           />
         </template>
@@ -27,7 +27,7 @@
           <van-cell
             :key="index"
             v-if="item.action_type == 'xz'"
-            :title="digitsMap[item.digits] + '--' + invoiceTypeMap[item.invoice_type]"
+            :title="digitsMap[item.digits] + '--' + invoiceTypeMap[item.invoice_type] + '✖' + item.amount"
             :value="item.createdate"
           /> </template
       ></van-tab>

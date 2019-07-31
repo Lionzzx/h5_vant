@@ -42,9 +42,14 @@ class User extends VuexModule {
   }
 
   @Mutation
+  REMOVECOMPANYID() {
+    this.companyId = ''
+  }
+
+  @Mutation
   SETCOMPANYID(val: any = '') {
-    setStorage('companyId', val)
     this.companyId = val
+    setStorage('companyId', val)
   }
 
   @Mutation

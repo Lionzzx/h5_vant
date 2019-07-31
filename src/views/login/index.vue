@@ -31,7 +31,7 @@ import { Button, Cell, CellGroup, Row, Col, Field } from 'vant';
 import { storeApi } from '@/api';
 import { isMobile } from '@/utils/validate';
 import UserModule from '@/store/modules/user';
-import { setStorage } from '@/utils/storage';
+import { setStorage, removeStorage } from '@/utils/storage';
 
 @Component({
   components: {
@@ -89,6 +89,10 @@ export default class Message extends Vue {
     this.$once('hook:beforeDestroy', () => {
       clearInterval(time1);
     });
+  }
+  created() {
+    removeStorage('companyId');
+    UserModule.REMOVECOMPANYID();
   }
 }
 </script>

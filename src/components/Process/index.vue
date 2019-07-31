@@ -1,7 +1,7 @@
 
 <template>
   <div class="page">
-    <div v-if="bussinessList.length" style="padding-top: 8px;" class="page-process">
+    <div style="padding-top: 8px;" class="page-process">
       <div @click="navToServe('BUSSINESS')" class="page-process-header">
         <div class="page-process-header-left color-theme"><van-icon class="icon " name="label-o"></van-icon>最新工商进度</div>
         <div class="page-process-header-right">全部</div>
@@ -16,7 +16,7 @@
         <!-- <div class="page-process-item-serve">详情</div> -->
         <div class="page-process-item-desc x-mb1">
           <div>当前进度：{{ item.CurrentProcess }}</div>
-          <div>预计完成时间: {{ item.service_end_time || '暂无信息' }}</div>
+          <div>预计完成时间: {{ item.person_plan_finish_date || '暂无信息' }}</div>
         </div>
         <div class="page-process-item-tip">
           <div class="title">详情</div>
@@ -24,22 +24,22 @@
       </div>
     </div>
 
-    <div v-if="accountList.length" class="page-process">
+    <div class="page-process">
       <div @click="navToServe('ACCOUNT')" class="page-process-header">
         <div class="page-process-header-left color-primary">
           <van-icon class="icon bg-primary" name="label-o"></van-icon>最新代账进度
         </div>
         <div class="page-process-header-right">全部</div>
       </div>
-      <div v-for="(item, index) in accountList" :key="index" class="page-process-item">
-        <div @click="navToAccount(item.workorderId)" class="page-process-item-title">{{ item.product }}</div>
+      <div @click="navToAccount(item.workorderId)" v-for="(item, index) in accountList" :key="index" class="page-process-item">
+        <div class="page-process-item-title">{{ item.product }}</div>
         <div class="page-process-item-serve">服务企业：{{ item.companyname }}</div>
         <div class="page-process-item-desc">
           <div>已成功代账 {{ item.successMonth }}个月</div>
         </div>
         <div class="page-process-item-tip">
           <div class="title">代帐中</div>
-          <div v-if="item.balance_count < 3" @click="navToBuy" class="tip">(立即缴费)</div>
+          <div v-if="item.balance_count < 3" @click.stop="navToBuy" class="tip">(立即缴费)</div>
         </div>
       </div>
     </div>
@@ -97,6 +97,7 @@ export default class MyProcess extends Vue {
       let month = date.getMonth();
       let nowMonth: any = `${date.getFullYear()}${month < 10 ? '0' + month : month}`;
       v.successMonth = nowMonth - v.begin_period * 1 < 0 ? '0' : nowMonth - v.begin_period * 1;
+      v.successMonth += 1;
       return v;
     });
     this.bussinessList = BUSSINESS;

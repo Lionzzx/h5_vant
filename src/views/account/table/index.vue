@@ -61,7 +61,6 @@
         </tbody>
       </table>
     </div>
-    <!-- <van-action-sheet v-model="show" :actions="actions" @select="onSelect" /> -->
   </div>
 </template>
 
@@ -70,11 +69,10 @@ import { Component, Vue } from 'vue-property-decorator';
 import { storeApi } from '@/api';
 import UserModule from '@/store/modules/user';
 import NavBar from '@/components/NavBar/index.vue';
-import { ActionSheet } from 'vant';
+
 @Component({
   components: {
-    NavBar,
-    [ActionSheet.name]: ActionSheet
+    NavBar
   },
   filters: {
     replace: function(value: any) {
@@ -82,7 +80,6 @@ import { ActionSheet } from 'vant';
         return '';
       }
       value = value.toString();
-      // console.log(value.replace(/ /g,"&nbsp;"))
       return value.replace(/ /g, '&nbsp;&nbsp;');
     }
   }
@@ -122,7 +119,6 @@ export default class Table extends Vue {
     }
   }
   async created() {
-    // this.getTable();
     this.getBaseInfo();
   }
   handleTitle() {

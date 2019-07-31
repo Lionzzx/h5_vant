@@ -46,7 +46,7 @@
                 <!-- <div class="info-tip">详情</div> -->
               </div>
             </div>
-            <div class="contain-list-footer">预计完成时间: {{ item.service_end_time || '暂无信息' }}</div>
+            <div class="contain-list-footer">预计完成时间: {{ item.person_plan_finish_date || '暂无信息' }}</div>
           </div>
         </div>
       </van-tab>
@@ -121,6 +121,7 @@ export default class MyServe extends Vue {
           let date = new Date();
           let nowMonth: any = `${date.getFullYear()}${date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()}`;
           v.successMonth = nowMonth - v.begin_period * 1 < 0 ? '0' : nowMonth - v.begin_period * 1;
+          v.successMonth += 1;
           return v;
         })
         .reverse();

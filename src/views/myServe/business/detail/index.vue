@@ -6,6 +6,7 @@
       <van-step>
         <van-row>
           <van-col v-if="status == 'ing'" span="24"> 服务中：{{ workPeople }} 正在为您服务</van-col>
+          <van-col v-if="status == 'ok'" span="24"> 已全部完成 </van-col>
         </van-row>
       </van-step>
       <van-step v-for="item in workOrderList" :key="item.id">

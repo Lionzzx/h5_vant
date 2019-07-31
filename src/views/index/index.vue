@@ -277,12 +277,13 @@ export default class Index extends Vue {
         value: v.id,
         serviceDeparts: v.service_departs
       }));
+      this.currentCompany = this.companyOption[0].value;
+      UserStore.SETCOMPANYLIST(this.companyOption);
       if (!!UserStore.COMPANYID) {
-        this.currentCompany = UserStore.COMPANYID;
-      } else {
-        this.currentCompany = this.companyOption[0].value;
-        UserStore.SETCOMPANYID(this.currentCompany);
+        this.currentCompany = parseInt(UserStore.COMPANYID);
       }
+
+      UserStore.SETCOMPANYID(this.currentCompany);
     } catch (error) {
     } finally {
       this.loading = false;
@@ -290,10 +291,13 @@ export default class Index extends Vue {
   }
   // 初始化界面
   initHome() {
-    let index =
-      this.companyOption.findIndex((v: any) => {
-        return v.value == this.currentCompany;
-      }) || 0;
+    let index = this.companyOption.findIndex((v: any) => {
+      return v.value == this.currentCompany;
+    });
+    if (index == -1) {
+      index = 0;
+    }
+
     this.home =
       this.companyOption[index].serviceDeparts && this.companyOption[index].serviceDeparts.split(',').includes('ACCOUNT')
         ? 'ACCOUNT'

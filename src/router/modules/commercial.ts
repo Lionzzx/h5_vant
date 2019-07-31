@@ -25,6 +25,46 @@ export default [
       )
   },
   {
+    path: '/commercial/projectApplication/detail',
+    name: 'projectApplicationindex0',
+    component: () =>
+      import(
+        /* webpackChunkName: "projectApplication" */ '@/views/commercial/projectApplication/detail/index0.vue'
+      )
+  },
+  {
+    path: '/commercial/projectApplication/detail',
+    name: 'projectApplicationindex1',
+    component: () =>
+      import(
+        /* webpackChunkName: "projectApplication" */ '@/views/commercial/projectApplication/detail/index1.vue'
+      )
+  },
+  {
+    path: '/commercial/projectApplication/detail',
+    name: 'projectApplicationindex2',
+    component: () =>
+      import(
+        /* webpackChunkName: "projectApplication" */ '@/views/commercial/projectApplication/detail/index2.vue'
+      )
+  },
+  {
+    path: '/commercial/projectApplication/detail',
+    name: 'projectApplicationindex3',
+    component: () =>
+      import(
+        /* webpackChunkName: "projectApplication" */ '@/views/commercial/projectApplication/detail/index3.vue'
+      )
+  },
+  {
+    path: '/commercial/projectApplication/detail',
+    name: 'projectApplicationindex4',
+    component: () =>
+      import(
+        /* webpackChunkName: "projectApplication" */ '@/views/commercial/projectApplication/detail/index4.vue'
+      )
+  },
+  {
     path: '/commercial/agencyAccount',
     name: 'agencyAccount',
     component: () =>
