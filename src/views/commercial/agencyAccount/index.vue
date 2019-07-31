@@ -100,7 +100,7 @@ export default class agencyAccount extends Vue {
       height: 50px;
     }
     .price {
-      color: #ca1924;
+      color: $theme-color;
       font-size: 27px;
     }
     .button {
@@ -114,7 +114,7 @@ export default class agencyAccount extends Vue {
     }
     .active {
       color: #fff;
-      background: rgba(228, 0, 35, 1);
+      background: $theme-color;
     }
   }
 
@@ -158,7 +158,7 @@ export default class agencyAccount extends Vue {
       text-align: center;
       font-size: 16px;
       color: rgba(255, 255, 255, 1);
-      background: #e40023;
+      background: $linear-color;
       border-radius: 22px;
     }
 

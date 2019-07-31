@@ -86,9 +86,11 @@ export default class MyProcess extends Vue {
       Dialog.confirm({
         title: '消息提示',
         message: '您现在还没有代账服务，现在就去开启代账服务。'
-      }).then(() => {
-        this.$router.push({ name: 'agencyAccount' });
-      });
+      })
+        .then(() => {
+          this.$router.push({ name: 'agencyAccount' });
+        })
+        .catch(() => {});
     }
     this.accountList = ACCOUNT.map((v: any) => {
       let date = new Date();
@@ -177,7 +179,7 @@ export default class MyProcess extends Vue {
 
         .tip {
           font-size: 14px;
-          color: #e52810;
+          color: $theme-color;
           text-decoration: underline;
         }
       }

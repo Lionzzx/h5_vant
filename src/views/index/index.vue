@@ -1,22 +1,20 @@
 <template>
   <div v-if="!loading" class="page">
-    <van-dropdown-menu class="page-header" active-color="#ff0808">
+    <van-dropdown-menu class="page-header" active-color="#fd6756">
       <van-dropdown-item @change="onCompanyIdChange" v-model="currentCompany" :options="companyOption" />
     </van-dropdown-menu>
-    <div @click.stop="navToMessage" class="page-message">
-      消息
-    </div>
+    <div @click.stop="navToMessage" class="page-message"><van-icon name="other-pay"></van-icon> 消息</div>
     <!-- 会计部页面 -->
     <template v-if="home == 'ACCOUNT'">
       <div @click="navToAccount" class="waveWrapper waveAnimation">
         <div class="waveWrapperInner bgTop">
-          <div class="wave waveTop" style="background-image: url('/img/cheshi1.png')"></div>
+          <!-- <div class="wave waveTop" style="background-image: url('/img/wave.png')"></div> -->
         </div>
         <div class="waveWrapperInner bgMiddle">
-          <div class="wave waveMiddle" style="background-image: url('/img/cheshi2.png')"></div>
+          <div class="wave waveMiddle" style="background-image: url('/img/wave.png')"></div>
         </div>
         <div class="waveWrapperInner bgBottom">
-          <div class="wave waveBottom" style="background-image: url('/img/cheshi1.png')"></div>
+          <div class="wave waveBottom" style="background-image: url('/img/wave.png')"></div>
         </div>
 
         <div class="page-count">
@@ -320,7 +318,7 @@ export default class Index extends Vue {
   top: 8px;
 }
 .van-dropdown-menu__title {
-  color: #ff0808;
+  color: #fd6756;
 }
 </style>
 
@@ -367,10 +365,13 @@ export default class Index extends Vue {
   &-message {
     z-index: 200;
     position: absolute;
-    top: 14px;
+    top: 0px;
     right: 10px;
+    vertical-align: middle;
     color: $theme-color;
     font-size: 13px;
+    line-height: 50px;
+    height: 50px;
   }
 
   &-swipe {
@@ -397,7 +398,7 @@ export default class Index extends Vue {
         // text-align: center;
         color: #717484;
         &-active {
-          color: #ff0808;
+          color: $theme-color;
         }
       }
     }
@@ -444,9 +445,9 @@ export default class Index extends Vue {
       background: #fff;
       padding: 8px 0;
       &-left {
-        color: #f27c41;
+        color: $primary-color;
         .icon {
-          background: #f27c41;
+          background: $primary-color;
           color: #fff;
           padding: 4px 10px;
           border-radius: 0 10px 10px 0;

@@ -129,7 +129,7 @@ export default class MyTools extends Vue {
     height: 40px;
     font-size: 14px;
     color: #fff;
-    background: rgba(233, 79, 85, 1);
+    background: $linear-color;
   }
   &-server {
     margin: 10px auto;
@@ -157,7 +157,7 @@ export default class MyTools extends Vue {
       width: 240px;
       display: block;
       height: 40px;
-      background: rgba(233, 79, 85, 1);
+      background: $linear-color;
       border-radius: 5px;
       color: #fff;
       text-align: center;
@@ -173,7 +173,7 @@ export default class MyTools extends Vue {
     font-size: 14px;
 
     &-item {
-      border: 1px solid #222;
+      border: 1px solid $theme-color;
       display: flex;
       justify-content: center;
       align-items: center;

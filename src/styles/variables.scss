@@ -1,5 +1,8 @@
-$theme-color: #e52810 !default;
-$primary-color: #f27c41;
+$theme-color: #fd6756 !default;
+$primary-color: #fe8652 !default;
+// 主题渐变色
+$linear-color: linear-gradient(60deg, $theme-color, $primary-color);
+
 
 $gray-base: #000 !default;
 $gray-darker: lighten($gray-base, 13.5%) !default; // #222

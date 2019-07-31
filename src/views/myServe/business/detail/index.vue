@@ -2,7 +2,7 @@
   <van-row>
     <nav-bar :title="companyName" has-left></nav-bar>
     <div><img src="@/assets/dymaic.png" width="100%" height="150px" /></div>
-    <van-steps direction="vertical" :active="activeIndex" active-color="#f60" style="margin-top:20px;margin-bottom:60px">
+    <van-steps direction="vertical" :active="activeIndex" active-color="#e94f55" style="margin-top:20px;margin-bottom:60px">
       <van-step>
         <van-row>
           <van-col v-if="status == 'ing'" span="24"> 服务中：{{ workPeople }} 正在为您服务</van-col>
@@ -100,7 +100,7 @@ export default class MyTools extends Vue {
   width: 100vw;
   position: fixed;
   bottom: 0px;
-  background: linear-gradient(#e94f55, #e52810);
+  background: $linear-color;
   z-index: 3;
 }
 .text {
@@ -110,7 +110,7 @@ export default class MyTools extends Vue {
 <style>
 .van-step--finish .van-step__circle,
 .van-step--finish .van-step__line {
-  background-color: #f23e0f;
+  background-color: #fd6756 !important;
 }
 </style>
 

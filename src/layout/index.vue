@@ -2,8 +2,8 @@
   <div class="page">
     <router-view></router-view>
     <van-tabbar v-model="active" active-color="#E52810" fixed>
-      <van-tabbar-item icon="gem-o" to="/">我的服务</van-tabbar-item>
-      <van-tabbar-item icon="apps-o" to="mytools">我的工具</van-tabbar-item>
+      <van-tabbar-item icon="home-o" to="/">我的服务</van-tabbar-item>
+      <van-tabbar-item icon="setting-o" to="mytools">我的工具</van-tabbar-item>
       <van-tabbar-item icon="user-o" to="user">个人中心</van-tabbar-item>
     </van-tabbar>
   </div>

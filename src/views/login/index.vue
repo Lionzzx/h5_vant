@@ -95,7 +95,7 @@ export default class Message extends Vue {
 
 <style lang="scss" scoped>
 .bt_primary {
-  background: linear-gradient(#fc2229, #e52810);
+  background: linear-gradient(60deg, $theme-color, $primary-color);
   color: #fff;
   border-radius: 6px;
 }

@@ -52,14 +52,14 @@ export default class MyTools extends Vue {}
     height: 40px;
     font-size: 14px;
     color: #fff;
-    background: rgba(233, 79, 85, 1);
+    background: $linear-color;
   }
 
   .button {
     margin: 20px auto;
     width: 300px;
     height: 40px;
-    background: rgba(233, 79, 85, 1);
+    background: $linear-color;
     border-radius: 5px;
     color: #fff;
     text-align: center;

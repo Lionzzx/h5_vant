@@ -16,7 +16,7 @@
       <!-- <van-cell icon="points" title="我的优惠券" is-link />
       <van-cell icon="gold-coin-o" title="反馈建议" is-link /> -->
       <van-cell icon="chat-o" to="/user/message" title="我的消息" is-link />
-      <van-cell icon="points" to="/user/about" title="关于我们" is-link />
+      <van-cell icon="smile-o" to="/user/about" title="关于我们" is-link />
     </van-cell-group>
   </div>
 </template>
@@ -51,7 +51,7 @@ export default class User extends Vue {
     justify-content: center;
     flex-direction: column;
     height: 30vh;
-    background: linear-gradient(#e94f55, #e52810);
+    background: $linear-color;
     &-name {
       font-size: 20px;
       margin-top: 10px;

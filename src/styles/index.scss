@@ -72,12 +72,12 @@
 }
 
 .bg-theme {
-  background: #e52810 !important;
+  background: $theme-color !important;
   color: #fff !important;
 }
 
 .bg-pink {
-  background: #e94f55 !important;
+  background: $linear-color !important;
   color: #fff !important;
 }
 .bg-primary {
@@ -111,9 +111,8 @@
   overflow: hidden;
   height: 30vh;
   top: -1px;
-  background-image: linear-gradient(to top, #ff0808 20%, #ff5d48 80%);
+  background-image: linear-gradient(to top, #fd6756 20%, #fe8652 80%);
   // background-image: linear-gradient(#e94f55, #ff5d48);
-  
 }
 .bgTop {
   z-index: 15;
