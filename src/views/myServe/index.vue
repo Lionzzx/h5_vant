@@ -121,6 +121,9 @@ export default class MyServe extends Vue {
           let date = new Date();
           let nowMonth: any = `${date.getFullYear()}${date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()}`;
           v.successMonth = nowMonth - v.begin_period * 1 < 0 ? '0' : nowMonth - v.begin_period * 1;
+          if (v.service_status == 'stop') {
+            v.successMonth = v.end_period - v.begin_period;
+          }
           v.successMonth += 1;
           return v;
         })
