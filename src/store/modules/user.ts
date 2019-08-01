@@ -26,7 +26,9 @@ class User extends VuexModule {
   }
 
   get COMPANYID() {
-    return this.companyId ? this.companyId : getStorage('companyId')
+    return this.companyId
+      ? this.companyId
+      : localStorage.getItem('companyId') || ''
   }
 
   get currentCompanyName() {

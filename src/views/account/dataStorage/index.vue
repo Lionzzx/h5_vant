@@ -48,7 +48,6 @@ export default class DataStorage extends Vue {
     for (let key in temMap) {
       this.list.push(temMap[key]);
     }
-    console.log(this.list);
   }
   async created() {
     this.getFileDetail();

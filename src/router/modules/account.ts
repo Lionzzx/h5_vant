@@ -24,6 +24,12 @@ export default [
       )
   },
   {
+    path: '/account/bill/:companyId',
+    name: 'bills',
+    component: () =>
+      import(/* webpackChunkName: "bill" */ '@/views/account/bill/index.vue')
+  },
+  {
     path: '/account/bill',
     name: 'bill',
     component: () =>

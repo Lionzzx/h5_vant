@@ -35,6 +35,8 @@
   </div>
 </template>
 
+
+
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import UserModule from '@/store/modules/user';
@@ -42,6 +44,7 @@ import { Tab, Tabs, Cell } from 'vant';
 import NavBar from '@/components/NavBar/index.vue';
 
 @Component({
+  name: 'bill',
   components: {
     NavBar,
     [Tab.name]: Tab,
@@ -49,7 +52,7 @@ import NavBar from '@/components/NavBar/index.vue';
     [Cell.name]: Cell
   }
 })
-export default class DataStorage extends Vue {
+export default class bill extends Vue {
   private list: any = [];
   private active = '0';
   private digitsMap = {
@@ -61,7 +64,9 @@ export default class DataStorage extends Vue {
     ElectronicInvoice: '电子票'
   };
   async invoiceList() {
-    this.list = await this.$storeApi.invoiceList({ companyId: UserModule.COMPANYID });
+    let { companyId: id } = this.$route.params;
+    let companyId = id ? id : UserModule.COMPANYID;
+    this.list = await this.$storeApi.invoiceList({ companyId });
   }
   async created() {
     this.invoiceList();

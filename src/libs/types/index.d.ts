@@ -4,10 +4,10 @@ interface IStoreApi {
   listCompanyOrder(): any
   detailOrder(config: { workOrderId: any }): any
   login(): any
-  showCompanyProgressInfo(config: { companyId: number }, loading?: boolean): any
+  showCompanyProgressInfo(config: { companyId: string }, loading?: boolean): any
   serviceList: Function
   accountReport(
-    config: { companyId: number; period?: string },
+    config: { companyId: any; period?: string },
     loading?: boolean
   ): any
   processImg(config: { processId: string }): any
