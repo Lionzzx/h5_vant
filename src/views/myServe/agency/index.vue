@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="page-header x-fl">{{ companyName }}</div>
+    <nav-bar :title="companyName" has-left></nav-bar>
     <div class="page-server">
       <div class="page-server-body">
         <div class="item">服务会计：{{ serviceInfo.realname }}</div>
@@ -31,12 +31,12 @@
       </van-steps>
     </div>
     <!-- <svg-icon icon-class="qq" /> -->
-    <van-dialog v-model="show"  title="税金" show-cancel-button>
-      <div class="dialog" style="margin:10px;">
-        <div class="dialog-title">增值税：{{ accountDetail.zhenzhishui }}</div>
-        <div class="dialog-title">企业所得税：{{ accountDetail.qiyesuodeshui }}</div>
-        <div class="dialog-title">个税：{{ accountDetail.gerensuodeshui }}</div>
-        <div class="dialog-title">附加税：{{ accountDetail.qitashuifei }}</div>
+    <van-dialog v-model="show" confirmButtonColor="#fd6756" title="税金" show-cancel-button>
+      <div class="dialog">
+        <div class="dialog-title"><van-icon name="gold-coin-o" /> 增值税：{{ accountDetail.zhenzhishui }}</div>
+        <div class="dialog-title"><van-icon name="gold-coin-o" /> 企业所得税：{{ accountDetail.qiyesuodeshui }}</div>
+        <div class="dialog-title"><van-icon name="gold-coin-o" /> 个税：{{ accountDetail.gerensuodeshui }}</div>
+        <div class="dialog-title"><van-icon name="gold-coin-o" /> 附加税：{{ accountDetail.qitashuifei }}</div>
       </div>
     </van-dialog>
 
@@ -48,14 +48,15 @@
 import { Component, Vue } from 'vue-property-decorator';
 import NavBar from '@/components/NavBar/index.vue';
 import userStore from '@/store/modules/user';
-import { Step, Steps, Dialog, ActionSheet } from 'vant';
+import { Step, Steps, Dialog, ActionSheet, Icon } from 'vant';
 @Component({
   components: {
     NavBar,
     [Step.name]: Step,
     [Steps.name]: Steps,
     [Dialog.Component.name]: Dialog.Component,
-    [ActionSheet.name]: ActionSheet
+    [ActionSheet.name]: ActionSheet,
+    [Icon.name]: Icon
   }
 })
 export default class Agency extends Vue {
@@ -130,12 +131,6 @@ export default class Agency extends Vue {
 
 <style lang="scss">
 .page {
-  &-header {
-    height: 40px;
-    font-size: 14px;
-    color: #fff;
-    background: $linear-color;
-  }
   &-server {
     margin: 10px auto;
     width: 345px;
@@ -153,6 +148,9 @@ export default class Agency extends Vue {
         padding: 6px 0;
         &-tip {
           font-size: 12px;
+          a {
+            color: $theme-color;
+          }
         }
       }
     }
@@ -178,6 +176,13 @@ export default class Agency extends Vue {
       color: #222;
     }
   }
+}
+</style>
+
+<style>
+.van-step--process .van-step__circle-container,
+.van-step--process .van-step__title {
+  color: rgb(233, 79, 85) !important;
 }
 </style>
 

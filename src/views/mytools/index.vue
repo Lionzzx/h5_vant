@@ -35,7 +35,6 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { Icon } from 'vant';
-import { AppModule } from '@/store/modules/app';
 
 @Component({
   components: {

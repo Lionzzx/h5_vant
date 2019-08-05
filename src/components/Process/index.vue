@@ -15,12 +15,17 @@
         <div class="page-process-item-title">{{ item.product }}</div>
         <!-- <div class="page-process-item-serve">详情</div> -->
         <div class="page-process-item-desc x-mb1">
-          <div>当前进度：{{ item.CurrentProcess }}</div>
+          <div>
+            当前进度：<span class="color-theme">{{ item.CurrentProcess }}</span>
+          </div>
           <div>预计完成时间: {{ item.person_plan_finish_date || '暂无信息' }}</div>
         </div>
         <div class="page-process-item-tip">
           <div class="title">详情</div>
         </div>
+      </div>
+      <div class="page-process-item" v-if="!bussinessList.length">
+        <img style="height:100%;width:100%;" src="~@/assets/guanggao2.png" />
       </div>
     </div>
 
@@ -41,6 +46,9 @@
           <div class="title">代帐中</div>
           <div v-if="item.balance_count < 3" @click.stop="navToBuy" class="tip">(立即缴费)</div>
         </div>
+      </div>
+      <div class="page-process-item" v-if="!accountList.length">
+        <img @click="navToBuy" style="height:100%;width:100%;" src="~@/assets/agencyLogo.png" />
       </div>
     </div>
 
@@ -84,8 +92,8 @@ export default class MyProcess extends Vue {
     if (!ACCOUNT.length) {
       Dialog.setDefaultOptions({ confirmButtonColor: '#e52810' });
       Dialog.confirm({
-        title: '消息提示',
-        message: '您现在还没有代账服务，现在就去开启代账服务。'
+        message: '您现在还没有代账服务，现在就去开启代账服务。',
+        confirmButtonText: '去开启'
       })
         .then(() => {
           this.$router.push({ name: 'agencyAccount' });

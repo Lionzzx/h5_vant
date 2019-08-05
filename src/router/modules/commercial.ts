@@ -17,6 +17,46 @@ export default [
       )
   },
   {
+    path: '/commercial/trademark/detail',
+    name: 'trademarkDetail',
+    component: () =>
+      import(
+        /* webpackChunkName: "trademarkDetail" */ '@/views/commercial/trademark/detail/index.vue'
+      )
+  },
+  {
+    path: '/commercial/projectScheme',
+    name: 'projectScheme',
+    component: () =>
+      import(
+        /* webpackChunkName: "projectScheme" */ '@/views/commercial/projectScheme/index.vue'
+      )
+  },
+  {
+    path: '/commercial/patent',
+    name: 'patent',
+    component: () =>
+      import(
+        /* webpackChunkName: "patent" */ '@/views/commercial/patent/index.vue'
+      )
+  },
+  {
+    path: '/commercial/abnormal',
+    name: 'abnormal',
+    component: () =>
+      import(
+        /* webpackChunkName: "abnormal" */ '@/views/commercial/abnormal/index.vue'
+      )
+  },
+  {
+    path: '/commercial/projectScheme/report',
+    name: 'projectSchemeReport',
+    component: () =>
+      import(
+        /* webpackChunkName: "projectSchemeReport" */ '@/views/commercial/projectScheme/report/index.vue'
+      )
+  },
+  {
     path: '/commercial/projectApplication',
     name: 'projectApplication',
     component: () =>
@@ -29,7 +69,7 @@ export default [
     name: 'projectApplicationindex0',
     component: () =>
       import(
-        /* webpackChunkName: "projectApplication" */ '@/views/commercial/projectApplication/detail/index0.vue'
+        /* webpackChunkName: "projectApplicationindex0" */ '@/views/commercial/projectApplication/detail/index0.vue'
       )
   },
   {
@@ -37,7 +77,7 @@ export default [
     name: 'projectApplicationindex1',
     component: () =>
       import(
-        /* webpackChunkName: "projectApplication" */ '@/views/commercial/projectApplication/detail/index1.vue'
+        /* webpackChunkName: "projectApplicationindex1" */ '@/views/commercial/projectApplication/detail/index1.vue'
       )
   },
   {
@@ -53,7 +93,7 @@ export default [
     name: 'projectApplicationindex3',
     component: () =>
       import(
-        /* webpackChunkName: "projectApplication" */ '@/views/commercial/projectApplication/detail/index3.vue'
+        /* webpackChunkName: "projectApplicationindex3" */ '@/views/commercial/projectApplication/detail/index3.vue'
       )
   },
   {
@@ -61,7 +101,7 @@ export default [
     name: 'projectApplicationindex4',
     component: () =>
       import(
-        /* webpackChunkName: "projectApplication" */ '@/views/commercial/projectApplication/detail/index4.vue'
+        /* webpackChunkName: "projectApplicationindex4" */ '@/views/commercial/projectApplication/detail/index4.vue'
       )
   },
   {

@@ -1,5 +1,6 @@
 <template>
   <div class="detail">
+    <nav-bar title="外勤详情" has-left></nav-bar>
     <van-cell-group>
       <van-cell title="开始办理时间" :value="detail.begin_time" />
       <van-cell title="到达拍照" />
@@ -20,10 +21,12 @@
 import { Component, Vue } from 'vue-property-decorator';
 import UserModule from '@/store/modules/user';
 import { Cell, CellGroup } from 'vant';
+import navBar from '@/components/NavBar/index.vue';
 @Component({
   components: {
     [Cell.name]: Cell,
-    [CellGroup.name]: CellGroup
+    [CellGroup.name]: CellGroup,
+    navBar
   }
 })
 export default class Detail extends Vue {

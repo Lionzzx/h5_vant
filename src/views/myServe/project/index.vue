@@ -25,7 +25,6 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import NavBar from '@/components/NavBar/index.vue';
-import { AppModule } from '@/store/modules/app';
 import { Step, Steps } from 'vant';
 @Component({
   components: {

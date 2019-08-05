@@ -152,6 +152,27 @@ export default {
     getTrademarkBySearchKey: {
       url: '/customer/company/getTrademarkBySearchKey',
       type: 'get'
-    }
+    },
+
+    chenkBmjCompanyMsg: {
+      url: '/customer/program/chenkBmjCompanyMsg',
+      type: 'get'
+    },
+    queryChannelCompnyByName: {
+      url: '/channel/garden/queryChannelCompnyByName',
+      type: 'get'
+    },
+    companyHonorByName: {
+      url: '/channel/garden/companyHonorByName',
+      type: 'get'
+    },
+    abnormalBusiness: {
+      url: '/channel/garden/business',
+      type: 'get'
+    },
+    etax: {
+      url: '/channel/garden/etax',
+      type: 'get'
+    },
   }
 }

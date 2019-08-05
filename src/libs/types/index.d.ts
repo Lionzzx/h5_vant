@@ -22,13 +22,14 @@ interface IStoreApi {
   fileDetail(config?: any, loading?: boolean): any
   billList(config: { companyId: string }, loadng?: boolean): any
   getTrademarkBySearchKey(
-    config: { searchKey: string; page: number; pageSize: number },
+    config: { searchKey: any; page: number; pageSize: number },
     loadng?: boolean
   ): any
   invoiceList(
     config: { companyId: string; type?: string },
     loading?: boolean
   ): any
+  etax(config?: any, loading?: boolean): any
   legworkList(
     config: {
       company_id: string
@@ -65,6 +66,16 @@ interface IStoreApi {
 
   legworkDetail(config: { legworkId: string }, loading?: boolean): any
   companyServiceInfo(config: { companyId: string }, loading?: boolean): any
+  chenkBmjCompanyMsg(
+    config: { companyname: string; userid: string; name: string; tel: string },
+    loading?: boolean
+  ): any
+  queryChannelCompnyByName(
+    config: { componyName: string },
+    loading?: boolean
+  ): any
+  companyHonorByName(config: { componyName: string }, loading?: boolean): any
+  abnormalBusiness(config: { componyName: string }, loading?: boolean): any
   createEvaluate(
     config: {
       customerMemo: string

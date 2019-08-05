@@ -21,7 +21,6 @@ export interface AppStoreType {
 @Module({ dynamic: true, store, name: 'app' })
 class App extends VuexModule {
   public loading = false
-
   @Mutation
   OPENLOADING() {
     this.loading = true
@@ -31,6 +30,7 @@ class App extends VuexModule {
   CLOSELOADING() {
     this.loading = false
   }
+
 }
 
-export const AppModule = getModule(App)
+export default getModule(App)

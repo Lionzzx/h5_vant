@@ -63,7 +63,7 @@ export default class Message extends Vue {
   padding: 10px 20px 10px 0;
   &-icon {
     width: 20vw;
-    color: rgb(22, 22, 48);
+    color: $theme-color;
     text-align: center;
   }
 

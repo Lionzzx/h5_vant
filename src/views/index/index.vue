@@ -28,14 +28,14 @@
         </div> -->
       </div>
       <div class="page-number">
-        <!-- <div class="page-number-item">
+        <div class="page-number-item">
           <div class="title"><van-icon style="margin-right:8px" color="#fbc2a7" name="bar-chart-o"></van-icon>银行存款（元）</div>
-          <div class="number number-active">{{ accountReport.yueshouru }}</div>
+          <div class="number number-active">{{ accountReport.yinhangcunkuan }}</div>
         </div>
         <div class="page-number-item">
           <div class="title"><van-icon style="margin-right:8px" color="#fbc2a7" name="bar-chart-o"></van-icon>库存现金（元）</div>
-          <div class="number">{{ accountReport.kucunxianjin  }}</div>
-        </div> -->
+          <div class="number">{{ accountReport.kucunxianjin }}</div>
+        </div>
         <div class="page-number-item">
           <div class="title"><van-icon style="margin-right:8px" color="#fbc2a7" name="bar-chart-o"></van-icon>月收入（元）</div>
           <div class="number number-active">{{ accountReport.yueshouru }}</div>
@@ -54,44 +54,34 @@
         </div>
       </div>
       <div class="page-center van-hairline--top">
-        <div @click="navToTable(item.name)" v-for="(item, index) in AccountConfig" :key="index" class="page-center-item">
+        <div @click="navToIcon(item.name)" v-for="(item, index) in AccountConfig" :key="index" class="page-center-item">
           <img class="img-icon" :src="item.icon" />
           <div class="img-title">{{ item.title }}</div>
         </div>
       </div>
       <div class="page-line"></div>
       <van-swipe class="page-ad" :autoplay="3000" indicator-color="black">
-        <van-swipe-item
-          ><img
-            src="https://caishui.zbjimg.com/caishui%2Fcaishui%2F%E6%98%93%E6%9F%A5%E8%B4%A6%E4%B8%AD%E9%83%A8%E5%B9%BB%E7%81%AF.jpg%2Forigine%2F95af7ea0-30f6-432c-8ecf-0d8fe11b9a50"
-            alt=""
-        /></van-swipe-item>
-
-        <van-swipe-item
-          ><img
-            src="https://caishui.zbjimg.com/caishui%2Fcaishui%2F%E6%98%93%E6%9F%A5%E8%B4%A6%E4%B8%AD%E9%83%A8%E5%B9%BB%E7%81%AF.jpg%2Forigine%2F95af7ea0-30f6-432c-8ecf-0d8fe11b9a50"
-            alt=""
-        /></van-swipe-item>
+        <van-swipe-item><img src="~@/assets/guanggao3.png" alt=""/></van-swipe-item>
+        <van-swipe-item><img src="~@/assets/guanggao2.png" alt=""/></van-swipe-item>
+        <van-swipe-item><img src="~@/assets/guanggao4.png" alt=""/></van-swipe-item>
       </van-swipe>
     </template>
     <!-- 企划商事部页面 -->
     <template v-if="home == 'BUSSINESS'">
       <van-swipe class="page-swipe" :autoplay="3000" indicator-color="black">
-        <van-swipe-item
-          ><img style="width:100%;height:100%;" src="http://www.zgcfo.com/images/index_bigBanner/bigBanner2.jpg" alt=""
-        /></van-swipe-item>
-
-        <van-swipe-item
-          ><img style="width:100%;height:100%;" src="http://www.zgcfo.com/images/index_bigBanner/bigBanner3.jpg" alt=""
-        /></van-swipe-item>
+        <!-- <van-swipe-item><img style="width:100%;height:100%;" src="~@/assets/guanggao2.png" alt=""/></van-swipe-item> -->
+        <van-swipe-item><img style="width:100%;height:100%;" src="~@/assets/guanggao5.png" alt=""/></van-swipe-item>
       </van-swipe>
 
       <div class="page-center van-hairline--top">
-        <div @click="onNavTo(item.title)" v-for="(item, index) in commercialConfig" :key="index" class="page-center-item">
+        <div @click="navToIcon(item.name)" v-for="(item, index) in commercialConfig" :key="index" class="page-center-item">
           <img class="img-icon" :src="item.icon" />
           <div class="img-title">{{ item.title }}</div>
         </div>
       </div>
+      <van-swipe class="page-ad" :autoplay="3000" indicator-color="black">
+        <van-swipe-item><img src="~@/assets/guanggao3.png" alt=""/></van-swipe-item>
+      </van-swipe>
     </template>
 
     <my-progress :company-id="currentCompany"></my-progress>
@@ -127,7 +117,13 @@ export default class Index extends Vue {
   private active: number = 0;
   private nowDate: string = '';
   private currentCompany: number = 0;
-  private companyOption: any = [];
+  private companyOption: any = [
+    {
+      text: '无信息',
+      value: 0,
+      serviceDeparts: ''
+    }
+  ];
   private AccountConfig = [
     // {
     //   title: '纳税详情',
@@ -172,36 +168,43 @@ export default class Index extends Vue {
   private commercialConfig = [
     {
       title: '企业荣誉',
-      icon: '/icon/icon_honor.png'
+      icon: '/icon/icon_honor.png',
+      name: 'honor'
     },
     {
       title: '项目方案',
-      icon: '/icon/icon_project.png'
+      icon: '/icon/icon_project.png',
+      name: 'projectScheme'
     },
     {
       title: '代账服务',
-      icon: '/icon/icon_daizhang.png'
+      icon: '/icon/icon_daizhang.png',
+      name: 'agencyAccount'
     },
     {
       title: '项目申报',
-      icon: '/icon/icon_diannao.png'
+      icon: '/icon/icon_diannao.png',
+      name: 'projectApplication'
     },
     {
       title: '异常查询',
-      icon: '/icon/icon_yichang.png'
+      icon: '/icon/icon_yichang.png',
+      name: 'abnormal'
     },
     {
       title: '商标查询',
-      icon: '/icon/icon_shangbiao.png'
+      icon: '/icon/icon_shangbiao.png',
+      name: 'trademark'
     },
     {
       title: '专利查询',
-      icon: '/icon/icon_zhuanli.png'
+      icon: '/icon/icon_zhuanli.png',
+      name: 'patent'
     }
   ];
 
-  // 利润表..查看
-  navToTable(value: string) {
+  // 跳转到对应的ICON页面
+  navToIcon(value: string) {
     if (value == 'balance' || value == 'income' || value == 'cash') {
       this.$router.push({ name: 'table', params: { type: value } });
     } else {
@@ -217,32 +220,7 @@ export default class Index extends Vue {
     this.$router.push({ name: 'agency' });
   }
 
-  onNavTo(index: string) {
-    switch (index) {
-      case '企业荣誉':
-        this.$router.push({ name: 'honor' });
-        break;
-      case '项目方案':
-        window.open('http://tools.zgcfo.com/#/project/10255');
-        break;
-      case '代账服务':
-        this.$router.push({ name: 'agencyAccount' });
-        break;
-      case '项目申报':
-        this.$router.push({ name: 'projectApplication' });
-        break;
-      case '异常查询':
-        window.open('http://park.zgcfo.com/#/pages/tools/abnormal/abnormal');
-
-        break;
-      case '商标查询':
-        this.$router.push({ name: 'trademark' });
-        break;
-      case '专利查询':
-        window.open('http://park.zgcfo.com/#/pages/tools/patent/patent');
-        break;
-    }
-  }
+  // 获取当前的税期报表
   getDate() {
     let date = new Date();
     let year = `${date.getFullYear()}`;
@@ -251,17 +229,9 @@ export default class Index extends Vue {
   }
   // 列表选择改变
   onCompanyIdChange(e: number) {
+    UserStore.SETCOMPANYID(e);
     this.currentCompany = e;
-    UserStore.SETCOMPANYID(this.currentCompany);
-    let company = this.companyOption.find((v: any) => {
-      return v.value == e;
-    });
-    if (company.serviceDeparts && company.serviceDeparts.indexOf('ACCOUNT') > -1) {
-      this.home = 'ACCOUNT';
-      this.getAccountReport();
-    } else {
-      this.home = 'BUSSINESS';
-    }
+    this.initHome();
   }
   // 获取银行存款等信息
   getAccountReport() {
@@ -272,6 +242,9 @@ export default class Index extends Vue {
     this.loading = true;
     try {
       let resp = await this.$storeApi.listCustomerCompany({}, true);
+      if (!resp.length) {
+        throw '该客户没有公司';
+      }
       this.companyOption = resp.map((v: any) => ({
         text: v.companyname,
         value: v.id,
@@ -281,9 +254,9 @@ export default class Index extends Vue {
       UserStore.SETCOMPANYLIST(this.companyOption);
       if (!!UserStore.COMPANYID) {
         this.currentCompany = parseInt(UserStore.COMPANYID);
+      } else {
+        UserStore.SETCOMPANYID(this.currentCompany);
       }
-
-      UserStore.SETCOMPANYID(this.currentCompany);
     } catch (error) {
     } finally {
       this.loading = false;
@@ -291,25 +264,27 @@ export default class Index extends Vue {
   }
   // 初始化界面
   initHome() {
-    let index = this.companyOption.findIndex((v: any) => {
+    let company = this.companyOption.find((v: any) => {
       return v.value == this.currentCompany;
     });
-    if (index == -1) {
-      index = 0;
+    if (!company) {
+      company = this.companyOption[0];
+      this.currentCompany = company.value;
     }
 
-    this.home =
-      this.companyOption[index].serviceDeparts && this.companyOption[index].serviceDeparts.split(',').includes('ACCOUNT')
-        ? 'ACCOUNT'
-        : 'BUSSINESS';
-    if (this.home == 'ACCOUNT') {
+    if (company.serviceDeparts && company.serviceDeparts.indexOf('ACCOUNT') > -1) {
+      this.home = 'ACCOUNT';
       this.getDate();
       this.getAccountReport();
+    } else {
+      this.home = 'BUSSINESS';
     }
   }
   async created() {
-    await this.getCompanyList();
-    this.initHome();
+    try {
+      await this.getCompanyList();
+      this.initHome();
+    } catch (error) {}
   }
 }
 </script>
@@ -398,6 +373,7 @@ export default class Index extends Vue {
       }
       .number {
         margin-top: 6px;
+        padding-left: 20px;
         font-size: 20px;
         // text-align: center;
         color: #717484;

@@ -6,12 +6,11 @@ import {
   Action,
   getModule
 } from 'vuex-module-decorators'
-import { storeApi } from '@/api'
 
 import store from '@/store'
 import { setStorage, getStorage } from '@/utils/storage'
 export interface UserStoreType {
-  user: User
+user: User
 }
 
 @Module({ dynamic: true, store, name: 'user' })
@@ -21,10 +20,12 @@ class User extends VuexModule {
   public companyList: any
   public home: string = 'ACCOUNT'
 
+  // 获取公司列表
   get COMPANYLIST() {
     return this.companyList ? this.companyList : getStorage('companyList')
   }
 
+  // 获取当前公司Id
   get COMPANYID() {
     return this.companyId
       ? this.companyId
@@ -52,11 +53,6 @@ class User extends VuexModule {
   SETCOMPANYID(val: any = '') {
     this.companyId = val
     setStorage('companyId', val)
-  }
-
-  @Mutation
-  SETHOME(val: string = '') {
-    this.home = val
   }
 
   @Action({})

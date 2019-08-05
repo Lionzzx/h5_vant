@@ -35,31 +35,31 @@
         <div class="title">公司变更</div>
         <div>精简流程 简单快速</div>
         <div>专人对接 高效详细</div>
-        <div @click="navToMore('projectApplicationindex5')" class="item-button">查看更多</div>
+        <div @click="navToMore('projectApplicationindex1')" class="item-button">查看更多</div>
       </div>
       <div class="page-list-item x-fl">
         <div class="title">商标注册</div>
         <div>当天报送材料</div>
         <div>98%通过率</div>
-        <div @click="navToMore('projectApplicationindex6')" class="item-button">查看更多</div>
+        <div @click="navToMore('projectApplicationindex2')" class="item-button">查看更多</div>
       </div>
       <div class="page-list-item x-fl">
         <div class="title">软著申请</div>
         <div>国家荣誉认可</div>
         <div>企业宣传利器</div>
-        <div @click="navToMore('projectApplicationindex7')" class="item-button">查看更多</div>
+        <div @click="navToMore('projectApplicationindex3')" class="item-button">查看更多</div>
       </div>
       <div class="page-list-item x-fl">
         <div class="title">软著申请</div>
         <div>国家荣誉认可</div>
         <div>企业宣传利器</div>
-        <div @click="navToMore('projectApplicationindex8')" class="item-button">查看更多</div>
+        <div @click="navToMore('projectApplicationindex4')" class="item-button">查看更多</div>
       </div>
       <div class="page-list-item x-fl">
         <div class="title">软著申请</div>
         <div>国家荣誉认可</div>
         <div>企业宣传利器</div>
-        <div @click="navToMore('projectApplicationindex9')" class="item-button">查看更多</div>
+        <div @click="navToMore('projectApplicationindex5')" class="item-button">查看更多</div>
       </div>
     </div>
     <!-- <div class="hasMore">加载更多</div>
@@ -77,9 +77,6 @@ import { Loading } from 'vant';
   }
 })
 export default class Home extends Vue {
-  // private list = [{
-  //   title:'title'
-  // }];
   navToMore(name: string) {
     this.$router.push({ name });
   }

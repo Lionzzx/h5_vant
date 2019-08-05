@@ -110,8 +110,12 @@ export default class MyTools extends Vue {
 </style>
 <style>
 .van-step--finish .van-step__circle,
-.van-step--finish .van-step__line {
+.van-step--finish .van-step__line  {
   background-color: #fd6756 !important;
+  
+}
+.van-step--finish .van-step__title {
+  color: #fd6756 !important;
 }
 </style>
 

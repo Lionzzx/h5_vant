@@ -1,35 +1,31 @@
 <template>
   <div id="app">
     <!-- <keep-alive> -->
-      <router-view :class="{ blur: isLoading }" />
+    <router-view :class="{ blur: isLoading }" />
     <!-- </keep-alive> -->
     <loading :show="isLoading"></loading>
   </div>
 </template>
 
-<script>
-import Loading from '@/components/Loading/x-loading';
-import { AppModule } from '@/store/modules/app';
-export default {
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import Loading from '@/components/Loading/index.vue';
+import AppModule from '@/store/modules/app';
+@Component({
   components: {
     Loading
-  },
-  data() {
-    return {};
-  },
-  computed: {
-    isLoading() {
-      return AppModule.loading;
-    }
   }
-};
+})
+export default class App extends Vue {
+  get isLoading() {
+    return AppModule.loading;
+  }
+}
 </script>
 
 <style lang="scss">
 .blur {
-  -webkit-filter: blur(5px); /* Chrome, Opera */
-  -moz-filter: blur(5px);
-  -ms-filter: blur(5px);
-  filter: blur(30upx);
+  filter: blur(30px);
 }
+
 </style>

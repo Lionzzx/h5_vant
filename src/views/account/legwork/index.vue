@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="page-header x-fl">{{ serviceInfo.companyname }}</div>
+    <nav-bar :title="serviceInfo.companyname" has-left></nav-bar>
     <div class="page-server">
       <div class="page-server-body">
         <div class="item">服务会计：{{ serviceInfo.realname }}</div>
@@ -10,7 +10,9 @@
         <div class="tousu van-hairline--top x-fls">
           <div>服务不满意？<span @click="handleComplain" style="color:#e94f55;">我有话要说</span></div>
           <div class="tousu-tip">
-            <a href="https://mp.weixin.qq.com/s/W25DatAlyJIchb7-O74Myw"><svg-icon icon-class="message" /> 做账资料注意事项</a>
+            <a style="color:#fd6756" href="https://mp.weixin.qq.com/s/W25DatAlyJIchb7-O74Myw"
+              ><svg-icon icon-class="message" /> 做账资料注意事项</a
+            >
           </div>
         </div>
 

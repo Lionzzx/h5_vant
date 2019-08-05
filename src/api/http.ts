@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { AppModule } from '@/store/modules/app'
+import  AppModule  from '@/store/modules/app'
 import delegate from './interceptors'
 const rqHttp = axios.create({
   timeout: 30000
@@ -110,7 +110,6 @@ export class HttpService extends BaseService {
       req,
       config
     })
-    console.log()
     try {
       if (config.loading) {
         AppModule.OPENLOADING()

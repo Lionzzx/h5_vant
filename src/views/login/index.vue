@@ -18,7 +18,7 @@
         </van-cell-group>
       </div>
       <van-row style="width:80%;margin:auto;margin-top:60px">
-        <van-button size="large" class="bt_primary" @click="login" :disabled="isLogin">登 陆</van-button>
+        <van-button size="large" class="bt_primary" @click.enter="login" :disabled="isLogin">登 陆</van-button>
       </van-row>
     </van-row>
   </van-row>
@@ -92,6 +92,7 @@ export default class Message extends Vue {
   }
   created() {
     removeStorage('companyId');
+    removeStorage('customerId');
     UserModule.REMOVECOMPANYID();
   }
 }

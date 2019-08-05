@@ -1,5 +1,5 @@
 @import './iconfont/iconfont.css';
-
+@import './mixin.scss';
 .x {
   &-mr1 {
     margin-right: 5px;
@@ -60,7 +60,7 @@
 }
 
 .color-theme {
-  color: #e52810 !important;
+  color: $theme-color !important;
 }
 
 .color-primary {

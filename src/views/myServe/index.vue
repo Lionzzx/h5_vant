@@ -24,6 +24,10 @@
             <div class="contain-list-footer">已成功代账 {{ item.successMonth }}个月</div>
           </div>
         </div>
+        <div @click="$router.push({ name: 'agencyAccount' })" class="gg" v-if="!list.length">
+          <div class="gg-title">您还未订购任何服务，现在就去了解一下！</div>
+          <img class="gg-pic" src="~@/assets/guanggao1.png" />
+        </div>
       </van-tab>
       <van-tab>
         <div slot="title"><van-icon class="icon" name="balance-list-o" />工商进度</div>
@@ -48,6 +52,10 @@
             </div>
             <div class="contain-list-footer">预计完成时间: {{ item.person_plan_finish_date || '暂无信息' }}</div>
           </div>
+        </div>
+        <div class="gg" v-if="!list.length">
+          <div class="gg-title">您还未订购任何服务，现在就去了解一下！</div>
+          <img class="gg-pic" src="https://caishui.zbjimg.com/caishui%2Fcaishui%2F%E6%9C%8D%E5%8A%A1%E8%BF%9B%E5%BA%A6-%E6%97%A0%E6%9C%8D%E5%8A%A1%E7%A9%BA%E7%BD%AE%E5%9B%BE-%E6%B3%A8%E5%86%8C.png%2Forigine%2Ff495c8c5-ca19-4563-8535-5709fcfcdc38" />
         </div>
       </van-tab>
     </van-tabs>
@@ -154,8 +162,6 @@ export default class MyServe extends Vue {
         display: flex;
         justify-content: space-between;
         .company {
-          &-name {
-          }
           &-serve {
             font-size: 12px;
             margin-top: 8px;
@@ -165,7 +171,7 @@ export default class MyServe extends Vue {
         .info {
           &-status {
             text-align: center;
-            color: #717484;
+            color: $theme-color;
           }
 
           &-tip {
@@ -189,7 +195,24 @@ export default class MyServe extends Vue {
       }
     }
   }
-
+  .gg {
+    background: #fff;
+    &-title {
+      font-size: 14px;
+      line-height: 24px;
+      color: #ff7d4e;
+      font-weight: normal;
+      padding: 10px;
+      margin-bottom: 0;
+    }
+    &-pic {
+      padding: 10px;
+      box-sizing: border-box;
+      border-radius: 5px;
+      height: 180px;
+      width: 100%;
+    }
+  }
   .empty {
     padding: 20px;
     &-tip {

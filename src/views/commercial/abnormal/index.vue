@@ -1,9 +1,47 @@
 <template>
   <div class="page">
+    <div @click="navBack" class="page-back">返回</div>
     <div class="page-search">
       <div class="page-search-input"><input v-model="searchValue" class="input" /></div>
       <div @click="handleSearch" class="page-search-button"><van-icon color="#fff" name="search"></van-icon></div>
     </div>
+
+    <popup @hidePopup="hidePopup" bgColor="#fff" @ :title="searchValue" :show="popup">
+      <div class="page__body">
+        <div class="tab">
+          <div
+            v-for="(item, index) in tabs"
+            :key="index"
+            @click="handleTab(index)"
+            :class="{ active: index == tabIndex }"
+            class="tab__item"
+          >
+            {{ item.title }}
+          </div>
+        </div>
+        <div class="contents">
+          <template v-if="tabIndex == 0">
+            <div v-for="(item, index) in businessList" :key="index" class="contents-item">
+              <div class="disc">
+                <div class="disc_item">列入经营异常名录原因：{{ item.abnormal_cause }}</div>
+                <div class="disc_item">决定机关：{{ item.office }}</div>
+                <div class="disc_item">列入日期：{{ item.abnormal_date }}</div>
+                <div class="disc_item">移出日期：{{ item.remove_date }}</div>
+              </div>
+            </div>
+          </template>
+          <template v-if="tabIndex == 1">
+            <div v-for="(item, index) in etaxList" :key="index" class="contents-item">
+              <div class="disc">
+                <div class="disc_item">税种：{{ item['zsxmmc'] }}</div>
+                <div class="disc_item">所属期始：{{ item['skssqq'] }}</div>
+                <div class="disc_item">所属期止：{{ item['skssqz'] }}</div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </popup>
   </div>
 </template>
 
@@ -21,15 +59,58 @@ import { formatDate } from '@/utils/index';
 })
 export default class abnormal extends Vue {
   private searchValue: string = '';
+  private result: string = '';
+  private popup: boolean = false;
+  private businessList = [];
+  private tabs = [
+    {
+      title: '工商异常信息'
+    },
+    {
+      title: '税务异常信息'
+    }
+  ];
+  private tabIndex = [];
+  private etaxList = [];
   async handleSearch() {
     if (!this.searchValue) {
-      return this.$toast('请输入商标进行查询');
+      return this.$toast('请输入企业名称');
     }
-
-    this.$router.push({ name: 'trademarkDetail', query: { name: this.searchValue } });
+    try {
+      let resp = await this.$storeApi.abnormalBusiness({ componyName: this.searchValue }, true);
+      this.businessList = JSON.parse(resp).data.abnormalList.map((v: any) => {
+        if (v.remove_date) {
+          v.remove_date = formatDate(v.remove_date);
+        }
+        if (v.abnormal_date) {
+          v.abnormal_date = formatDate(v.abnormal_date);
+        }
+        return v;
+      });
+    } catch (error) {
+    } finally {
+      this.popup = true;
+    }
   }
   navBack() {
     this.$router.go(-1);
+  }
+  handleTab(index: any) {
+    this.tabIndex = index;
+    if (index == 1) {
+      this.getEtax(this.searchValue);
+    }
+  }
+  hidePopup() {
+    this.popup = false;
+  }
+  async getEtax(componyName: any) {
+    try {
+      const resp = await this.$storeApi.etax({ componyName });
+      this.etaxList = JSON.parse(resp).data.taxML.body.taxML.sbqkList.sbqk;
+    } catch (e) {
+    } finally {
+    }
   }
   async created() {}
 }
@@ -39,7 +120,7 @@ export default class abnormal extends Vue {
 @import '@/styles/mixin.scss';
 .page {
   height: 100vh;
-  background: url('~@/assets/abnormal_bg.png');
+  background: url('http://park.zgcfo.com/static/abnormal_bg.png');
   background-size: 100% 100%;
   &-back {
     position: absolute;
@@ -64,7 +145,7 @@ export default class abnormal extends Vue {
     left: 0;
     right: 0;
     margin: 0 auto;
-    top: 234px;
+    top: 184px;
     display: flex;
     border-radius: 3px;
     width: 341px;

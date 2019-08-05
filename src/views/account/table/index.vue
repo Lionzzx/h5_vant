@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <nav-bar has-left
-      ><div @click="handleTitle" slot="title">{{ companyName }}</div></nav-bar
+      ><div slot="title">{{ companyName + period }}</div></nav-bar
     >
     <div class="main">
       <table class="table table-striped table-bordered" v-if="this.$route.params.type == 'cash'">
@@ -68,6 +68,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { storeApi } from '@/api';
 import UserModule from '@/store/modules/user';
+import AppModule from '@/store/modules/app';
 import NavBar from '@/components/NavBar/index.vue';
 
 @Component({
@@ -85,8 +86,6 @@ import NavBar from '@/components/NavBar/index.vue';
   }
 })
 export default class Table extends Vue {
-  private show = false;
-  private actions = [{ name: '选项' }, { name: '选项' }, { name: '选项', subname: '描述信息' }];
   private type: string = '';
   private tableData = [];
   private period = '';
@@ -115,17 +114,11 @@ export default class Table extends Vue {
       this.period = this.workOrderList[0].period;
       this.getTable();
     } catch (error) {
-      this.$toast('该公司没有周期性服务');
     }
   }
   async created() {
     this.getBaseInfo();
   }
-  handleTitle() {
-    this.show = true;
-  }
-
-  onSelect(item: any) {}
 }
 </script>
 
