@@ -72,6 +72,7 @@
 <script lang="ts">
 import { Component, Vue, Watch, Prop } from 'vue-property-decorator';
 import { Icon, Dialog } from 'vant';
+import { monthDistance } from '@/utils';
 @Component({
   components: {
     [Icon.name]: Icon
@@ -101,10 +102,7 @@ export default class MyProcess extends Vue {
         .catch(() => {});
     }
     this.accountList = ACCOUNT.map((v: any) => {
-      let date = new Date();
-      let month = date.getMonth();
-      let nowMonth: any = `${date.getFullYear()}${month < 10 ? '0' + month : month}`;
-      v.successMonth = nowMonth - v.begin_period * 1 < 0 ? '0' : nowMonth - v.begin_period * 1;
+      v.successMonth = monthDistance(v.begin_period);
       v.successMonth += 1;
       return v;
     });

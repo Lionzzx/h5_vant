@@ -271,7 +271,8 @@ export default class Index extends Vue {
       company = this.companyOption[0];
       this.currentCompany = company.value;
     }
-
+    // 缓存公司名
+    UserStore.SETCOMPANYNAME(company.text);
     if (company.serviceDeparts && company.serviceDeparts.indexOf('ACCOUNT') > -1) {
       this.home = 'ACCOUNT';
       this.getDate();

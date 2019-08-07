@@ -2,7 +2,7 @@ interface IStoreApi {
   findCompanyReportInfo(): any
   listCustomerCompany(config?: any, loading?: boolean): any
   listCompanyOrder(): any
-  detailOrder(config: { workOrderId: any }): any
+  detailOrder(config: { workOrderId: any }, loading?: boolean): any
   login(): any
   showCompanyProgressInfo(config: { companyId: string }, loading?: boolean): any
   serviceList: Function

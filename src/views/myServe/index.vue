@@ -55,7 +55,10 @@
         </div>
         <div class="gg" v-if="!list.length">
           <div class="gg-title">您还未订购任何服务，现在就去了解一下！</div>
-          <img class="gg-pic" src="https://caishui.zbjimg.com/caishui%2Fcaishui%2F%E6%9C%8D%E5%8A%A1%E8%BF%9B%E5%BA%A6-%E6%97%A0%E6%9C%8D%E5%8A%A1%E7%A9%BA%E7%BD%AE%E5%9B%BE-%E6%B3%A8%E5%86%8C.png%2Forigine%2Ff495c8c5-ca19-4563-8535-5709fcfcdc38" />
+          <img
+            class="gg-pic"
+            src="https://caishui.zbjimg.com/caishui%2Fcaishui%2F%E6%9C%8D%E5%8A%A1%E8%BF%9B%E5%BA%A6-%E6%97%A0%E6%9C%8D%E5%8A%A1%E7%A9%BA%E7%BD%AE%E5%9B%BE-%E6%B3%A8%E5%86%8C.png%2Forigine%2Ff495c8c5-ca19-4563-8535-5709fcfcdc38"
+          />
         </div>
       </van-tab>
     </van-tabs>
@@ -66,6 +69,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Tab, Tabs, Icon } from 'vant';
 import userStore from '@/store/modules/user';
+import { monthDistance } from '@/utils';
 
 @Component({
   components: {
@@ -126,11 +130,9 @@ export default class MyServe extends Vue {
       );
       this.list = resp.rows
         .map((v: any) => {
-          let date = new Date();
-          let nowMonth: any = `${date.getFullYear()}${date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()}`;
-          v.successMonth = nowMonth - v.begin_period * 1 < 0 ? '0' : nowMonth - v.begin_period * 1;
-          if (v.service_status == 'stop') {
-            v.successMonth = v.end_period - v.begin_period;
+          v.successMonth = monthDistance(v.begin_period);
+          if (v.service_status == 'stop' && monthDistance(v.end_period) !== 0) {
+            v.successMonth = monthDistance(v.begin_period, v.end_period);
           }
           v.successMonth += 1;
           return v;

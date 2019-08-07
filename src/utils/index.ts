@@ -13,7 +13,21 @@
 //   }
 //   return ''
 // }
-
+export const monthDistance = (value1: string, value2?: string) => {
+  if (!value1) {
+    return 0
+  }
+  if (!value2) {
+    let beginMonth = Number(value1.slice(0, 4)) * 12 + Number(value1.slice(4))
+    let nowTime = new Date()
+    let nowMonth = nowTime.getFullYear() * 12 + nowTime.getMonth()
+    return nowMonth - beginMonth < 0 ? 0 : nowMonth - beginMonth
+  } else {
+    let beginMonth = Number(value1.slice(0, 4)) * 12 + Number(value1.slice(4))
+    let endMonth = Number(value2.slice(0, 4)) * 12 + Number(value2.slice(4))
+    return endMonth - beginMonth < 0 ? 0 : endMonth - beginMonth
+  }
+}
 // 时间格式化
 export const formatDate = (
   timestamp = new Date().valueOf(),
