@@ -18,7 +18,13 @@
         </div>
 
         <div class="page-count">
-          <countTo class="count-number" :startVal="startVal" :endVal="accountReport.yuelirun || 0" :duration="1000"></countTo>
+          <countTo
+            class="count-number"
+            decimal
+            :startVal="startVal"
+            :endVal="accountReport.yuelirun || 0"
+            :duration="1000"
+          ></countTo>
           <div class="count-title">月净利润（元）</div>
         </div>
         <div class="page-tip">财税报表 {{ nowDate }}</div>
@@ -34,23 +40,23 @@
         </div>
         <div class="page-number-item">
           <div class="title"><van-icon style="margin-right:8px" color="#fbc2a7" name="bar-chart-o"></van-icon>库存现金（元）</div>
-          <div class="number">{{ accountReport.kucunxianjin }}</div>
+          <div class="number number-active">{{ accountReport.kucunxianjin }}</div>
         </div>
         <div class="page-number-item">
           <div class="title"><van-icon style="margin-right:8px" color="#fbc2a7" name="bar-chart-o"></van-icon>月收入（元）</div>
           <div class="number number-active">{{ accountReport.yueshouru }}</div>
         </div>
         <div class="page-number-item">
-          <div class="title"><van-icon style="margin-right:8px" color="#fbc2a7" name="bar-chart-o"></van-icon>货币资金（元）</div>
-          <div class="number">{{ accountReport.huobizijin }}</div>
+          <div class="title"><van-icon style="margin-right:8px" color="#fbc2a7" name="bar-chart-o"></van-icon>投资收益（元）</div>
+          <div class="number number-active">{{ accountReport.touzhi }}</div>
         </div>
         <div class="page-number-item">
           <div class="title"><van-icon style="margin-right:8px" color="#fbc2a7" name="bar-chart-o"></van-icon>成本费用（元）</div>
-          <div class="number">{{ accountReport.chengbenfeiyong }}</div>
+          <div class="number number-active">{{ accountReport.chengbenfeiyong }}</div>
         </div>
         <div class="page-number-item">
           <div class="title"><van-icon style="margin-right:8px" color="#fbc2a7" name="bar-chart-o"></van-icon>税金（元）</div>
-          <div class="number">{{ accountReport.zhenzhishui }}</div>
+          <div class="number number-active">{{ accountReport.shuijin }}</div>
         </div>
       </div>
       <div class="page-center van-hairline--top">
@@ -92,7 +98,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import CountTo from '@/components/CountTo/index.vue';
 import MyProgress from '@/components/Process/index.vue';
-import { formatDate } from '@/utils';
+import { formatDate, floatString } from '@/utils';
 import { Swipe, SwipeItem, ActionSheet, DropdownMenu, DropdownItem, Icon } from 'vant';
 import UserStore from '@/store/modules/user';
 import trademark from '../commercial/trademark/index.vue';
@@ -112,7 +118,15 @@ import trademark from '../commercial/trademark/index.vue';
 export default class Index extends Vue {
   private startVal = 0;
   private home = 'BUSSINESS';
-  private accountReport: any = {};
+  private accountReport: any = {
+    kucunxianjin: 0,
+    yueshouru: 0,
+    yinhangcunkuan: 0,
+    touzhi: 0,
+    chengbenfeiyong: 0,
+    shuijin: 0,
+    yuelirun: 0
+  };
   private loading: boolean = false;
   private active: number = 0;
   private nowDate: string = '';
@@ -234,8 +248,33 @@ export default class Index extends Vue {
     this.initHome();
   }
   // 获取银行存款等信息
-  getAccountReport() {
-    this.accountReport = this.$storeApi.accountReport({ companyId: this.currentCompany }, true);
+  async getAccountReport() {
+    // /store/getAccountBalance
+    // this.accountReport = this.$storeApi.accountReport({ companyId: this.currentCompany }, true);
+    this.accountReport = {};
+    try {
+      let nowMonth = formatDate(undefined, 'yyyy-MM');
+      const [balance, form] = await Promise.all([
+        this.$storeApi.getAccountBalance({ companyId: this.currentCompany, startPeriod: nowMonth, endPeriod: nowMonth }, true),
+        this.$storeApi.getCompanyReportForm({ companyId: this.currentCompany, type: 1, period: nowMonth }, true)
+      ]);
+
+      this.accountReport.kucunxianjin = balance.result && balance.result[0].periodEndBorrow / 100;
+      this.accountReport.yinhangcunkuan = balance.result && balance.result[1].periodEndBorrow / 100;
+      this.accountReport.yuelirun = floatString(form.result[16].currentMonth);
+      this.accountReport.yueshouru = floatString(form.result[0].currentMonth);
+      this.accountReport.shuijin = floatString(form.result[2].currentMonth);
+      this.accountReport.touzhi = floatString(form.result[8].currentMonth);
+      this.accountReport.chengbenfeiyong = (
+        floatString(form.result[3].currentMonth) +
+        floatString(form.result[4].currentMonth) +
+        floatString(form.result[5].currentMonth)
+      ).toFixed(2);
+    } catch (error) {
+      this.$toast(error.msg);
+    }
+
+    // ;
   }
   // 获取公司列表
   async getCompanyList() {

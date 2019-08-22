@@ -1,5 +1,5 @@
 interface IStoreApi {
-  findCompanyReportInfo(): any
+  findCompanyReportInfo(config?: any, loading?: boolean): any
   listCustomerCompany(config?: any, loading?: boolean): any
   listCompanyOrder(): any
   detailOrder(config: { workOrderId: any }): any
@@ -8,6 +8,14 @@ interface IStoreApi {
   serviceList: Function
   accountReport(
     config: { companyId: any; period?: string },
+    loading?: boolean
+  ): any
+  getAccountBalance(
+    config: { companyId?: any; startPeriod?: string; endPeriod?: string },
+    loading?: boolean
+  ): any
+  getCompanyReportForm(
+    config: { companyId?: any; period?: string; type?: any },
     loading?: boolean
   ): any
   processImg(config: { processId: string }): any

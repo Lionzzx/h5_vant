@@ -74,6 +74,14 @@ export const formatDate = (
   return fmt
 }
 
+export const floatString = (value: string) => {
+  if (value) {
+    return parseFloat(value.replace(/,/, ''))
+  } else {
+    return 0
+  }
+}
+
 // /**
 //  * 深拷贝
 //  */

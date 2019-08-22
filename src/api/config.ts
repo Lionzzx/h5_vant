@@ -44,6 +44,14 @@ export default {
       url: '/store/customer/company/account/report',
       type: 'get'
     },
+    getAccountBalance: {
+      url: '/store/getAccountBalance',
+      type: 'get'
+    },
+    getCompanyReportForm: {
+      url: '/store/getCompanyReportForm',
+      type: 'get'
+    },
     userDetail: {
       url: '/store/customer/user/detail',
       type: 'get'
@@ -173,6 +181,6 @@ export default {
     etax: {
       url: '/channel/garden/etax',
       type: 'get'
-    },
+    }
   }
 }

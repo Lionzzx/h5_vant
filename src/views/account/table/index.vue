@@ -15,8 +15,8 @@
         <tbody>
           <tr v-for="item in tableData" :key="item.id">
             <td v-html="$options.filters.replace(item.name)"></td>
-            <td :class="{ zero: item.current_year < 0 }">{{ item.current_year }}</td>
-            <td :class="{ zero: item.current_month < 0 }">{{ item.current_month }}</td>
+            <td :class="{ zero: item.currentYear < 0 }">{{ item.currentYear }}</td>
+            <td :class="{ zero: item.currentMonth < 0 }">{{ item.currentMonth }}</td>
           </tr>
         </tbody>
       </table>
@@ -32,8 +32,8 @@
         <tbody>
           <tr v-for="item in tableData" :key="item.id">
             <td v-html="$options.filters.replace(item.name)"></td>
-            <td :class="{ zero: item.current_year < 0 }">{{ item.current_year }}</td>
-            <td :class="{ zero: item.current_month < 0 }">{{ item.current_month }}</td>
+            <td :class="{ zero: item.currentYear < 0 }">{{ item.currentYear }}</td>
+            <td :class="{ zero: item.currentMonth < 0 }">{{ item.currentMonth }}</td>
           </tr>
         </tbody>
       </table>
@@ -42,21 +42,21 @@
         <thead>
           <tr>
             <th style="width:25%">资产</th>
-            <th style="width:12%">期末余额</th>
             <th style="width:12%">年初余额</th>
+            <th style="width:12%">期末余额</th>
             <th style="width:27%">负债和所有者权益</th>
-            <th style="width:12%">期末余额</th>
             <th style="width:12%">年初余额</th>
+            <th style="width:12%">期末余额</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in tableData" :key="item.id">
-            <td v-html="$options.filters.replace(item.asset)" style="width:26%"></td>
-            <td :class="{ zero: item.asset_year_init_balance < 0 }" style="width:12%">{{ item.asset_year_init_balance }}</td>
-            <td :class="{ zero: item.asset_end_balance < 0 }" style="width:12%">{{ item.asset_end_balance }}</td>
-            <td v-html="$options.filters.replace(item.equity)" style="width:26%"></td>
-            <td :class="{ zero: item.equity_year_init_balance < 0 }" style="width:12%">{{ item.equity_year_init_balance }}</td>
-            <td :class="{ zero: item.equity_end_balance < 0 }" style="width:12%">{{ item.equity_end_balance }}</td>
+            <td v-html="$options.filters.replace(item.left.name)" style="width:26%"></td>
+            <td :class="{ zero: item.left.yearBegin < 0 }" style="width:12%">{{ item.left.yearBegin }}</td>
+            <td :class="{ zero: item.left.periodEnd < 0 }" style="width:12%">{{ item.left.periodEnd }}</td>
+            <td v-html="$options.filters.replace(item.right.name)" style="width:26%"></td>
+            <td :class="{ zero: item.right.yearBegin < 0 }" style="width:12%">{{ item.right.yearBegin }}</td>
+            <td :class="{ zero: item.right.periodEnd < 0 }" style="width:12%">{{ item.right.periodEnd }}</td>
           </tr>
         </tbody>
       </table>
@@ -87,7 +87,7 @@ import NavBar from '@/components/NavBar/index.vue';
 })
 export default class Table extends Vue {
   private type: string = '';
-  private tableData = [];
+  private tableData: any = [];
   private period = '';
   private companyName = UserModule.currentCompanyName;
   private workOrderList: any = [];
@@ -99,8 +99,22 @@ export default class Table extends Vue {
       if (this.$route.params.period) {
         this.period = this.$route.params.period;
       }
-      this.tableData = await storeApi.findCompanyReportInfo({ companyId: UserModule.COMPANYID, period: this.period, type }, true);
-    } catch (error) {}
+      type = type == 'income' ? '1' : type == 'cash' ? '2' : '0';
+      // 操他妈后端
+      const { result } = await this.$storeApi.getCompanyReportForm(
+        { companyId: UserModule.COMPANYID, period: `${String(this.period).substr(0, 4)}-${String(this.period).substr(4)}`, type },
+        true
+      );
+      if (type == '0') {
+        this.tableData = [...new Array(33)].map((v, i) => {
+          return { left: result[i], right: result[i + 33] };
+        });
+      } else {
+        this.tableData = result;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async getBaseInfo() {
@@ -113,8 +127,7 @@ export default class Table extends Vue {
         .reverse();
       this.period = this.workOrderList[0].period;
       this.getTable();
-    } catch (error) {
-    }
+    } catch (error) {}
   }
   async created() {
     this.getBaseInfo();
