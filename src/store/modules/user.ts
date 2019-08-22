@@ -10,7 +10,7 @@ import {
 import store from '@/store'
 import { setStorage, getStorage } from '@/utils/storage'
 export interface UserStoreType {
-user: User
+  user: User
 }
 
 @Module({ dynamic: true, store, name: 'user' })
@@ -19,6 +19,7 @@ class User extends VuexModule {
   public companyId: string = ''
   public companyList: any
   public home: string = 'ACCOUNT'
+  public currentCompanyName: string = ''
 
   // 获取公司列表
   get COMPANYLIST() {
@@ -32,10 +33,13 @@ class User extends VuexModule {
       : localStorage.getItem('companyId') || ''
   }
 
-  get currentCompanyName() {
-    return this.COMPANYLIST.find((v: any) => {
-      return v.value == this.COMPANYID
-    }).text
+  get CURRENTCOMPANYNAME() {
+    return this.currentCompanyName
+  }
+
+  @Mutation
+  SETCOMPANYNAME(val: any) {
+    this.currentCompanyName = val
   }
 
   @Mutation

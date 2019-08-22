@@ -63,7 +63,7 @@ export default class MyTools extends Vue {
 
   // 获取信息
   async getDetail() {
-    const resp = await this.$storeApi.detailOrder({ workOrderId: this.$route.query.id });
+    const resp = await this.$storeApi.detailOrder({ workOrderId: this.$route.query.id }, true);
     this.workOrderList = resp.map((v: any, i: number) => {
       if (v.status == 1) {
         this.activeIndex = i + 1;
@@ -77,7 +77,7 @@ export default class MyTools extends Vue {
 
   createComplaint() {
     try {
-      this.$storeApi.createComplaint({ workOrderId: this.$route.query.id, record: '客户催单' });
+      this.$storeApi.createComplaint({ workOrderId: this.$route.query.id, record: '客户催单' }, true);
       this.$toast('已通知服务人员');
     } catch (error) {}
   }
@@ -110,9 +110,8 @@ export default class MyTools extends Vue {
 </style>
 <style>
 .van-step--finish .van-step__circle,
-.van-step--finish .van-step__line  {
+.van-step--finish .van-step__line {
   background-color: #fd6756 !important;
-  
 }
 .van-step--finish .van-step__title {
   color: #fd6756 !important;

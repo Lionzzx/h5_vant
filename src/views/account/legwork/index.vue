@@ -23,28 +23,53 @@
     <div class="page-type">
       <div @click="navToBuy" class="page-type-item bg-pink">
         <div class="page-type-item-title">A类</div>
-        <div>使用：{{ detail.aCount - detail.remainderA }} 剩余：{{ detail.remainderA }}</div>
+        <div>使用：{{ detail.shiyongA }} 剩余：{{ detail.remainderA }}</div>
       </div>
       <div @click="navToBuy" class="page-type-item">
         <div class="page-type-item-title">B类</div>
-        <div>使用：{{ detail.bCount - detail.remainderB }} 剩余：{{ detail.remainderB }}</div>
+        <div>使用：{{ detail.shiyongB }} 剩余：{{ detail.remainderB }}</div>
       </div>
     </div>
 
-    <div v-if="hasMore" class="page-tip" @click="getLegworkList">获取更多外勤>></div>
-    <div class="steps">
-      <van-steps active-color="#000" direction="vertical">
-        <van-step v-for="(item, index) in list" :key="index">
-          <div @click="navToDetail(item.id)" class="steps-title">
-            <span>{{ item.legwork_name }}</span
-            ><span>{{ item.begin_time }}</span>
+    <!-- <div v-if="hasMore" class="page-tip" @click="getLegworkList">获取更多外勤>></div> -->
+    <van-collapse v-model="activeNames">
+      <van-collapse-item title="服务期间" name="1">
+        <div class="steps">
+          <van-steps active-color="#000" direction="vertical">
+            <van-step v-for="(item, index) in periodList" :key="index">
+              <div @click="navToDetail(item.id)" class="steps-title">
+                <span>{{ item.legwork_name }}</span
+                ><span>{{ item.begin_time }}</span>
+              </div>
+              <div>{{ item.begin_address }}</div>
+              <div slot="active-icon">{{ item.type }}类</div>
+              <div slot="inactive-icon">{{ item.type }}类</div>
+            </van-step>
+          </van-steps>
+          <div style="text-align:center" v-if="!periodList.length">
+            暂无信息
           </div>
-          <div>{{ item.begin_address }}</div>
-          <div slot="active-icon">{{ item.type }}类</div>
-          <div slot="inactive-icon">{{ item.type }}类</div></van-step
-        >
-      </van-steps>
-    </div>
+        </div>
+      </van-collapse-item>
+      <van-collapse-item title="历史" name="2">
+        <div class="steps">
+          <van-steps active-color="#000" direction="vertical">
+            <van-step v-for="(item, index) in noPeriodlist" :key="index">
+              <div @click="navToDetail(item.id)" class="steps-title">
+                <span>{{ item.legwork_name }}</span
+                ><span>{{ item.begin_time }}</span>
+              </div>
+              <div>{{ item.begin_address }}</div>
+              <div slot="active-icon">{{ item.type }}类</div>
+              <div slot="inactive-icon">{{ item.type }}类</div>
+            </van-step>
+          </van-steps>
+          <div style="text-align:center" v-if="!noPeriodlist.length">
+            暂无信息
+          </div>
+        </div>
+      </van-collapse-item>
+    </van-collapse>
   </div>
 </template>
 
@@ -53,42 +78,40 @@ import { Component, Vue } from 'vue-property-decorator';
 import NavBar from '@/components/NavBar/index.vue';
 import userStore from '@/store/modules/user';
 
-import { Step, Steps } from 'vant';
+import { Step, Steps, Collapse, CollapseItem } from 'vant';
 @Component({
   components: {
     NavBar,
     [Step.name]: Step,
-    [Steps.name]: Steps
+    [Steps.name]: Steps,
+    [Collapse.name]: Collapse,
+    [CollapseItem.name]: CollapseItem
   }
 })
 export default class MyTools extends Vue {
   private detail: any = {};
-  private list: any = [];
+  private activeNames: any = ['1'];
+  private periodList: any = [];
+  private noPeriodlist: any = [];
   private serviceInfo: any = {};
   private serverTel: string = '';
-  private page: number = 1;
-  private pageSize: number = 10;
-  private hasMore: boolean = true;
 
   async getLegworkList() {
-    if (!this.hasMore) {
-      this.$toast('已经到底了');
-      return;
-    }
     try {
-      let { detail = {}, list = {} } = await this.$storeApi.legworkList(
+      let { detail = {}, list = [] } = await this.$storeApi.legworkList(
         {
-          company_id: userStore.COMPANYID,
-          page: this.page,
-          pageSize: this.pageSize
+          company_id: userStore.COMPANYID
         },
         true
       );
-      this.list.push(...list.rows);
-      this.page += 1;
-      this.detail = detail;
 
-      this.hasMore = this.page * this.pageSize < list.total;
+      this.noPeriodlist = list.filter((v: any) => {
+        return v.if_period == 'N';
+      });
+      this.periodList = list.filter((v: any) => {
+        return v.if_period == 'Y';
+      });
+      this.detail = detail;
     } catch (error) {}
   }
 
@@ -111,7 +134,6 @@ export default class MyTools extends Vue {
   }
   created() {
     this.getLegworkList();
-    this.list = [];
     this.getCompanyServiceInfo();
   }
 }
